@@ -1,0 +1,148 @@
+﻿---
+import "../styles/global.css";
+
+export interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  schema?: string;
+  qaPageSchema?: string;
+}
+
+const { title, description, ogImage = "/images/chinese-tea-og.webp", schema = "", qaPageSchema = "" } = Astro.props;
+const ogImageURL = ogImage.startsWith("http") ? ogImage : new URL(ogImage, Astro.site).href;
+let canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
+if (canonicalURL.endsWith("/")) canonicalURL = canonicalURL.slice(0, -1);
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+
+    <script type="application/ld+json" set:html={`{
+      "@context":"https://schema.org","@type":"Organization",
+      "name":"Chinese Tea Guide","url":"https://chinese-tea.com","potentialAction":{"@type":"SearchAction","target":"https://chinese-tea.com#tea-search={search_term_string}","query-input":"required name=search_term_string"},
+      "logo":"https://chinese-tea.com/favicon.svg",
+      "description":"Your complete guide to Chinese tea: types, famous teas, brewing methods, tea culture, and how to choose the right tea for you."
+    }`} />
+    <script type="application/ld+json" set:html={`{
+      "@context":"https://schema.org","@type":"WebSite",
+      "name":"Chinese Tea Guide","url":"https://chinese-tea.com","potentialAction":{"@type":"SearchAction","target":"https://chinese-tea.com#tea-search={search_term_string}","query-input":"required name=search_term_string"}
+    }`} />
+
+    {schema && <script type="application/ld+json" set:html={schema} />}
+    {qaPageSchema && <script type="application/ld+json" set:html={qaPageSchema} />}
+  </head>
+  <body class="bg-white text-zinc-900 antialiased font-sans">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-leaf-600 focus:text-white focus:rounded-lg focus:outline-none">
+      Skip to content
+    </a>
+
+    <nav class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-zinc-100">
+      <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2.5 font-semibold text-lg text-zinc-900 tracking-tight">
+          <span class="w-8 h-8 rounded-lg bg-leaf-600 flex items-center justify-center text-white text-sm font-bold">茶</span>
+          Chinese Tea Guide
+        </a>
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-zinc-100 transition-colors" aria-label="Toggle menu" aria-expanded="false">
+          <svg id="menu-icon-open" class="w-6 h-6 text-zinc-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+          <svg id="menu-icon-close" class="w-6 h-6 text-zinc-700 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-600">
+          <a href="#types" class="hover:text-leaf-600 transition-colors">Types</a>
+          <a href="#finder" class="hover:text-leaf-600 transition-colors">Find Your Tea</a>
+          <a href="#famous" class="hover:text-leaf-600 transition-colors">Famous Teas</a>
+          <a href="#brewing" class="hover:text-leaf-600 transition-colors">Brewing</a>
+          <a href="#regions" class="hover:text-leaf-600 transition-colors">Regions</a>
+          <a href="#culture" class="hover:text-leaf-600 transition-colors">Culture</a>
+          <a href="#health" class="hover:text-leaf-600 transition-colors">Health</a>
+          <a href="#buying" class="hover:text-leaf-600 transition-colors">Buying Guide</a>
+          <a href="#faq" class="hover:text-leaf-600 transition-colors">FAQ</a>
+        </div>
+      </div>
+      <div id="mobile-menu" class="md:hidden hidden border-t border-zinc-100 bg-white">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-2 text-sm font-medium text-zinc-600">
+          <a href="#types" class="py-2 hover:text-leaf-600 transition-colors">Types</a>
+          <a href="#finder" class="py-2 hover:text-leaf-600 transition-colors">Find Your Tea</a>
+          <a href="#famous" class="py-2 hover:text-leaf-600 transition-colors">Famous Teas</a>
+          <a href="#brewing" class="py-2 hover:text-leaf-600 transition-colors">Brewing</a>
+          <a href="#regions" class="py-2 hover:text-leaf-600 transition-colors">Regions</a>
+          <a href="#culture" class="py-2 hover:text-leaf-600 transition-colors">Culture</a>
+          <a href="#health" class="py-2 hover:text-leaf-600 transition-colors">Health</a>
+          <a href="#buying" class="py-2 hover:text-leaf-600 transition-colors">Buying Guide</a>
+          <a href="#faq" class="py-2 hover:text-leaf-600 transition-colors">FAQ</a>
+        </div>
+      </div>
+    </nav>
+
+    <main id="main-content"><slot /></main>
+
+    <footer class="border-t border-zinc-100 bg-bone-50 mt-20">
+      <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div>
+          <p class="font-semibold text-zinc-900 mb-2">Chinese Tea Guide</p>
+          <p class="text-sm text-zinc-500 max-w-xs">Your practical guide to Chinese tea — types, famous teas, brewing methods, culture, and how to choose.</p>
+        </div>
+        <div>
+          <p class="font-semibold text-zinc-900 mb-2">Explore</p>
+          <div class="flex flex-col gap-1.5 text-sm text-zinc-500">
+            <a href="#types" class="hover:text-leaf-600 transition-colors">Tea Types</a>
+            <a href="#finder" class="hover:text-leaf-600 transition-colors">Find Your Tea</a>
+            <a href="#famous" class="hover:text-leaf-600 transition-colors">Famous Teas</a>
+            <a href="#brewing" class="hover:text-leaf-600 transition-colors">Brewing Guide</a>
+          </div>
+        </div>
+        <div>
+          <p class="font-semibold text-zinc-900 mb-2">About</p>
+          <p class="text-sm text-zinc-500">Built to help English-speaking tea lovers discover the world of Chinese tea — one cup at a time.</p>
+        </div>
+      </div>
+      <div class="border-t border-zinc-200 py-4 text-center text-xs text-zinc-400">
+        &copy; {new Date().getFullYear()} Chinese Tea Guide. All rights reserved.
+      </div>
+    </footer>
+    <script>
+      document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+        var menu = document.getElementById('mobile-menu');
+        var openIcon = document.getElementById('menu-icon-open');
+        var closeIcon = document.getElementById('menu-icon-close');
+        var expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !expanded);
+        menu.classList.toggle('hidden');
+        openIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      });
+      document.querySelectorAll('#mobile-menu a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          var menu = document.getElementById('mobile-menu');
+          var btn = document.getElementById('mobile-menu-btn');
+          var openIcon = document.getElementById('menu-icon-open');
+          var closeIcon = document.getElementById('menu-icon-close');
+          menu.classList.add('hidden');
+          btn.setAttribute('aria-expanded', 'false');
+          openIcon.classList.remove('hidden');
+          closeIcon.classList.add('hidden');
+        });
+      });
+    </script>
+  </body>
+</html>

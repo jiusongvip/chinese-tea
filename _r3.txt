@@ -1,0 +1,55 @@
+  function renderDetailPanel(t) {
+    return `<div class="px-5 sm:px-8 py-6 md:py-8">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-xl bg-leaf-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">&#33590;</div>
+        <div>
+          <h4 class="text-lg font-bold text-zinc-900">${t.name}</h4>
+          <p class="text-sm text-zinc-400">${t.nameChinese} &middot; ${t.type} Tea &middot; ${t.origin}</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div>
+          <h5 class="text-xs font-mono uppercase tracking-[0.15em] text-leaf-600 mb-3">Flavor Profile</h5>
+          <div class="space-y-2.5 text-sm">
+            <div class="flex gap-2"><span class="text-zinc-400 w-16 flex-shrink-0">Aroma</span><span class="text-zinc-700">${t.flavor.aroma}</span></div>
+            <div class="flex gap-2"><span class="text-zinc-400 w-16 flex-shrink-0">Taste</span><span class="text-zinc-700">${t.flavor.taste}</span></div>
+            <div class="flex gap-2"><span class="text-zinc-400 w-16 flex-shrink-0">Color</span><span class="text-zinc-700">${t.flavor.color}</span></div>
+            <div class="flex gap-2"><span class="text-zinc-400 w-16 flex-shrink-0">Body</span><span class="text-zinc-700">${t.flavor.body}</span></div>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-3 text-xs text-zinc-500">
+            <span class="px-2 py-1 bg-white rounded-md border border-zinc-200">Caffeine: ${t.caffeine}</span>
+            <span class="px-2 py-1 bg-white rounded-md border border-zinc-200">Harvest: ${t.harvest}</span>
+          </div>
+        </div>
+        <div>
+          <h5 class="text-xs font-mono uppercase tracking-[0.15em] text-leaf-600 mb-3">Brewing Guide</h5>
+          <div class="grid grid-cols-2 gap-x-6 gap-y-2.5 text-sm">
+            <div><span class="text-zinc-400 block text-xs">Water</span><span class="text-zinc-700 font-medium">${t.brewing.temp}</span></div>
+            <div><span class="text-zinc-400 block text-xs">Vessel</span><span class="text-zinc-700 font-medium">${t.brewing.vessel}</span></div>
+            <div><span class="text-zinc-400 block text-xs">Gongfu Time</span><span class="text-zinc-700 font-medium">${t.brewing.timeGongfu}</span></div>
+            <div><span class="text-zinc-400 block text-xs">Western Time</span><span class="text-zinc-700 font-medium">${t.brewing.timeWestern}</span></div>
+            <div><span class="text-zinc-400 block text-xs">Ratio</span><span class="text-zinc-700 font-medium">${t.brewing.ratio}</span></div>
+            <div><span class="text-zinc-400 block text-xs">Infusions</span><span class="text-zinc-700 font-medium">${t.brewing.infusions}</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-6 p-4 sm:p-5 bg-white rounded-xl border border-zinc-200">
+        <h5 class="text-xs font-mono uppercase tracking-[0.15em] text-amber-600 mb-3">Buying Guide</h5>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4 text-sm">
+          <div class="p-3 bg-bone-50 rounded-lg"><span class="text-zinc-400 block text-xs mb-0.5">Entry Level</span><span class="text-zinc-800 font-medium">${t.buying.priceEntry}</span></div>
+          <div class="p-3 bg-bone-50 rounded-lg"><span class="text-zinc-400 block text-xs mb-0.5">Premium / Collector</span><span class="text-zinc-800 font-medium">${t.buying.priceAdvance}</span></div>
+        </div>
+        <div class="space-y-3 text-sm">
+          <div class="flex gap-2"><span class="text-leaf-600 mt-0.5 flex-shrink-0">&#10003;</span><span><strong class="text-zinc-700">Quality Check:</strong> <span class="text-zinc-600">${t.buying.qualityCheck}</span></span></div>
+          <div class="flex gap-2"><span class="text-amber-500 mt-0.5 flex-shrink-0">&#9888;</span><span><strong class="text-zinc-700">Watch Out:</strong> <span class="text-zinc-600">${t.buying.commonScams}</span></span></div>
+          <div class="flex gap-2"><span class="text-zinc-400 mt-0.5 flex-shrink-0">&#128269;</span><span><strong class="text-zinc-700">Search:</strong> <span class="text-zinc-500">${t.buying.searchKeywords}</span></span></div>
+        </div>
+      </div>
+      <div class="mb-5 text-sm">
+        <h5 class="text-xs font-mono uppercase tracking-[0.15em] text-zinc-400 mb-2">History and Background</h5>
+        <p class="text-zinc-600 leading-relaxed">${t.history}</p>
+      </div>
+      <div class="p-3 bg-leaf-50 rounded-lg border border-leaf-100 text-sm">
+        <span class="font-semibold text-leaf-800">Ideal For: </span><span class="text-leaf-700">${t.idealFor}</span>
+      </div>
+    </div>`;

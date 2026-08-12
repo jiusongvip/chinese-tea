@@ -1,0 +1,67 @@
+  function toggleTeaDetail(teaId) {
+    const detailRow = document.getElementById("detail-" + teaId);
+    const summaryRow = document.querySelector(`tr.tea-row[data-tea-id="${teaId}"]`);
+    if (!detailRow || !summaryRow) return;
+    const isOpen = !detailRow.classList.contains("hidden");
+    const icon = summaryRow.querySelector(".expand-icon");
+    document.querySelectorAll("tr.tea-detail-row:not(.hidden)").forEach(d => {
+      if (d.dataset.teaId !== teaId) {
+        d.classList.add("hidden");
+        const oi = document.querySelector(`tr.tea-row[data-tea-id="${d.dataset.teaId}"] .expand-icon`);
+        if (oi) oi.style.transform = "";
+      }
+    });
+    if (isOpen) {
+      detailRow.classList.add("hidden");
+      if (icon) icon.style.transform = "";
+      if (window.location.hash === "#tea-" + teaId) history.replaceState(null, "", window.location.pathname);
+    } else {
+      detailRow.classList.remove("hidden");
+      if (icon) icon.style.transform = "rotate(90deg)";
+      history.replaceState(null, "", "#tea-" + teaId);
+      setTimeout(() => {
+        const rect = detailRow.getBoundingClientRect();
+        if (rect.bottom > window.innerHeight) detailRow.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }, 100);
+    }
+  }
+
+  // Table sort
+  document.querySelectorAll("[data-sort]").forEach(th => th.addEventListener("click", () => {
+    const key = th.dataset.sort;
+    sortKey === key ? sortAsc = !sortAsc : (sortKey = key, sortAsc = true);
+    document.querySelectorAll("tr.tea-detail-row:not(.hidden)").forEach(d => d.classList.add("hidden"));
+    renderTable();
+  }));
+
+  // Table filter
+  const filterBtns = document.querySelectorAll("#tea-filter [data-filter]");
+  filterBtns.forEach(btn => btn.addEventListener("click", () => {
+    filterBtns.forEach(b => { b.classList.remove("border-2", "border-leaf-600", "bg-leaf-600", "text-white", "active"); b.classList.add("border", "border-zinc-200", "text-zinc-600"); });
+    btn.classList.add("border-2", "border-leaf-600", "bg-leaf-600", "text-white", "active"); btn.classList.remove("border-zinc-200", "text-zinc-600");
+    currentFilter = btn.dataset.filter;
+    document.querySelectorAll("tr.tea-detail-row:not(.hidden)").forEach(d => d.classList.add("hidden"));
+    renderTable();
+  }));
+
+  // Row click to expand detail
+  document.querySelectorAll("tr.tea-row").forEach(row => {
+    row.addEventListener("click", e => { if (!e.target.closest("a")) toggleTeaDetail(row.dataset.teaId); });
+    row.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleTeaDetail(row.dataset.teaId); } });
+  });
+
+  // ARIA state tracking
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(m => {
+      if (m.attributeName === "class" && m.target.classList.contains("tea-detail-row")) {
+        const r = document.querySelector(`tr.tea-row[data-tea-id="${m.target.dataset.teaId}"]`);
+        if (r) r.setAttribute("aria-expanded", m.target.classList.contains("hidden") ? "false" : "true");
+      }
+    });
+  });
+  document.querySelectorAll("tr.tea-detail-row").forEach(d => observer.observe(d, { attributes: true, attributeFilter: ["class"] }));
+
+  // URL hash deep linking
+  if (window.location.hash && window.location.hash.startsWith("#tea-")) {
+    setTimeout(() => toggleTeaDetail(window.location.hash.replace("#tea-", "")), 300);
+  }

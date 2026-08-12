@@ -1,0 +1,22 @@
+# Chinese Tea Guide
+
+Your practical guide to Chinese tea — types, famous teas, brewing methods, tea culture, and how to choose the right tea.
+
+## Site Structure
+
+- Homepage: https://chinese-tea.com
+  - Tea Types (six major categories)
+  - Famous Teas (16 iconic Chinese teas with brewing and buying guides)
+  - Brewing Guide (gongfu and western methods, water guide, cold brew)
+  - Tea Regions (Zhejiang, Fujian, Yunnan, Anhui, Jiangsu, Guangdong)
+  - Tea Culture and Ceremony
+  - Health Benefits
+  - Food Pairing
+  - Teaware Essentials
+  - Buying and Storage Guide
+  - FAQ (13 common questions)
+
+## About
+
+This site is built to help English-speaking tea lovers discover the world of Chinese tea through practical, experience-based information — exact brewing temperatures, realistic price ranges, quality checks, and common scams to avoid.
+

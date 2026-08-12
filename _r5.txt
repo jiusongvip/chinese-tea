@@ -1,0 +1,52 @@
+
+  // Flavor Finder
+  const recommendations = {
+    fresh: { title: "Try Longjing (Dragon Well) Green Tea", desc: "The most famous Chinese green tea, with a fresh nutty flavor and sweet aftertaste. Perfect if you enjoy vegetal, clean-tasting teas.", brew: "Brew: 175F, 2-3 minutes, 2g per cup" },
+    floral: { title: "Try Tie Guan Yin Oolong Tea", desc: "A lightly oxidized oolong with an enchanting orchid fragrance. Smooth and creamy, with natural floral sweetness.", brew: "Brew: 195F, 30-60s gongfu, 5g per 100ml" },
+    malty: { title: "Try Keemun Black Tea", desc: "A smooth, malty black tea from Anhui with notes of cocoa and a hint of smoke.", brew: "Brew: 200F, 3-4 minutes, 2.5g per cup" },
+    earthy: { title: "Try Shou (Ripe) Pu-erh", desc: "A post-fermented dark tea from Yunnan with deep earthy, woody notes. Ages beautifully like fine wine.", brew: "Brew: 212F, 20-40s gongfu, 5g per 100ml" },
+    roasted: { title: "Try Da Hong Pao (Big Red Robe) Oolong", desc: "A legendary Wuyi rock oolong with deep roasted notes and mineral complexity.", brew: "Brew: 205F, 30-50s gongfu, 5g per 100ml" },
+    sweet: { title: "Try Silver Needle White Tea", desc: "The purest expression of tea, just buds, minimally processed. Naturally sweet with notes of melon.", brew: "Brew: 175F, 3-5 minutes, 2g per cup" }
+  };
+  const flavorBtns = document.querySelectorAll("#flavor-options [data-flavor]");
+  const resultDiv = document.getElementById("finder-result");
+  flavorBtns.forEach(btn => btn.addEventListener("click", () => {
+    const rec = recommendations[btn.dataset.flavor]; if (!rec) return;
+    flavorBtns.forEach(b => { b.classList.remove("border-leaf-600", "bg-leaf-50", "text-leaf-700"); b.classList.add("border-zinc-200", "text-zinc-600"); });
+    btn.classList.add("border-leaf-600", "bg-leaf-50", "text-leaf-700"); btn.classList.remove("border-zinc-200");
+    document.getElementById("result-title").textContent = rec.title;
+    document.getElementById("result-desc").textContent = rec.desc;
+    document.getElementById("result-brew").textContent = rec.brew;
+    resultDiv.classList.remove("hidden");
+  }));
+
+  // Brewing Guide Tabs
+  const brewData = {
+    green: { title: "Brewing Green Tea", temp: "160-175F (70-80C)", time: "2-3 minutes", vessel: "Glass teapot or gaiwan", ratio: "2g per 200ml", tips: "Never use boiling water; it burns the leaves and creates bitterness. Watch the leaves dance in a glass vessel." },
+    oolong: { title: "Brewing Oolong Tea", temp: "185-205F (85-95C)", time: "30-60 seconds (gongfu)", vessel: "Yixing clay pot or gaiwan", ratio: "5g per 100ml", tips: "Use gongfu style for best results. Oolongs shine across 5-8 infusions, with flavor evolving each round." },
+    black: { title: "Brewing Black Tea", temp: "195-212F (90-100C)", time: "3-5 minutes", vessel: "Porcelain teapot", ratio: "2.5g per 200ml", tips: "Chinese black teas (hong cha) are smoother than Indian and do not need milk." },
+    white: { title: "Brewing White Tea", temp: "175-185F (80-85C)", time: "3-5 minutes", vessel: "Glass or porcelain", ratio: "2g per 200ml", tips: "White tea is the most forgiving; hard to over-brew. Aged white teas can handle hotter water." },
+    puerh: { title: "Brewing Pu-erh Tea", temp: "200-212F (95-100C)", time: "20-40 seconds (gongfu)", vessel: "Yixing clay pot or gaiwan", ratio: "5g per 100ml", tips: "Always rinse pu-erh twice before drinking, quick rinses to wake up the leaves." }
+  };
+  const brewTabs = document.querySelectorAll("#brew-tabs [data-brew]");
+  const brewContent = document.getElementById("brew-content");
+  function renderBrew(type) {
+    const d = brewData[type]; if (!d) return;
+    brewContent.innerHTML = `<h3 class="text-xl font-bold text-zinc-900 mb-6">${d.title}</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="p-4 bg-bone-50 rounded-xl"><p class="text-xs text-zinc-400 uppercase tracking-wider mb-1">Water Temperature</p><p class="font-semibold text-zinc-800">${d.temp}</p></div>
+        <div class="p-4 bg-bone-50 rounded-xl"><p class="text-xs text-zinc-400 uppercase tracking-wider mb-1">Steeping Time</p><p class="font-semibold text-zinc-800">${d.time}</p></div>
+        <div class="p-4 bg-bone-50 rounded-xl"><p class="text-xs text-zinc-400 uppercase tracking-wider mb-1">Best Vessel</p><p class="font-semibold text-zinc-800">${d.vessel}</p></div>
+        <div class="p-4 bg-bone-50 rounded-xl"><p class="text-xs text-zinc-400 uppercase tracking-wider mb-1">Leaf-to-Water Ratio</p><p class="font-semibold text-zinc-800">${d.ratio}</p></div>
+      </div>
+      <div class="mt-6 p-4 bg-leaf-50 rounded-xl border border-leaf-200">
+        <p class="text-sm font-semibold text-leaf-800 mb-1">Pro Tips</p>
+        <p class="text-sm text-leaf-700">${d.tips}</p>
+      </div>`;
+  }
+  brewTabs.forEach(tab => tab.addEventListener("click", () => {
+    brewTabs.forEach(t => { t.classList.remove("bg-leaf-600", "text-white"); t.classList.add("border", "border-zinc-200", "text-zinc-600"); });
+    tab.classList.add("bg-leaf-600", "text-white"); tab.classList.remove("border-zinc-200", "text-zinc-600");
+    renderBrew(tab.dataset.brew);
+  }));
+  renderBrew("green");

@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Sitemap: https://chinese-tea.com/sitemap-index.xml
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
