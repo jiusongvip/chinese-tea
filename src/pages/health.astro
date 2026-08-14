@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CTACard from '../components/CTACard.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import { healthCards, caffeineGrid } from '../data/content';
+import { articleSchema } from '../data/schemas';
+import FaIcon from '../components/FaIcon.astro';
+import { faShieldHeart, faBrain, faHeartPulse, type IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import LeadImage from '../components/LeadImage.astro';
+
+const title = 'Health Benefits of Chinese Tea';
+const description = 'What the science says about Chinese tea — antioxidants and EGCG, L-theanine for calm focus, heart and metabolic health, and the real caffeine numbers vs coffee.';
+
+const schemaJson = JSON.stringify(articleSchema({
+  title,
+  description,
+  canonicalURL: 'https://chinese-tea.com/health',
+  image: 'https://chinese-tea.com/images/chinese-tea-og.webp',
+  datePublished: '2026-08-01',
+  dateModified: '2026-08-12',
+}));
+
+const healthIcons: Record<string, IconDefinition> = {
+  'shield-heart': faShieldHeart,
+  brain: faBrain,
+  'heart-pulse': faHeartPulse,
+};
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="Wellness" title="Health Benefits of Chinese Tea" subtitle="For centuries, Chinese tea has been valued not just for flavor but for its effects on body and mind. Modern science is now catching up with tradition." headingLevel="h1" />
+    <div class="mt-8"><LeadImage src="/images/green-tea.webp" alt="Green tea leaves" caption="Green tea: the most-studied leaf" /></div>
+  </section>
+
+  <section class="section-container py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {healthCards.map((c) => (
+        <div class="card card-hover p-6">
+          <div class={`w-10 h-10 rounded-lg flex items-center justify-center mb-4 ${c.tone}`}><FaIcon icon={healthIcons[c.icon]} size={20} /></div>
+          <h3 class="font-semibold text-warm-900 mb-2">{c.title}</h3>
+          <p class="text-sm text-muted leading-relaxed">{c.body} <a href={c.source.href} target="_blank" rel="noopener" class="text-accent underline hover:text-accent-dark text-xs">[{c.source.label}]</a></p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-paper-100 py-16">
+    <div class="section-container max-w-4xl">
+      <div class="card p-6 md:p-8">
+        <h3 class="font-semibold text-warm-900 mb-4">Caffeine in Chinese Tea vs. Coffee</h3>
+        <p class="text-sm text-muted leading-relaxed mb-4">An 8oz cup of coffee contains ~95mg of caffeine. Chinese tea varies widely <strong class="text-warm-800">by type and brewing method</strong>:</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+          {caffeineGrid.map((c) => (
+            <div class="p-3 bg-paper-100 rounded-lg text-center"><span class="block text-xs text-zinc-400 mb-0.5">{c.label}</span><span class="font-semibold text-warm-900">{c.value}</span></div>
+          ))}
+        </div>
+        <p class="text-xs text-zinc-400 mt-4">Multiple short gongfu infusions release caffeine more gradually than a single long Western steep. L-theanine in tea smooths out the caffeine curve, producing alert calm rather than a spike.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-container py-16 max-w-3xl">
+    <SectionHeader eyebrow="Honest Notes" title="What Tea Won't Do" headingLevel="h2" />
+    <div class="mt-6 card p-6 text-sm text-muted leading-relaxed space-y-4">
+      <p>Tea is a wonderful beverage with genuine, well-studied compounds — but it is not medicine. It should <strong class="text-warm-900">complement, not replace</strong>, a balanced diet and healthy lifestyle. Consult a healthcare professional for specific health concerns.</p>
+      <p>The tradition is worth taking seriously, though. The Chinese custom of drinking tea after heavy meals — especially pu-erh — reflects something real: the earthy, fermented character genuinely helps settle a full stomach, which is why it has survived a thousand years of practice.</p>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/types/green" primaryLabel="Explore Green Teas" secondaryHref="/teas/silver-needle" secondaryLabel="Low-Caffeine Silver Needle" />
+
+  <RelatedLinks links={[
+    { href: '/types/green', label: 'green tea antioxidants' },
+    { href: '/teas/anji-bai-cha', label: 'high theanine green tea' },
+    { href: '/teas/pu-erh-shou', label: 'pu-erh after meals' },
+    { href: '/faq', label: 'is chinese tea healthy' },
+  ]} />
+
+</BaseLayout>

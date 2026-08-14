@@ -1,0 +1,75 @@
+---
+import { Menu, X, ArrowRight } from '@lucide/astro';
+import InkGlyph from './InkGlyph.astro';
+
+const navLinks = [
+  { label: 'Types', href: '/types' },
+  { label: 'Flavours', href: '/flavours' },
+  { label: 'Famous Teas', href: '/teas' },
+  { label: 'Brewing', href: '/guides/brewing' },
+  { label: 'Regions', href: '/regions' },
+  { label: 'Buying', href: '/guides/buying' },
+];
+---
+
+<header class="sticky top-0 z-50 border-b border-paper-200 bg-paper-50/90 backdrop-blur-md">
+  <nav class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between gap-4" aria-label="Main">
+    <a href="/" class="font-accent italic text-lg font-semibold tracking-tight flex items-center gap-2.5 no-underline">
+      <span class="w-8 h-8 rounded-[5px] bg-red-600 text-paper-50 flex items-center justify-center shadow-[0_2px_6px_rgba(160,58,31,0.35)]"><InkGlyph size={17} /></span>
+      <span>Chinese Tea<span class="text-accent"> Guide</span></span>
+    </a>
+    <ul class="hidden md:flex items-center gap-7">
+      {navLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-warm-700 hover:text-accent transition-colors duration-150"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <a href="/teas" class="hidden lg:inline-flex items-center justify-center px-4 py-2 btn btn-ink text-sm">
+      Find Your Tea <ArrowRight class="w-4 h-4" />
+    </a>
+    <button id="mobile-menu-btn" class="md:hidden text-warm-700 p-1" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+      <Menu id="menu-icon-open" class="w-6 h-6" />
+      <X id="menu-icon-close" class="hidden w-6 h-6" />
+    </button>
+  </nav>
+  <div id="mobile-menu" class="hidden md:hidden border-t border-paper-200 bg-paper-50">
+    <ul class="flex flex-col px-6 py-4 gap-1">
+      {navLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class="block py-3 font-mono text-xs font-medium uppercase tracking-[0.18em] text-warm-700 hover:text-accent transition-colors duration-150"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+      <li class="pt-2">
+        <a href="/teas" class="block py-3 text-sm font-semibold text-accent flex items-center gap-1.5">
+          Find Your Tea <ArrowRight class="w-4 h-4" />
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+  if (btn && menu && iconOpen && iconClose) {
+    btn.addEventListener('click', () => {
+      const isOpen = menu.classList.toggle('hidden');
+      iconOpen.classList.toggle('hidden', !isOpen);
+      iconClose.classList.toggle('hidden', isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+    });
+  }
+</script>

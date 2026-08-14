@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Privacy Policy';
+const description = 'How Chinese Tea Guide handles data — what we collect, what we don\'t, and how to contact us.';
+---
+
+<BaseLayout {title} {description} noindex>
+
+  <section class="section-container pt-12 pb-16 max-w-3xl">
+    <h1 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-warm-900 mb-6">Privacy Policy</h1>
+    <div class="space-y-6 text-sm text-muted leading-relaxed">
+      <p class="card p-6"><strong class="text-warm-900">The short version:</strong> we don't run ads, we don't sell data, and this site collects as little as possible. Our goal is to be the tea guide we wished existed — not a surveillance machine.</p>
+      <div class="card p-6">
+        <h2 class="font-semibold text-warm-900 mb-3">What we collect</h2>
+        <ul class="list-disc pl-5 space-y-2">
+          <li><strong>Nothing when you browse.</strong> There are no tracking cookies, no analytics scripts by default, and no account system.</li>
+          <li><strong>Emails you send us.</strong> If you contact us at hello@chinese-tea.com, we keep the conversation to respond. We never add you to a newsletter you didn't ask for.</li>
+        </ul>
+      </div>
+      <div class="card p-6">
+        <h2 class="font-semibold text-warm-900 mb-3">Third parties</h2>
+        <p>We self-host this site and serve no third-party advertising. The only third-party connections are the font files loaded from our own server and, optionally, a privacy-respecting analytics script that is disabled by default. If you email us, your message passes through standard email infrastructure.</p>
+      </div>
+      <div class="card p-6">
+        <h2 class="font-semibold text-warm-900 mb-3">Your rights</h2>
+        <p>You can ask us at any time what data we hold about you and request that it be deleted. Just write to <a href="mailto:hello@chinese-tea.com" class="text-accent underline">hello@chinese-tea.com</a>. We'll do it.</p>
+      </div>
+      <div class="card p-6">
+        <h2 class="font-semibold text-warm-900 mb-3">Changes</h2>
+        <p>If this policy ever changes, we'll update it here and note the date. Last updated: August 12, 2026.</p>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

@@ -1,0 +1,37 @@
+---
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { getTeaType } from '../data/teaTypes';
+import type { Tea } from '../data/teas';
+
+export interface Props {
+  tea: Tea;
+  size?: 'sm' | 'md';
+  class?: string;
+}
+
+const { tea, size = 'sm', class: cls = '' } = Astro.props;
+const type = getTeaType(tea.type);
+
+// A unique per-tea photo may be dropped into public/images/teas/{slug}.{avif|webp|jpg|png}
+// — when it exists we show the photo, otherwise a one-of-a-kind ink seal char.
+const base = path.join(process.cwd(), 'public', 'images', 'teas');
+const ext = (['avif', 'webp', 'jpg', 'png'] as const).find((e) => existsSync(path.join(base, tea.slug + '.' + e)));
+const photo = ext ? `/images/teas/${tea.slug}.${ext}` : null;
+
+const box = size === 'md' ? 'h-12 w-12 text-lg' : 'h-10 w-10 text-base';
+---
+
+{
+  photo ? (
+    <img src={photo} alt={tea.name} class={`${box} rounded-lg object-cover flex-shrink-0 ${cls}`} loading="lazy" width={size === 'md' ? 48 : 40} height={size === 'md' ? 48 : 40} />
+  ) : (
+    <span
+      class={`${box} rounded-lg border grid place-items-center flex-shrink-0 select-none ${type?.accent.bg} ${type?.accent.border} ${type?.accent.text} ${cls}`}
+      title={tea.name}
+      aria-label={`${tea.name} seal`}
+    >
+      <span class="font-serif leading-none" aria-hidden="true">{tea.char}</span>
+    </span>
+  )
+}

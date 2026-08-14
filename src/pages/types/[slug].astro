@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import TeaCard from '../../components/TeaCard.astro';
+import CTACard from '../../components/CTACard.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { teaTypes, getTeaType } from '../../data/teaTypes';
+import { teasByType, stars } from '../../data/teas';
+import { teaTypeSchema } from '../../data/schemas';
+
+export function getStaticPaths() {
+  return teaTypes.map((t) => ({ params: { slug: t.slug } }));
+}
+
+const { slug } = Astro.params;
+const type = getTeaType(slug!);
+if (!type) return new Response(null, { status: 404, statusText: 'Not found' });
+
+const typeTeas = teasByType(type.slug);
+const { accent } = type;
+
+const title = `${type.name} (${type.nameZh}): A Complete Guide`;
+const description = `${type.name} guide — ${type.oxidation.toLowerCase()}, caffeine level ${type.caffeine}, brewing temperature ${type.brewTemp}, famous examples like ${type.exampleNames.join(', ')}, and how to buy them.`;
+
+const schemaJson = JSON.stringify(teaTypeSchema({
+  name: type.name,
+  description,
+  url: `https://chinese-tea.com/types/${type.slug}`,
+}));
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson} ogImage={type.image}>
+
+  <!-- Hero -->
+  <section class="relative bg-leaf-950 text-white overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+      <img src={type.image} alt={type.name} class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async" width="1200" height="800" />
+      <div class="absolute inset-0 bg-gradient-to-b from-leaf-950/70 via-leaf-950/85 to-leaf-950"></div>
+    </div>
+    <div class="relative z-10 section-container py-16 md:py-20">
+      <div class="flex flex-wrap items-center gap-3 mb-5">
+        <span class={`px-3 py-1 text-xs font-bold rounded-full ${accent.badge}`}>{type.nameShort}</span>
+        <a href="/types" class="text-xs text-leaf-200/70 hover:text-white transition-colors">← All six types</a>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-display font-bold tracking-tight max-w-3xl">{type.name} <span class="text-leaf-300 text-2xl md:text-3xl font-semibold">{type.nameZh} <span class="text-leaf-200/60 text-lg font-normal">{type.namePinyin}</span></span></h1>
+      <p class="mt-4 text-lg text-leaf-100/85 max-w-2xl">{type.description.slice(0, 140)}…</p>
+      <div class="mt-8 flex flex-wrap gap-3 text-xs">
+        <span class="px-3 py-1.5 rounded-lg bg-white/10 border border-white/10">Defining step: {type.process.term}</span>
+        <span class="px-3 py-1.5 rounded-lg bg-white/10 border border-white/10">Oxidation: {type.oxidation}</span>
+        <span class="px-3 py-1.5 rounded-lg bg-white/10 border border-white/10">Caffeine: {type.caffeine}</span>
+        <span class="px-3 py-1.5 rounded-lg bg-white/10 border border-white/10">Brew: {type.brewTemp}</span>
+        <span class="px-3 py-1.5 rounded-lg bg-white/10 border border-white/10">Beginner: {stars(type.beginner)}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Defining process -->
+  <section class="section-container py-16">
+    <div class="max-w-3xl reveal">
+      <SectionHeader eyebrow="The Defining Process" title={`How ${type.name} Is Made`} headingLevel="h2" />
+      <div class="mt-6 card p-6 bg-leaf-50 border-leaf-200">
+        <p class="text-sm font-semibold text-leaf-900 mb-1">{type.process.term}</p>
+        <p class="text-sm text-accent"><strong>{type.process.zh}</strong> — {type.process.literal}</p>
+      </div>
+      <p class="mt-6 text-warm-700 leading-relaxed">{type.process.body}</p>
+      <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Oxidation</p><p class="font-semibold text-warm-900 text-sm">{type.oxidation}</p></div>
+        <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Caffeine</p><p class="font-semibold text-warm-900">{type.caffeine}</p></div>
+        <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Brew Temp</p><p class="font-semibold text-warm-900">{type.brewTemp}</p></div>
+        <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Typical Price</p><p class="font-semibold text-warm-900 text-sm">{type.priceRange}</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Misconceptions -->
+  <section class="bg-paper-100 py-16">
+    <div class="section-container max-w-3xl">
+      <SectionHeader eyebrow="Straight Answers" title={`Common ${type.nameShort} Misconceptions`} headingLevel="h2" />
+      <div class="mt-8 space-y-3">
+        {type.misconceptions.map((m) => (
+          <div class="card p-5 flex gap-3">
+            <span class="text-amber-500 flex-shrink-0 mt-0.5">✕</span>
+            <p class="text-sm text-muted leading-relaxed">{m}</p>
+          </div>
+        ))}
+      </div>
+      <div class="mt-6 card p-5">
+        <p class="text-sm text-warm-700 leading-relaxed"><strong class="text-warm-900">The one-liner:</strong> {type.oneLiner}</p>
+      </div>
+    </div>
+  </section>
+
+  {type.relatedNote && (
+    <section class="section-container py-16">
+      <div class="max-w-3xl reveal">
+        <SectionHeader eyebrow="Beyond the Mainland" title={type.relatedNote.title} headingLevel="h2" />
+        <p class="mt-5 text-warm-700 leading-relaxed">{type.relatedNote.body}</p>
+        <p class="mt-6 text-sm text-muted">Related: <a href="/guides/oolong-styles" class="text-accent underline">four families of oolong</a> · <a href="/regions" class="text-accent underline">tea by region</a> · <a href="/guides/beginners" class="text-accent underline">where to start</a> · <a href="/flavours" class="text-accent underline">find teas by flavour</a></p>
+      </div>
+    </section>
+  )}
+
+  <!-- Famous examples -->
+  <section class="bg-paper-100 py-16">
+    <div class="section-container">
+      <SectionHeader eyebrow={`${typeTeas.length} Famous ${type.nameShort} Teas`} title={`Our ${type.name} Guides`} subtitle="Click any tea for its full page — flavor profile, exact brewing parameters, buying tips, and common scams." headingLevel="h2" />
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {typeTeas.map((t) => <TeaCard tea={t} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Other types -->
+  <section class="section-container py-16">
+    <SectionHeader eyebrow="Keep Exploring" title="The Other Five Types" headingLevel="h2" />
+    <div class="mt-8 flex flex-wrap gap-3">
+      {teaTypes.filter((t) => t.slug !== type.slug).map((t) => (
+        <a href={`/types/${t.slug}`} class={`px-4 py-2 border rounded-full text-sm transition ${t.accent.chip}`}>{t.name} ({t.nameZh})</a>
+      ))}
+    </div>
+  </section>
+
+  <CTACard primaryHref="/teas" primaryLabel="Browse All Famous Teas" secondaryHref="/guides/buying" secondaryLabel="Buying Guide" />
+
+  <RelatedLinks links={[
+    { href: '/types/green', label: 'types of chinese green tea' },
+    { href: '/types/oolong', label: 'types of oolong tea' },
+    { href: '/types/dark', label: 'dark tea vs pu-erh' },
+    { href: '/types/black', label: 'chinese black tea list' },
+    { href: '/types/yellow', label: 'rarest chinese tea' },
+    { href: '/types/white', label: 'white tea for beginners' },
+  ]} />
+
+</BaseLayout>

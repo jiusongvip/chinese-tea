@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import CTACard from '../../components/CTACard.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { storage } from '../../data/content';
+import { articleSchema } from '../../data/schemas';
+import LeadImage from '../../components/LeadImage.astro';
+
+const title = 'How to Store Chinese Tea';
+const description = 'The complete Chinese tea storage guide — how to keep green, white, and yellow teas fresh, how long roasted oolongs and blacks last, and how to age Pu-erh correctly.';
+
+const schemaJson = JSON.stringify(articleSchema({
+  title,
+  description,
+  canonicalURL: 'https://chinese-tea.com/guides/storage',
+  image: 'https://chinese-tea.com/images/chinese-tea-og.webp',
+  datePublished: '2026-08-01',
+  dateModified: '2026-08-12',
+}));
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="Preservation" title="How to Store Chinese Tea" subtitle="Proper storage keeps fresh tea vibrant for months or helps aged teas develop complexity over decades. The rules differ completely depending on which type you're storing." headingLevel="h1" />
+    <div class="mt-8"><LeadImage src="/images/dark-tea.webp" alt="Compressed dark tea" caption="Pu-erh ages in breathable storage" /></div>
+  </section>
+
+  <section class="section-container py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {storage.map((col) => (
+        <div class="card p-6">
+          <h3 class={`font-semibold text-warm-900 mb-3 flex items-center gap-2`}><span class={col.tone}>{col.label}</span> {col.title}</h3>
+          <ul class="space-y-3 text-sm text-muted">
+            {col.items.map((item) => (
+              <li><strong class="text-warm-800">{item.strong}</strong>{item.body}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-paper-100 py-16">
+    <div class="section-container max-w-3xl">
+      <SectionHeader eyebrow="The Golden Rule" title="Fresh Tea vs Aged Tea Are Different Worlds" headingLevel="h2" />
+      <div class="mt-6 card p-6">
+        <p class="text-sm text-muted leading-relaxed">
+          The single most common mistake people make is treating all tea the same. Green, white, and yellow teas are like fresh produce — they <strong>fade</strong>, so you seal them airtight and drink within a year. Pu-erh and aged whites are like wine — they <strong>evolve</strong>, so you let them breathe in a stable, slightly humid environment and wait.
+        </p>
+        <p class="text-sm text-muted leading-relaxed mt-4">
+          If you only remember one thing: <strong>never refrigerate any tea</strong>. The condensation that forms when you open the door ruins the leaves — moisture is the enemy of every tea category except properly aged dark tea.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/guides/buying" primaryLabel="Back to Buying Guide" secondaryHref="/teas/pu-erh-sheng" secondaryLabel="Aged Pu-erh Guide" />
+
+  <RelatedLinks links={[
+    { href: '/teas/pu-erh-sheng', label: 'how to age pu-erh' },
+    { href: '/guides/buying', label: 'buying fresh tea' },
+    { href: '/types/green', label: 'how long does green tea last' },
+    { href: '/guides/brewing', label: 'brew your stored tea' },
+  ]} />
+
+</BaseLayout>

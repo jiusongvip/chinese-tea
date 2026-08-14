@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import TeaCard from '../../components/TeaCard.astro';
+import TeaExplorer from '../../components/TeaExplorer.astro';
+import CTACard from '../../components/CTACard.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { teas } from '../../data/teas';
+
+const title = 'Famous Chinese Teas';
+const description = 'Explore 21 famous Chinese teas — from Longjing and Silver Needle to Da Hong Pao and Pu-erh — each with brewing temperatures, buying tips, quality checks, and common scams.';
+
+const schemaJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description,
+  url: 'https://chinese-tea.com/teas',
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: teas.map((t, i) => ({ '@type': 'Product', name: t.name, url: `https://chinese-tea.com/teas/${t.slug}`, position: i + 1 })),
+  },
+});
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="Tea Explorer" title="Famous Chinese Teas" subtitle="Twenty-one iconic teas. Every one has a dedicated page with its flavor profile, exact brewing parameters, realistic prices, quality checks, common scams, and history." headingLevel="h1" />
+  </section>
+
+  <section class="section-container py-12">
+    <h2 class="font-display text-2xl md:text-3xl font-semibold text-warm-900 mb-8 reveal">Tea Detail Pages</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {teas.map((t) => <TeaCard tea={t} />)}
+    </div>
+  </section>
+
+  <section class="section-container py-12">
+    <h2 class="font-display text-2xl md:text-3xl font-semibold text-warm-900 mb-8 reveal">Compare &amp; Explore</h2>
+    <TeaExplorer />
+  </section>
+
+  <section class="section-container py-12">
+    <div class="card p-6 md:p-8">
+      <h2 class="font-display text-2xl md:text-3xl font-semibold text-warm-900 mb-2 reveal">More Teas Worth Knowing</h2>
+      <p class="text-sm text-muted mb-6 reveal">Famous enough to name, and worth asking about at any serious tea shop — even though they don't have full pages here yet.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+        {[
+          { name: 'Rou Gui', zh: '肉桂', note: "Wuyi rock oolong named for its cassia-cinnamon aroma — one of the most-drunk yancha cultivars.", href: '/guides/oolong-styles' },
+          { name: 'Shui Xian', zh: '水仙', note: 'The floral, full-bodied workhorse of Wuyi rock tea; old-bush versions are prized.', href: '/guides/oolong-styles' },
+          { name: 'Unsmoked Lapsang', zh: '正山小种', note: "The original black tea, made in Tongmu — before the pine smoke. Smooth, honeyed, no campfire.", href: '/teas/lapsang-souchong' },
+          { name: 'Yue Guang Bai', zh: '月光白', note: "Yunnan's 'Moonlight White' — a white tea that is sometimes passed off as Silver Needle.", href: '/teas/silver-needle' },
+          { name: 'Jasmine Pearls', zh: '茉莉龙珠', note: 'Hand-rolled green pearls scented over several nights with fresh jasmine blossoms.', href: '/faq' },
+          { name: 'Jin Xuan', zh: '金萱', note: "Taiwan's 'milky' oolong cultivar, famous for a creamy, buttery note.", href: '/guides/oolong-styles' },
+          { name: 'Oriental Beauty', zh: '东方美人', note: 'Taiwanese insect-bitten oolong with honey and muscat notes; it barely looks like an oolong.', href: '/guides/oolong-styles' },
+          { name: 'Dong Ding', zh: '冻顶', note: "Taiwan's classic roasted oolong — the 'frozen summit' style.", href: '/guides/oolong-styles' },
+          { name: 'Lushan Yunwu', zh: '庐山云雾', note: 'Cloud-mist green from the mountains of Jiangxi, one of China\u2019s Ten Famous Teas.', href: '/types/green' },
+          { name: 'Meng Ding Gan Lu', zh: '蒙顶甘露', note: "Sichuan's sweet, delicate green — one of the oldest named teas in China.", href: '/types/green' },
+        ].map((t) => (
+          <a href={t.href} class="group flex gap-3 items-start no-underline">
+            <div>
+              <p class="font-semibold text-warm-900 group-hover:text-accent transition-colors">{t.name} <span class="text-xs font-normal text-zinc-400">{t.zh}</span></p>
+              <p class="text-xs text-muted leading-relaxed">{t.note}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/types" primaryLabel="Compare the Six Types" secondaryHref="/guides/brewing" secondaryLabel="Brewing Guide" />
+
+  <RelatedLinks links={[
+    { href: '/best-teas', label: 'best chinese teas ranked' },
+    { href: '/types/green', label: 'best chinese green tea' },
+    { href: '/teas/longjing', label: 'longjing vs biluochun' },
+    { href: '/teas/pu-erh-sheng', label: 'aged pu-erh buying guide' },
+    { href: '/guides/cold-brew', label: 'best tea for cold brew' },
+    { href: '/guides/buying', label: 'how to spot fake chinese tea' },
+  ]} />
+
+</BaseLayout>

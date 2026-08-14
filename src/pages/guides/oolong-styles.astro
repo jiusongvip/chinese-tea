@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import OnThisPage from '../../components/OnThisPage.astro';
+import CTACard from '../../components/CTACard.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { articleSchema } from '../../data/schemas';
+
+const title = 'The Four Families of Oolong Tea';
+const description = 'Oolong is four different worlds under one name — Anxi green-style, Wuyi rock tea, Phoenix Dan Cong, and Taiwan high-mountain. The styles, the famous cultivars, and how to tell them apart.';
+
+const schemaJson = JSON.stringify(articleSchema({
+  title,
+  description,
+  canonicalURL: 'https://chinese-tea.com/guides/oolong-styles',
+  image: 'https://chinese-tea.com/images/chinese-tea-og.webp',
+  datePublished: '2026-08-01',
+  dateModified: '2026-08-12',
+}));
+
+const families = [
+  {
+    id: 'anxi',
+    name: 'Anxi Green-Style Oolong',
+    zh: '清香型安溪乌龙',
+    summary: 'The most popular oolong in the world today — light, floral, and creamy.',
+    body: "Made in Anxi County, Fujian, this is the style most people mean by 'oolong.' Leaves are oxidized only 10-20%, lightly rolled into tight balls, and fixed early to keep them green. The result is a bright, floral, creamy cup with a strong orchid note and almost no roast. Because they're so lightly processed, green-style Tie Guan Yin teas are delicate: they want cooler water (around 195°F), a shorter steep, and refrigeration to stay fresh.",
+    cultivars: ['Tie Guan Yin 铁观音', 'Huang Jin Gui 黄金桂', 'Ben Shan 本山', 'Mao Xie 毛蟹'],
+    examples: ['tie-guan-yin'],
+  },
+  {
+    id: 'wuyi',
+    name: 'Wuyi Rock Tea (Yancha)',
+    zh: '武夷岩茶',
+    summary: 'The legendary cliff teas of Wuyi Mountain — mineral, roasted, and built to age.',
+    body: "From the rocky cliffs of Wuyi Mountain, Fujian. Yancha is oxidized 40-70%, then charcoal-roasted, sometimes repeatedly across seasons. The mineral character of the mountain — yan yun (岩韵, 'rock rhyme') — defines the style: a deep, stone-like depth that no amount of oxidation alone can create. Rock teas are bought and discussed by cultivar (ming cong), the most famous being Da Hong Pao; old-bush (lao cong) examples are prized. They take boiling water and reward many infusions.",
+    cultivars: ['Da Hong Pao 大红袍', 'Rou Gui 肉桂', 'Shui Xian 水仙', 'Shui Jin Gui 水金龟', 'Tie Luo Han 铁罗汉', 'Qi Lan 奇兰', 'Lao Cong 老枞 (old bush)'],
+    examples: ['da-hong-pao'],
+  },
+  {
+    id: 'dan-cong',
+    name: 'Phoenix Dan Cong',
+    zh: '凤凰单丛',
+    summary: 'Single-bush oolongs from Chaozhou, each one bred to mimic a fruit or flower.',
+    body: "From Phoenix Mountain in Chaozhou, Guangdong. Dan Cong means 'single bush' — each tea comes from one specific cultivar, and each cultivar naturally mimics a different fragrance: honey orchid, almond, gardenia, even 'duck shit' (ya shi xiang, don't let the name put you off). Traditionally roasted at high oxidation, Dan Cong is intense, aromatic, and famously long-lasting — good examples steep 8-15+ times. The Chaozhou gongfu ceremony, with its tiny pots and flash steeps, was built around these teas.",
+    cultivars: ['Mi Lan Xiang 蜜兰香 (Honey Orchid)', 'Ya Shi Xiang 鸭屎香', 'Song Zhong 宋种', 'Yu Lan Xiang 玉兰香', 'Gardenia 栀子香'],
+    examples: ['phoenix-dan-cong'],
+  },
+  {
+    id: 'taiwan',
+    name: 'Taiwan High-Mountain Oolong',
+    zh: '台湾高山乌龙',
+    summary: 'The island\'s creamy, floral mountain teas — plus roasted Dong Ding and insect-bitten Oriental Beauty.',
+    body: "Taiwan's high-mountain (gaoshan) oolongs grow above 1,000m on Alishan, Lishan, Dayuling, and Shan Lin Xi. Cool mist and slow growth give them a famously creamy, milky body and gentle floral character, usually at light-medium oxidation. The island also makes Dong Ding Oolong (the classic roasted style), Wenshan Baozhong (barely oxidized, fresh and floral), and Oriental Beauty (Dongfang Meiren) — an insect-bitten tea with honey and muscat notes that barely looks like an oolong at all. Cultivar names to know: Qing Xin 青心 and Jin Xuan 金萱 (the 'milky' cultivar).",
+    cultivars: ['Qing Xin 青心', 'Jin Xuan 金萱 (Milk Oolong)', 'Dong Ding 冻顶', 'Oriental Beauty 东方美人'],
+    examples: [],
+  },
+];
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="Oolong, Unpacked" title="The Four Families of Oolong Tea" subtitle="Oolong is the widest tea category for a reason — it's four different worlds under one name. Each family is defined by its own region, oxidation level, and roasting tradition." headingLevel="h1" />
+    <p class="mt-3 text-xs text-zinc-400 flex items-center gap-1.5"><span class="inline-block w-1.5 h-1.5 rounded-full bg-accent"></span> Last updated August 2026.</p>
+  </section>
+
+  <div class="section-container pt-8">
+    <div class="lg:grid lg:grid-cols-[220px_1fr] lg:gap-10">
+      <OnThisPage items={families.map((f) => ({ id: f.id, label: f.name }))} />
+      <div class="space-y-8 pb-8">
+        {families.map((f) => (
+          <section id={f.id} class="card p-6 md:p-8 scroll-mt-24 reveal">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="w-10 h-10 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center font-display font-bold">{families.indexOf(f) + 1}</span>
+              <div>
+                <h2 class="font-display text-xl md:text-2xl font-semibold text-warm-900">{f.name}</h2>
+                <p class="text-xs text-zinc-400">{f.zh}</p>
+              </div>
+            </div>
+            <p class="text-sm font-medium text-warm-800 mb-3">{f.summary}</p>
+            <p class="text-sm text-muted leading-relaxed">{f.body}</p>
+            <div class="mt-4">
+              <p class="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">Cultivars to know</p>
+              <div class="flex flex-wrap gap-2">
+                {f.cultivars.map((c) => <span class="px-2.5 py-1 text-xs rounded-full bg-orange-50 text-orange-700 border border-orange-200">{c}</span>)}
+              </div>
+            </div>
+            {f.examples.length > 0 && (
+              <div class="mt-4 flex flex-wrap gap-2">
+                {f.examples.map((slug) => <a href={`/teas/${slug}`} class="text-xs font-medium text-accent underline">See our {slug.replace(/-/g, ' ')} guide →</a>)}
+              </div>
+            )}
+          </section>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <section class="section-container pb-16 max-w-3xl reveal">
+    <div class="card p-6 bg-paper-100">
+      <h3 class="font-semibold text-warm-900 mb-2">The shortcut for choosing</h3>
+      <p class="text-sm text-muted leading-relaxed">Want floral and creamy, lightly roasted? <strong class="text-warm-800">Anxi green-style</strong>. Mineral depth, strong roast, built to age? <strong class="text-warm-800">Wuyi yancha</strong>. Explosive natural fruit and 15 infusions? <strong class="text-warm-800">Phoenix Dan Cong</strong>. Smooth, milky, and floral at altitude? <strong class="text-warm-800">Taiwan gaoshan</strong>. Read the full story of oolong on the <a href="/types/oolong" class="text-accent underline">oolong type page</a>, or jump straight to the teas in the <a href="/flavours" class="text-accent underline">flavour guide</a>.</p>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/types/oolong" primaryLabel="The Oolong Type Page" secondaryHref="/teas" secondaryLabel="Browse All Teas" />
+
+  <RelatedLinks links={[
+    { href: '/types/oolong', label: 'what is oolong tea' },
+    { href: '/teas/da-hong-pao', label: 'wuyi rock tea guide' },
+    { href: '/teas/phoenix-dan-cong', label: 'phoenix dan cong guide' },
+    { href: '/teas/tie-guan-yin', label: 'anxi tie guan yin guide' },
+    { href: '/regions', label: 'taiwan high mountain oolong' },
+    { href: '/flavours', label: 'find oolong by flavour' },
+  ]} />
+
+</BaseLayout>

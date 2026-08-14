@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CTACard from '../components/CTACard.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import { teaware } from '../data/content';
+import { articleSchema } from '../data/schemas';
+import FaIcon from '../components/FaIcon.astro';
+import { faMugSaucer, faMugHot, faGlassWater, faChampagneGlasses, type IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import LeadImage from '../components/LeadImage.astro';
+
+const title = 'Teaware Essentials for Chinese Tea';
+const description = 'The four essential pieces of teaware for brewing Chinese tea — gaiwan, Yixing teapot, fairness pitcher, and aroma cups — with prices and what to start with.';
+
+const schemaJson = JSON.stringify(articleSchema({
+  title,
+  description,
+  canonicalURL: 'https://chinese-tea.com/teaware',
+  image: 'https://chinese-tea.com/images/chinese-tea-og.webp',
+  datePublished: '2026-08-01',
+  dateModified: '2026-08-12',
+}));
+
+const icons: Record<string, IconDefinition> = {
+  pot: faMugSaucer,
+  yixing: faMugHot,
+  pitcher: faGlassWater,
+  cups: faChampagneGlasses,
+};
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="Equipment" title="Teaware Essentials" subtitle="The right teaware transforms brewing from routine to ritual. You don't need much to start — these four pieces cover everything from your first gaiwan to serious gongfu sessions." headingLevel="h1" />
+    <div class="mt-8"><LeadImage src="/images/chinese-tea-hero.webp" alt="Tea tray with gaiwan and cups" caption="A gaiwan is all you need to start" /></div>
+  </section>
+
+  <section class="section-container py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      {teaware.map((t) => (
+        <div class="card card-hover p-6 text-center">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-lg bg-leaf-50 flex items-center justify-center text-leaf-700"><FaIcon icon={icons[t.icon]} size={30} /></div>
+          <h3 class="font-semibold text-warm-900 mb-1">{t.name}</h3>
+          <p class="text-xs text-muted leading-relaxed">{t.body}</p>
+          <p class="text-xs text-zinc-400 mt-3"><span class="text-zinc-500 font-medium">Price:</span> {t.price}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-paper-100 py-16">
+    <div class="section-container max-w-3xl">
+      <SectionHeader eyebrow="Where to Start" title="The Honest Starter Setup" headingLevel="h2" />
+      <div class="mt-6 card p-6 text-sm text-muted leading-relaxed space-y-4">
+        <p><strong class="text-warm-900">You need exactly three things to start:</strong> a gaiwan ($8-20), a fairness pitcher ($10-30), and a few small cups ($5-25). That's under $50 total and covers every tea type. The gaiwan's neutral porcelain won't absorb flavors, so it never locks you into one tea.</p>
+        <p><strong class="text-warm-900">Skip the Yixing pot at first.</strong> It's a wonderful tool, but the whole point — that the porous clay absorbs tea oils and seasons over time — also means one pot is forever dedicated to one tea type. Start with a gaiwan, learn what you drink most, then graduate to a dedicated Yixing pot for that tea.</p>
+        <p><strong class="text-warm-900">A variable-temperature kettle</strong> is the single best upgrade after that. Green tea at 175°F and pu-erh at 212°F want very different water — a kettle that remembers the temperature makes every brew more consistent.</p>
+      </div>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/guides/brewing" primaryLabel="Brew With Your Teaware" secondaryHref="/teas" secondaryLabel="Pick a Tea" />
+
+  <RelatedLinks links={[
+    { href: '/guides/brewing', label: 'gongfu brewing guide' },
+    { href: '/culture', label: 'gongfu tea ceremony' },
+    { href: '/types/oolong', label: 'teas for gongfu' },
+    { href: '/guides/water', label: 'water for your teaware' },
+  ]} />
+
+</BaseLayout>

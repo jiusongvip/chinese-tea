@@ -1,0 +1,174 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import TeaCard from '../../components/TeaCard.astro';
+import CTACard from '../../components/CTACard.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { teas, getTea, getRelatedTeas, stars } from '../../data/teas';
+import { getTeaType } from '../../data/teaTypes';
+import { teaItemSchema, qaSchema, faqSchema } from '../../data/schemas';
+import FaIcon from '../../components/FaIcon.astro';
+import { faLocationDot, faCircleCheck, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+
+export function getStaticPaths() {
+  return teas.map((t) => ({ params: { slug: t.slug } }));
+}
+
+const { slug } = Astro.params;
+const tea = getTea(slug!);
+if (!tea) return new Response(null, { status: 404, statusText: 'Not found' });
+
+const type = getTeaType(tea.type);
+const related = getRelatedTeas(tea.slug);
+
+const title = `${tea.name} (${tea.nameChinese})`;
+const description = `${tea.name} tea guide — flavor profile, exact brewing temperature, ${tea.buying.priceEntry}, quality checks, common scams, and history.`;
+
+const teaQa = [
+  { q: `How do you brew ${tea.name}?`, a: `Brew ${tea.name} at ${tea.brewing.temp}. For gongfu style, steep ${tea.brewing.timeGongfu}; Western style, ${tea.brewing.timeWestern}. Use ${tea.brewing.vessel} with ${tea.brewing.ratio}. Expect ${tea.brewing.infusions} infusions.` },
+  { q: `Where is ${tea.name} from?`, a: `${tea.name} is produced in ${tea.origin}. ${tea.harvest}` },
+  { q: `How much does ${tea.name} cost?`, a: `Entry-level ${tea.name} costs ${tea.buying.priceEntry}. Premium grades run ${tea.buying.priceAdvance}.` },
+];
+
+const schemaJson = JSON.stringify([
+  teaItemSchema(tea),
+  ...qaSchema(teaQa),
+  faqSchema(teaQa),
+]);
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson} ogImage={tea.image}>
+
+  <!-- Hero -->
+  <section class="relative bg-leaf-950 text-white overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+      <img src={tea.image} alt={tea.name} class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async" width="1200" height="800" />
+      <div class="absolute inset-0 bg-gradient-to-b from-leaf-950/70 via-leaf-950/85 to-leaf-950"></div>
+    </div>
+    <div class="relative z-10 section-container py-16 md:py-20">
+      <div class="flex flex-wrap items-center gap-3 mb-5">
+        <a href={`/types/${type?.slug}`} class={`px-3 py-1 text-xs font-bold rounded-full ${type?.accent.badge ?? 'bg-white/20 text-white'}`}>{type?.name}</a>
+        <a href="/teas" class="text-xs text-leaf-200/70 hover:text-white transition-colors">← All famous teas</a>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-display font-bold tracking-tight max-w-3xl">{tea.name} <span class="text-leaf-300 text-2xl md:text-3xl font-semibold">{tea.nameChinese}</span></h1>
+      <p class="mt-4 text-lg text-leaf-100/85 max-w-2xl">{tea.flavorShort}</p>
+      <div class="mt-8 flex flex-wrap gap-3 text-xs">
+        <span class="px-3 py-1.5 rounded-lg bg-white/10 border border-white/10 inline-flex items-center gap-1.5"><span class="text-leaf-300"><FaIcon icon={faLocationDot} size={12} /></span> {tea.origin}</span>
+        <span class="px-3 py-1.5 rounded-lg bg-white/10 border border-white/10">Caffeine: {tea.caffeine}</span>
+        <span class="px-3 py-1.5 rounded-lg bg-white/10 border border-white/10">Beginner: {stars(tea.beginner)}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick facts strip -->
+  <section class="section-container -mt-8 relative z-20 reveal">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Water Temp</p><p class="font-semibold text-warm-900">{tea.brewing.temp}</p></div>
+      <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Infusions</p><p class="font-semibold text-warm-900">{tea.brewing.infusions}</p></div>
+      <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Harvest</p><p class="font-semibold text-warm-900 text-sm leading-snug">{tea.harvest}</p></div>
+      <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Entry Price</p><p class="font-semibold text-warm-900 text-sm leading-snug">{tea.buying.priceEntry}</p></div>
+    </div>
+  </section>
+
+  <!-- Flavor + brewing -->
+  <section class="section-container py-16">
+    <div class="grid lg:grid-cols-2 gap-10">
+      <div class="reveal">
+        <SectionHeader eyebrow="Flavor Profile" title="Taste & Aroma" headingLevel="h2" />
+        <div class="mt-6 space-y-4 text-sm">
+          <div class="card p-4 flex gap-3"><span class="text-zinc-400 w-16 flex-shrink-0 font-medium">Aroma</span><span class="text-warm-700">{tea.flavor.aroma}</span></div>
+          <div class="card p-4 flex gap-3"><span class="text-zinc-400 w-16 flex-shrink-0 font-medium">Taste</span><span class="text-warm-700">{tea.flavor.taste}</span></div>
+          <div class="card p-4 flex gap-3"><span class="text-zinc-400 w-16 flex-shrink-0 font-medium">Color</span><span class="text-warm-700">{tea.flavor.color}</span></div>
+          <div class="card p-4 flex gap-3"><span class="text-zinc-400 w-16 flex-shrink-0 font-medium">Body</span><span class="text-warm-700">{tea.flavor.body}</span></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <SectionHeader eyebrow="Brewing Guide" title="How to Brew It" headingLevel="h2" />
+        <div class="mt-6 grid grid-cols-2 gap-3 text-sm">
+          <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Water</p><p class="font-semibold text-warm-900">{tea.brewing.temp}</p></div>
+          <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Vessel</p><p class="font-semibold text-warm-900 text-sm leading-snug">{tea.brewing.vessel}</p></div>
+          <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Gongfu Time</p><p class="font-semibold text-warm-900">{tea.brewing.timeGongfu}</p></div>
+          <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Western Time</p><p class="font-semibold text-warm-900">{tea.brewing.timeWestern}</p></div>
+          <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Ratio</p><p class="font-semibold text-warm-900 text-sm leading-snug">{tea.brewing.ratio}</p></div>
+          <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Infusions</p><p class="font-semibold text-warm-900">{tea.brewing.infusions}</p></div>
+        </div>
+        <a href="/guides/brewing" class="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">Read the general brewing guide →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Buying guide -->
+  <section class="bg-paper-100 py-16">
+    <div class="section-container">
+      <SectionHeader eyebrow="Buying Guide" title={`How to Buy ${tea.name} Without Getting Scammed`} subtitle="The Chinese tea market is vast and unregulated. Here's exactly what to look for — and what to run from." headingLevel="h2" />
+      <div class="mt-8 grid md:grid-cols-2 gap-4">
+        <div class="card p-5"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Entry Level</p><p class="font-semibold text-warm-900">{tea.buying.priceEntry}</p></div>
+        <div class="card p-5"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Premium / Collector</p><p class="font-semibold text-warm-900">{tea.buying.priceAdvance}</p></div>
+      </div>
+      <div class="mt-6 grid md:grid-cols-2 gap-6">
+        <div class="card p-6">
+          <h3 class="flex items-center gap-2 font-semibold text-warm-900 mb-3"><span class="w-8 h-8 rounded-lg bg-leaf-100 text-accent flex items-center justify-center"><FaIcon icon={faCircleCheck} size={16} /></span> Quality Check</h3>
+          <p class="text-sm text-muted leading-relaxed">{tea.buying.qualityCheck}</p>
+        </div>
+        <div class="card p-6">
+          <h3 class="flex items-center gap-2 font-semibold text-warm-900 mb-3"><span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center"><FaIcon icon={faTriangleExclamation} size={16} /></span> Common Scams</h3>
+          <p class="text-sm text-muted leading-relaxed">{tea.buying.commonScams}</p>
+        </div>
+      </div>
+      <div class="mt-6 card p-6">
+        <h3 class="font-semibold text-warm-900 mb-3">Search keywords that find the real thing</h3>
+        <div class="flex flex-wrap gap-2">
+          {tea.buying.searchKeywords.split(',').map((k) => (
+            <span class="px-3 py-1 bg-white rounded-full border border-paper-200 text-xs text-warm-700">{k.trim()}</span>
+          ))}
+        </div>
+      </div>
+      <p class="mt-6 text-xs text-zinc-400">For the general principles behind every one of these checks — harvest dates, origin specificity, red flags — read our <a href="/guides/buying" class="text-accent underline">complete buying guide</a>.</p>
+    </div>
+  </section>
+
+  <!-- History + ideal for -->
+  <section class="section-container py-16">
+    <div class="grid lg:grid-cols-3 gap-10">
+      <div class="lg:col-span-2 reveal">
+        <SectionHeader eyebrow="History" title="Where It Comes From" headingLevel="h2" />
+        <p class="mt-6 text-warm-700 leading-relaxed">{tea.history}</p>
+        <div class="mt-8 card p-6 bg-leaf-50 border-leaf-200">
+          <h3 class="font-semibold text-leaf-900 mb-1">Ideal For</h3>
+          <p class="text-sm text-accent leading-relaxed">{tea.idealFor}</p>
+        </div>
+      </div>
+      <aside class="reveal">
+        <div class="card p-6 sticky top-24">
+          <p class="text-xs uppercase tracking-wider text-zinc-400 mb-3">Quick Facts</p>
+          <dl class="space-y-3 text-sm">
+            <div><dt class="text-zinc-400 text-xs">Type</dt><dd class="text-warm-800 font-medium">{type?.name}</dd></div>
+            <div><dt class="text-zinc-400 text-xs">Chinese name</dt><dd class="text-warm-800 font-medium">{tea.nameChinese}</dd></div>
+            <div><dt class="text-zinc-400 text-xs">Origin</dt><dd class="text-warm-800 font-medium text-sm leading-snug">{tea.origin}</dd></div>
+            <div><dt class="text-zinc-400 text-xs">Caffeine</dt><dd class="text-warm-800 font-medium">{tea.caffeine}</dd></div>
+            <div><dt class="text-zinc-400 text-xs">Beginner friendliness</dt><dd class="text-warm-800 font-medium">{stars(tea.beginner)}</dd></div>
+          </dl>
+          <a href={`/types/${type?.slug}`} class="mt-5 block text-center px-4 py-2.5 btn btn-primary text-sm">All {type?.nameShort} teas</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Related teas -->
+  <section class="section-container pb-16">
+    <SectionHeader eyebrow="You May Also Like" title="Related Teas" headingLevel="h2" />
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {related.map((r) => <TeaCard tea={r} />)}
+    </div>
+  </section>
+
+  <CTACard primaryHref="/teas" primaryLabel="Browse All Teas" secondaryHref="/guides/buying" secondaryLabel="Buying Guide" />
+
+  <RelatedLinks links={[
+    { href: `/types/${type?.slug}`, label: `${type?.nameShort?.toLowerCase()} tea brewing guide` },
+    { href: '/guides/storage', label: 'how to store chinese tea' },
+    { href: `/teas/${related[0]?.slug}`, label: `${related[0]?.name?.toLowerCase()} comparison` },
+    { href: '/guides/cold-brew', label: 'cold brew this tea' },
+  ]} />
+
+</BaseLayout>

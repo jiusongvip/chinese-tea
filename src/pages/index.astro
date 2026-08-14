@@ -1,1138 +1,347 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import TypeCard from '../components/TypeCard.astro';
+import TeaCard from '../components/TeaCard.astro';
+import TeaExplorer from '../components/TeaExplorer.astro';
+import FinderWidget from '../components/FinderWidget.astro';
+import BrewingTabs from '../components/BrewingTabs.astro';
+import CTACard from '../components/CTACard.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import FaqList from '../components/FaqList.astro';
+import { getTeaType } from '../data/teaTypes';
+import { teas } from '../data/teas';
+import { faqs } from '../data/faq';
+import { comparisonRows, heroSteps, cultureFacts, relatedSearchLinks, cultureEntries } from '../data/content';
+import { FlaskConical, BadgeCheck, HandCoins, SearchX } from '@lucide/astro';
 
-const faqData = [
-  { q: "What is Chinese tea?", a: "Chinese tea refers to tea produced from the leaves of the Camellia sinensis plant using traditional Chinese processing methods. Unlike many Western teas, Chinese tea is categorized by processing method rather than region alone, resulting in six distinct types: green, white, yellow, oolong, black, and dark (post-fermented) tea. China is the birthplace of tea culture, with a history spanning over 4,000 years." },
-  { q: "How many types of Chinese tea are there?", a: "There are six major categories of Chinese tea, distinguished by their oxidation level and processing method: <strong>Green Tea</strong> (unoxidized, fresh, vegetal), <strong>White Tea</strong> (minimally processed, delicate), <strong>Yellow Tea</strong> (lightly oxidized, mellow, rare), <strong>Oolong Tea</strong> (partially oxidized, from floral to roasted), <strong>Black Tea</strong> (fully oxidized, malty, robust — called hong cha/'red tea' in Chinese), and <strong>Dark Tea</strong> (post-fermented, earthy, aged like Pu-erh)." },
-  { q: "Which Chinese tea is best for beginners?", a: "For beginners, we recommend starting with <strong>White Tea</strong> (light, forgiving to brew) or <strong>Tie Guan Yin Oolong</strong> (floral, approachable). If you prefer something familiar to Western black tea, try <strong>Keemun</strong> (smooth, malty). If you enjoy green tea, <strong>Longjing (Dragon Well)</strong> is the most famous and a great starting point. The key is to match the tea to your existing taste preferences — use our <a href='#finder' class='text-leaf-600 underline'>Find Your Tea tool</a> above." },
-  { q: "How do you brew Chinese tea?", a: "Chinese tea brewing varies by type, but the general method — <strong>gongfu style</strong> — uses a small teapot or gaiwan with a high leaf-to-water ratio and multiple short infusions. Key factors: <strong>water temperature</strong> (160°F-212°F depending on tea type), <strong>steeping time</strong> (10-60 seconds for gongfu, 2-5 minutes for Western style), and <strong>quality water</strong> (spring or filtered). See our <a href='#brewing' class='text-leaf-600 underline'>Brewing Guide</a> for detailed instructions per tea type." },
-  { q: "What is the difference between Chinese tea and Japanese tea?", a: "Chinese tea is almost entirely pan-fired or wok-roasted to halt oxidation, resulting in toasty, nutty flavors. Japanese green teas are <strong>steamed</strong>, producing a vegetal, umami-rich profile. Chinese tea culture emphasizes variety (six categories) and the gongfu ceremony, while Japan focuses primarily on green tea (matcha, sencha, gyokuro) and the chanoyu tea ceremony. Chinese oolongs and pu-erhs have no Japanese equivalent." },
-  { q: "Is Chinese tea healthy?", a: "Chinese tea, particularly green and white varieties, is rich in antioxidants (catechins, EGCG), L-theanine (promotes calm focus), and moderate caffeine. Studies suggest regular tea consumption may support heart health, metabolism, and cognitive function. However, tea should complement — not replace — a balanced diet and healthy lifestyle. Consult a healthcare professional for specific health concerns." },
-  { q: "Where can I buy authentic Chinese tea?", a: "Look for vendors who specify the harvest date, origin (specific mountain/village), and cultivar. Reputable online sources include specialty tea shops that import directly from Chinese tea farms. Avoid generic 'Chinese tea' blends from supermarkets — they are rarely fresh or authentic. For specific recommendations, explore our <a href='#famous' class='text-leaf-600 underline'>Famous Teas section</a> to know what to look for." },
-  { q: "What is gongfu tea ceremony?", a: "Gongfu cha (功夫茶, 'tea made with skill') is a traditional Chinese brewing method that uses a small clay teapot or gaiwan, a high leaf-to-water ratio, and multiple short infusions (often 5-10+). It emphasizes appreciating the tea's evolving flavor across steepings. Unlike the formal Japanese tea ceremony, gongfu cha is more focused on the tea itself than ritual — it can be practiced casually at home or formally." },
-  { q: "How should I store Chinese tea?", a: "Store tea in an <strong>airtight, opaque container</strong> away from light, heat, moisture, and strong odors. Avoid the fridge for most teas (condensation ruins them). Green and lightly oxidized teas are best consumed within 6-12 months. Dark teas (Pu-erh) and aged whites improve with time if stored in a breathable environment (not sealed plastic). A dedicated tea cabinet or dark cupboard at room temperature is ideal." },
-  { q: "Can I reuse Chinese tea leaves?", a: "Absolutely — this is one of the best things about loose leaf Chinese tea. Most quality teas can be steeped <strong>3-8+ times</strong>, with each infusion revealing different flavors. Gongfu-style brewing is specifically designed for multiple infusions. Western-style brewing typically yields 2-3 good steeps. The key is to increase steeping time slightly with each round. Green teas: 3-4 infusions. Oolongs: 5-8 infusions. Pu-erh: 8-15+ infusions." },
-  { q: "What does 'hui gan' (回甘) mean?", a: "<strong>Hui gan</strong> (回甘, 'returning sweetness') is one of the most prized qualities in Chinese tea. It refers to the <strong>sweet aftertaste that emerges in your throat</strong> after swallowing — distinct from the initial sweetness on your tongue. A tea with good hui gan starts slightly bitter or astringent, then transforms into a lingering, cooling sweetness that can last for minutes. It's a key quality indicator in oolongs, pu-erhs, and premium green teas." },
-  { q: "Is loose leaf Chinese tea better than tea bags?", a: "<strong>Almost always, yes.</strong> Tea bags typically contain broken leaf fragments (fannings or dust) that release tannins quickly, resulting in a bitter, one-dimensional brew. Loose leaf tea uses intact leaves that unfurl gradually, releasing complex flavors across multiple infusions. The difference is comparable to instant coffee vs. freshly ground beans. Even a budget loose leaf Chinese tea will outperform premium tea bags. That said, the best tea is the one you’ll actually brew — if convenience matters, look for whole-leaf pyramid sachets as a middle ground." },
-  { q: "How much caffeine is in Chinese tea compared to coffee?", a: "An 8oz cup of coffee contains ~95mg of caffeine. Chinese tea varies widely by type and brewing method: <strong>Green tea:</strong> 25-35mg (light, refreshing energy), <strong>White tea:</strong> 15-25mg (gentlest lift), <strong>Oolong:</strong> 30-45mg, <strong>Black tea:</strong> 40-60mg, <strong>Pu-erh:</strong> 40-70mg. Crucially, tea also contains <strong>L-theanine</strong>, an amino acid that promotes calm focus and counteracts caffeine jitters. This is why tea drinkers describe the energy as 'alert calm' rather than the spike-and-crash of coffee." }
+const title = 'Chinese Tea Guide: Types, Brewing & Culture';
+const description = 'The practical guide to Chinese tea — six types, 21 famous teas with brewing and buying guides, tea regions, culture, and how to choose the right tea for your taste.';
+
+const heroNav = [
+  { label: 'Types', href: '/types' },
+  { label: 'Flavours', href: '/flavours' },
+  { label: 'Teas', href: '/teas' },
+  { label: 'Brewing', href: '/guides/brewing' },
+  { label: 'Regions', href: '/regions' },
+  { label: 'Buying', href: '/guides/buying' },
 ];
 
-const faqSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqData.map((item) => ({
-    "@type": "Question",
-    "name": item.q,
-    "acceptedAnswer": { "@type": "Answer", "text": item.a.replace(/<[^>]*>/g, "") },
-  })),
-});
-
-// Article Schema
-
-// QAPage Schema for high-value Q&As (AI citation-optimized, replaces deprecated FAQ rich results)
-const qaPageSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "QAPage",
-  "mainEntity": {
-    "@type": "Question",
-    "name": "Which Chinese tea is best for beginners?",
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "For beginners, we recommend starting with White Tea (light, forgiving to brew) or Tie Guan Yin Oolong (floral, approachable). If you prefer something familiar to Western black tea, try Keemun (smooth, malty). If you enjoy green tea, Longjing (Dragon Well) is the most famous and a great starting point."
-    }
-  }
-});
-
-const pageSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "@id": "https://chinese-tea.com/#article",
-  "mainEntityOfPage": "https://chinese-tea.com",
-  "headline": "Chinese Tea Guide: Types, Brewing & Culture",
-  "description": "Discover China’s six major tea categories, famous regional teas, traditional brewing methods, tea culture, and the best teas to start with.",
-  "image": "https://chinese-tea.com/images/chinese-tea-og.webp",
-  "author": { "@type": "Organization", "name": "Chinese Tea Guide" },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Chinese Tea Guide",
-    "url": "https://chinese-tea.com",
-    "logo": { "@type": "ImageObject", "url": "https://chinese-tea.com/favicon.svg" }
+const schemaJson = JSON.stringify([
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: teas.map((t, i) => ({
+      '@type': 'Product',
+      name: t.name,
+      url: `https://chinese-tea.com/teas/${t.slug}`,
+      position: i + 1,
+    })),
   },
-  "datePublished": "2026-08-01",
-  "dateModified": "2026-08-12",
-  "isAccessibleForFree": true
-});
-
-const teaDetails = [
-  { id: "longjing", name: "Longjing (Dragon Well)", nameChinese: "龙井", type: "Green", origin: "Xihu, Hangzhou, Zhejiang", flavorShort: "Fresh, nutty, chestnut, sweet finish", caffeine: "Medium", beginner: "★★★★★", harvest: "Pre-Qingming (before April 5) is premium; Guyu (April 20) is standard grade.", flavor: { aroma: "Toasted chestnut, fresh-cut grass, hint of orchid", taste: "Smooth, sweet, nutty with a clean vegetal backbone", color: "Pale jade green, clear and bright", body: "Light to medium, silky" }, brewing: { temp: "175°F (80°C)", timeGongfu: "30-45 seconds", timeWestern: "2-3 minutes", vessel: "Glass teapot or tall glass", ratio: "2-3g per 200ml", infusions: "3-4" }, buying: { priceEntry: "$10-20 / 100g (standard grade)", priceAdvance: "$40-100+ / 100g (pre-Qingming, Shifeng origin)", qualityCheck: "Flat, spear-shaped leaves with yellowish-green color. Genuine Longjing has a recognizable chestnut aroma when dry. Avoid broken or dusty leaves.", searchKeywords: "Longjing tea, Dragon Well tea, Xihu Longjing, Shifeng Longjing, pre-qingming Longjing", commonScams: "Fake Longjing from Sichuan/Guizhou processed to look authentic. Wuniu Zao, an early-sprouting cultivar, is often sold as Longjing but lacks the chestnut aroma." }, history: "China's most celebrated green tea, named after the Dragon Well spring near West Lake in Hangzhou. Designated imperial tribute tea during the Qing Dynasty. Emperor Qianlong visited the gardens and named 18 tea bushes Imperial Tea Bushes, still producing today.", idealFor: "Beginners and green tea enthusiasts. Perfect for daily drinking, after meals, or as a gift." },
-  { id: "biluochun", name: "Biluochun", nameChinese: "碧螺春", type: "Green", origin: "Dongting Mountain, Suzhou, Jiangsu", flavorShort: "Fruity, floral, delicate, apricot", caffeine: "Medium", beginner: "★★★★★", harvest: "Early spring, only buds and the first leaf. Peak season is late March to early April.", flavor: { aroma: "Fresh fruit, apricot, floral bouquet, light vegetal", taste: "Delicate sweetness, fruity with a hint of nuttiness, clean finish", color: "Pale green with silver-white tips, clear liquor", body: "Very light, ethereal" }, brewing: { temp: "170°F (75°C)", timeGongfu: "20-30 seconds", timeWestern: "2 minutes", vessel: "Tall clear glass (enjoy the visual spectacle)", ratio: "2-3g per 200ml", infusions: "3" }, buying: { priceEntry: "$15-30 / 100g (standard grade)", priceAdvance: "$60-120+ / 100g (Dongting origin, pure bud)", qualityCheck: "Tiny, tightly curled leaves covered in white down. Dry aroma should be intensely fruity. Avoid flat, unfurled, or dark leaves.", searchKeywords: "Biluochun tea, Pi Lo Chun, Green Snail Spring, Dongting Biluochun, Suzhou green tea", commonScams: "Non-Dongting Biluochun from Zhejiang or Sichuan. Machine-harvested versions lack the downy white tips. Over-roasted imitations taste flat and lack the fruity bouquet." }, history: "Also called Green Snail Spring for its tightly curled shape. Originated on Dongting Mountain near Lake Tai in Jiangsu. Legend says a tea picker ran out of basket space and carried leaves in her clothing; body heat caused the distinctive curl and fragrance. One of China's Top Ten Teas.", idealFor: "Those who love light, fragrant teas. Excellent introduction to premium Chinese greens. Perfect for spring afternoons." },
-  { id: "huangshan-maofeng", name: "Huangshan Maofeng", nameChinese: "黄山毛峰", type: "Green", origin: "Huangshan (Yellow Mountain), Anhui", flavorShort: "Fresh, orchid, sweet, lingering", caffeine: "Medium", beginner: "★★★★☆", harvest: "Pre-Qingming for top grade. Harvested from high-altitude gardens (800m+) on Yellow Mountain.", flavor: { aroma: "Fresh orchid, vegetal sweetness, hint of chestnut", taste: "Clean, sweet, full orchid flavor, pleasant lingering aftertaste", color: "Clear, pale ivory with a green tint", body: "Medium-light, smooth" }, brewing: { temp: "175°F (80°C)", timeGongfu: "30-45 seconds", timeWestern: "2-3 minutes", vessel: "Glass teapot or gaiwan", ratio: "2-3g per 200ml", infusions: "3-4" }, buying: { priceEntry: "$8-15 / 100g (standard)", priceAdvance: "$30-60 / 100g (pre-Qingming, high-altitude)", qualityCheck: "Leaves should bear the distinctive peak shape with white downy tips. Dry leaves are ivory-green with a slight golden tinge. Orchid aroma should be detectable in dry leaves.", searchKeywords: "Huangshan Maofeng, Yellow Mountain Fur Peak, Anhui green tea, maofeng tea", commonScams: "Lower-altitude imitations from non-Huangshan areas. Leaves lacking white tips indicate either poor harvest timing or machine processing." }, history: "Grown on the mist-shrouded peaks of Huangshan (Yellow Mountain), one of China's most scenic areas and a UNESCO World Heritage Site. The maofeng name refers to the tea's appearance: mao meaning downy/furry and feng meaning peak, describing the white-tipped, peak-shaped leaves. Another Top Ten Tea.", idealFor: "Green tea lovers seeking something between Longjing's nuttiness and Biluochun's fruitiness. Great afternoon tea." },
-  { id: "silver-needle", name: "Silver Needle (Bai Hao Yin Zhen)", nameChinese: "白毫银针", type: "White", origin: "Fuding and Zhenghe, Fujian", flavorShort: "Soft, melon, hay, natural sweetness", caffeine: "Low", beginner: "★★★★★", harvest: "Early spring, only the unopened bud. Harvested for just 2-3 days per year on each bush.", flavor: { aroma: "Fresh hay, honeydew melon, faint floral", taste: "Gentle sweetness, melon, light cream, minimal astringency", color: "Very pale straw, almost colorless, crystal clear", body: "Very light, silky, almost water-like" }, brewing: { temp: "175°F (80°C)", timeGongfu: "45-60 seconds", timeWestern: "3-5 minutes", vessel: "Glass or porcelain gaiwan", ratio: "2g per 200ml", infusions: "3-5" }, buying: { priceEntry: "$15-25 / 100g (standard grade)", priceAdvance: "$50-100+ / 100g (Fuding origin, pure bud, early spring)", qualityCheck: "Entirely silver-white buds, plump and uniform, covered in fine white down. Avoid buds with green or brown discoloration. Dry aroma should be clean and sweet, never musty.", searchKeywords: "Silver Needle white tea, Bai Hao Yin Zhen, Fuding white tea, premium white tea", commonScams: "Yunnan Silver Needle (Yue Guang Bai) is sometimes sold as Fujian Silver Needle but uses a different cultivar. Aged Silver Needle is a legitimate category but verify storage conditions." }, history: "The pinnacle of white tea, made exclusively from unopened buds harvested in early spring. Originated in Fuding, Fujian in the late 18th century. White tea is the least processed of all tea types, simply withered and dried, preserving the leaf's natural character. Often called the champagne of teas.", idealFor: "Absolute beginners, those sensitive to caffeine, and anyone who thinks they don't like tea. Also excellent iced. The most forgiving tea to brew." },
-  { id: "white-peony", name: "White Peony (Bai Mu Dan)", nameChinese: "白牡丹", type: "White", origin: "Fuding and Zhenghe, Fujian", flavorShort: "Soft, fruity, floral, fuller body", caffeine: "Low", beginner: "★★★★★", harvest: "Spring, one bud with one or two young leaves. Slightly later harvest than Silver Needle.", flavor: { aroma: "Fresh wildflowers, ripe stone fruit, faint honey", taste: "Richer than Silver Needle, clear fruity notes, honey sweetness, subtle floral finish", color: "Pale golden, bright", body: "Light to medium, rounder than Silver Needle" }, brewing: { temp: "180°F (82°C)", timeGongfu: "45-60 seconds", timeWestern: "3-4 minutes", vessel: "Porcelain gaiwan or glass", ratio: "2-3g per 200ml", infusions: "4-6" }, buying: { priceEntry: "$10-20 / 100g (standard grade)", priceAdvance: "$30-60 / 100g (Fuding origin, high proportion of buds)", qualityCheck: "Mix of silvery buds and green-brown leaves. Leaves should appear as if dancing when brewed. Dry fragrance should be fresh and mildly sweet, avoid smoky or stale notes.", searchKeywords: "White Peony tea, Bai Mu Dan, Fuding white tea, budget white tea", commonScams: "Lower-quality production using summer or autumn leaves lacks the fruity sweetness. Machine-processed versions lose the leaf integrity and visual appeal." }, history: "Bai Mu Dan means White Peony, the brewed leaves resemble peony petals floating in water. Second only to Silver Needle in white tea hierarchy but offers more flavor complexity at a friendlier price. A great everyday white tea.", idealFor: "Those who find Silver Needle too subtle. Great value daily white tea. Pairs beautifully with light foods." },
-  { id: "tie-guan-yin", name: "Tie Guan Yin (Iron Goddess of Mercy)", nameChinese: "铁观音", type: "Oolong", origin: "Anxi County, Fujian", flavorShort: "Floral, orchid, creamy, lingering sweetness", caffeine: "Low", beginner: "★★★★☆", harvest: "Spring (May) and autumn (October). Autumn harvest has a richer aroma; spring is more delicate.", flavor: { aroma: "Captivating orchid, lilac, light cream", taste: "Smooth and creamy entry, blooming floral mid-palate, long sweet finish (hui gan)", color: "Bright golden-green, clear", body: "Medium, creamy, coating" }, brewing: { temp: "195°F (90°C)", timeGongfu: "30-60 seconds", timeWestern: "3-4 minutes", vessel: "Gaiwan or small porcelain teapot", ratio: "5g per 100ml (gongfu)", infusions: "5-8" }, buying: { priceEntry: "$8-15 / 100g (modern green-style)", priceAdvance: "$30-80+ / 100g (traditional roast, high mountain, competition grade)", qualityCheck: "Tightly rolled dark green balls that unfurl dramatically when brewed. Dry aroma should be intensely floral. Modern style is greener and more floral; traditional style has a light charcoal roast.", searchKeywords: "Tie Guan Yin, Iron Goddess of Mercy, Anxi oolong, TGY tea, Chinese oolong tea", commonScams: "Low-altitude TGY from non-Anxi regions. Overly green versions with a seaweed note are poorly made. Pure Tie Guan Yin cultivar vs. blended Guan Yin style." }, history: "Named after the Buddhist deity Guanyin. Legend says a poor farmer named Wei Yin discovered the tea bush beneath a Guanyin temple and was rewarded for his devotion. The most famous Chinese oolong, with a distinctive ball-rolled shape and intoxicating orchid fragrance.", idealFor: "The perfect entry oolong. If you enjoy floral notes, this is your tea. Equally enjoyable brewed casually or gongfu style." },
-  { id: "da-hong-pao", name: "Da Hong Pao (Big Red Robe)", nameChinese: "大红袍", type: "Oolong", origin: "Wuyi Mountains, Fujian", flavorShort: "Roasted, mineral, dark chocolate, rock rhythm", caffeine: "Medium", beginner: "★★★☆☆", harvest: "Spring (late April to May). The rocky terroir of Wuyi is inseparable from the tea's character.", flavor: { aroma: "Deep roast, charcoal, mineral, warm stone fruit", taste: "Bold mineral entry (yan yun or rock rhythm), dark chocolate, dried longan, lingering sweet and cooling aftertaste", color: "Deep amber to dark copper", body: "Full, structured, warming" }, brewing: { temp: "205°F (95°C)", timeGongfu: "30-50 seconds", timeWestern: "3-5 minutes", vessel: "Yixing clay pot or gaiwan", ratio: "5g per 100ml (gongfu)", infusions: "6-10+" }, buying: { priceEntry: "$15-30 / 100g (modern clone/cutting)", priceAdvance: "$80-300+ / 100g (Wuyi core area, high roast, aged)", qualityCheck: "Dark, twisted, rope-like leaves. True Da Hong Pao has yan yun, a distinctive mineral-rock character from Wuyi's unique terroir. The original mother bushes no longer produce commercially.", searchKeywords: "Da Hong Pao, Big Red Robe, Wuyi rock tea, Wuyi yancha, Chinese oolong tea", commonScams: "The original 6 mother bushes on Wuyi Mountain are protected and no longer harvested. All Da Hong Pao today is from clones/cuttings. Cheap Da Hong Pao may be blended with non-Wuyi teas. Authentic yancha has mineral depth that imitations lack." }, history: "China's most legendary tea. Story goes that a Ming Dynasty scholar was cured of illness by tea from Wuyi's cliffs. When he later became a high official, he draped his red robe over the tea bushes in gratitude, hence Big Red Robe. The original mother bushes are over 350 years old and tourists pay to see them. A true connoisseur's tea.", idealFor: "Adventurous drinkers who enjoy whiskey, dark chocolate, or roasted coffee. A winter tea that warms from within. The tea to graduate to after Tie Guan Yin." },
-  { id: "phoenix-dan-cong", name: "Phoenix Dan Cong", nameChinese: "凤凰单丛", type: "Oolong", origin: "Chaozhou, Guangdong", flavorShort: "Peach, almond, honey, complex, natural fruit", caffeine: "Medium", beginner: "★★★☆☆", harvest: "Spring (April-May). Each Dan Cong variety comes from a single bush and mimics a specific fruit/flower fragrance.", flavor: { aroma: "Intense natural fruit, peach, almond, honey, gardenia (varies by cultivar)", taste: "Complex and layered, the fruit fragrance is natural (no flavoring). Bitter-sweet opening, rich fruit mid-palate, enduring sweet aftertaste", color: "Golden to amber, bright", body: "Full, robust, mouth-filling" }, brewing: { temp: "203°F (95°C)", timeGongfu: "20-40 seconds (flash infusions)", timeWestern: "3-4 minutes", vessel: "Small gaiwan or Chaozhou clay pot", ratio: "5-6g per 100ml (gongfu)", infusions: "8-15+" }, buying: { priceEntry: "$15-30 / 100g (common cultivars like Mi Lan Xiang)", priceAdvance: "$60-200+ / 100g (rare single-bush, old tree, competition grade)", qualityCheck: "Long, twisted, dark leaves. Dry aroma should be intensely fragrant, the fruit note should hit you immediately. Check for natural vs. added fragrance: natural Dan Cong aroma evolves across infusions; artificial fades after the first steep.", searchKeywords: "Phoenix Dan Cong, Fenghuang Dancong, Mi Lan Xiang, Ya Shi Xiang, Chao Zhou oolong", commonScams: "Artificially scented Dan Cong is common, the strong fruit aroma lasts only 1-2 infusions before going flat. Genuine Dan Cong should evolve across 8+ infusions. Non-Phoenix Mountain cultivars lack the shan yun (mountain character)." }, history: "From the Phoenix Mountain in Chaozhou, Guangdong, where tea bushes grow among fruit trees at high altitudes. Dan Cong means single bush, each tea comes from one specific bush, and each bush naturally mimics a different fragrance: honey orchid, duck shit (don't let the name fool you), almond, and more. The Chaozhou gongfu tea ceremony is considered the most refined in China.", idealFor: "Serious tea explorers and flavor hunters. If you're into wine, whiskey, or single-origin coffee, Dan Cong is your tea. Each cultivar is a completely different experience." },
-  { id: "keemun", name: "Keemun (Qimen)", nameChinese: "祁门红茶", type: "Black", origin: "Qimen County, Anhui", flavorShort: "Malty, smooth, cocoa, hint of smoke", caffeine: "Medium", beginner: "★★★★★", harvest: "Spring and early summer. Qimen County's misty climate is essential to the tea's character.", flavor: { aroma: "Wine-like, floral, hint of smoke, cocoa", taste: "Smooth, malty, rich cocoa, subtle smokiness, no bitterness", color: "Bright copper-red, clear", body: "Medium-full, smooth, round" }, brewing: { temp: "200°F (93°C)", timeGongfu: "30-45 seconds", timeWestern: "3-4 minutes", vessel: "Porcelain teapot or gaiwan", ratio: "2.5g per 200ml (Western) or 5g per 100ml (gongfu)", infusions: "3-5" }, buying: { priceEntry: "$8-15 / 100g (standard grade)", priceAdvance: "$25-50 / 100g (Qimen origin, Hao Ya grade)", qualityCheck: "Small, thin, tightly twisted leaves. Dry aroma: wine-like with floral notes. Liquor should be bright copper-red, never dull brown. The Keemun fragrance is distinctive, winey, floral, slightly smoky.", searchKeywords: "Keemun tea, Qimen black tea, Qimen Hong Cha, Chinese breakfast tea, Anhui black tea", commonScams: "Non-Qimen black teas sold under the Keemun name. Lower grades (broken leaf, fannings) are common in tea bags. True Qimen Hao Ya consists of fine, uniform leaf tips." }, history: "A relative newcomer (created 1875) but quickly became one of the world's three most fragrant black teas alongside Darjeeling and Uva. A key component in English Breakfast blends. Keemun is the only Chinese tea that ranks alongside the great British-style black teas.", idealFor: "The natural bridge from Western black tea to Chinese tea. If you love English Breakfast or Earl Grey, start here. Excellent with or without milk. The perfect morning tea." },
-  { id: "dian-hong", name: "Dian Hong (Yunnan Black)", nameChinese: "滇红", type: "Black", origin: "Fengqing and Lincang, Yunnan", flavorShort: "Sweet potato, cocoa, rich, golden tips", caffeine: "Medium", beginner: "★★★★☆", harvest: "Spring and autumn. Uses the large-leaf Yunnan broad-leaf cultivar.", flavor: { aroma: "Sweet potato, dried fruit, cocoa, malt", taste: "Rich, thick, naturally sweet with prominent cocoa and sweet potato notes, minimal astringency", color: "Deep red-gold, bright, almost coppery", body: "Full, thick, almost syrupy" }, brewing: { temp: "200°F (93°C)", timeGongfu: "30-45 seconds", timeWestern: "3-5 minutes", vessel: "Porcelain or clay teapot", ratio: "2.5g per 200ml (Western) or 5g per 100ml (gongfu)", infusions: "4-6" }, buying: { priceEntry: "$8-15 / 100g (standard)", priceAdvance: "$25-60 / 100g (pure golden tips/buds, ancient tree)", qualityCheck: "Golden tips throughout, the more golden tips, the higher the grade. Leaves are large and wiry. Dry aroma: intense malt and sweet potato. Liquor is deep red with a golden ring.", searchKeywords: "Dian Hong, Yunnan black tea, golden tips black tea, Yunnan red tea, Fengqing black tea", commonScams: "Low-tip content sold as high-grade. Dian Hong made from small-leaf cultivars lacks the characteristic richness. Pure golden tip versions at suspiciously low prices are usually imitation." }, history: "Developed in the 1930s in Fengqing, Yunnan, using the indigenous large-leaf tea trees that grow at high altitudes. Yunnan is the birthplace of all tea, and its ancient tea forests give Dian Hong a depth that other black teas can't match. One of the most forgiving and rewarding Chinese black teas.", idealFor: "Those who take milk in their black tea but want to graduate to drinking it plain. The natural sweetness and thick body make it satisfying without additions. Also makes incredible iced tea." },
-  { id: "lapsang-souchong", name: "Lapsang Souchong", nameChinese: "正山小种", type: "Black", origin: "Tongmu Village, Wuyi Mountains, Fujian", flavorShort: "Smoky, pine, bold, longan", caffeine: "Medium", beginner: "★★☆☆☆", harvest: "Late spring to early summer. Traditional pine-smoking process in wooden smoking sheds.", flavor: { aroma: "Campfire smoke, pine wood, dried longan, cedar", taste: "Assertive smoke upfront, pine resin, sweet dried longan underneath, surprisingly smooth finish", color: "Deep red-brown, warm", body: "Full, bold, warming" }, brewing: { temp: "205°F (96°C)", timeGongfu: "30-45 seconds", timeWestern: "3-4 minutes", vessel: "Porcelain teapot (smoke can season clay pots permanently)", ratio: "2.5g per 200ml (Western) or 5g per 100ml (gongfu)", infusions: "3-5" }, buying: { priceEntry: "$10-20 / 100g (standard smoked)", priceAdvance: "$30-70 / 100g (Tongmu origin, traditional pine smoke)", qualityCheck: "Large, coarse leaves. Traditional version uses pine wood smoking. Genuine Tongmu Lapsang has balanced smoke, not acrid or chemical.", searchKeywords: "Lapsang Souchong, Zheng Shan Xiao Zhong, smoked black tea, Tongmu black tea, Wuyi black tea", commonScams: "Many Lapsang Souchong teas are artificially smoke-flavored, not traditionally pine-smoked. The real thing comes only from the Tongmu protected area. Over-smoked versions can be harsh and acrid." }, history: "The original black tea. Invented accidentally in the 17th century when Tongmu villagers had to quickly dry tea leaves over pine fires. The resulting smoky tea became wildly popular in Europe. Lapsang is the single malt whiskey of the tea world, polarizing but unforgettable.", idealFor: "Whiskey and mezcal drinkers. Camping trips. Cold winter mornings. Also brilliant as a cooking ingredient. Definitely not for everyone, and that's the point." },
-  { id: "pu-erh-sheng", name: "Pu-erh (Sheng / Raw)", nameChinese: "生普洱", type: "Dark", origin: "Xishuangbanna, Lincang, Pu'er, Yunnan", flavorShort: "Green, astringent when young, ages into complexity", caffeine: "High", beginner: "★★★☆☆", harvest: "Spring and autumn. Pressing occurs after sun-drying, then aged for years or decades.", flavor: { aroma: "Young: green, floral, slight smoke. Aged: dried fruit, camphor, wood, medicinal", taste: "Young: bright, astringent, bitter-sweet, strong hui gan. Aged: smooth, complex, dried plum, camphor, cooling", color: "Pale golden (young) to deep amber/copper (aged)", body: "Medium to full, structured, mouth-coating" }, brewing: { temp: "200-212°F (95-100°C)", timeGongfu: "15-30 seconds (young), 30-60 seconds (aged)", timeWestern: "3-5 minutes", vessel: "Yixing clay pot (dedicated to sheng) or gaiwan", ratio: "5g per 100ml (gongfu)", infusions: "10-20+" }, buying: { priceEntry: "$15-40 / 357g cake (young, generic origin)", priceAdvance: "$100-500+ / 357g cake (famous mountain: Lao Ban Zhang, Bing Dao, aged 10+ years)", qualityCheck: "Pressed into cakes (bing), bricks, or tuos. Leaves should be intact, visible on surface. Young sheng is greenish; aged turns reddish-brown. Store in breathable environment.", searchKeywords: "Sheng Pu-erh, raw Pu-erh, aged Pu-erh, Lao Ban Zhang, Bing Dao, Yunnan Pu-erh tea", commonScams: "Fake famous mountain tea (Lao Ban Zhang claims vastly outnumber production). Aged Pu-erh artificially wet-piled. Low-quality plantation tea passed off as ancient tree (gu shu). Poor storage leading to mold." }, history: "Sheng Pu-erh is the original Pu-erh, sun-dried green tea from Yunnan's large-leaf trees, pressed and aged naturally. Like wine, it transforms with time. The famous tea horse road carried Pu-erh from Yunnan to Tibet for centuries.", idealFor: "Collectors, connoisseurs, and those who enjoy watching tea evolve. The ultimate hobby tea. Young sheng pairs with rich food; aged sheng is a meditation tea." },
-  { id: "pu-erh-shou", name: "Pu-erh (Shou / Ripe)", nameChinese: "熟普洱", type: "Dark", origin: "Menghai, Xishuangbanna, Yunnan", flavorShort: "Earthy, woody, smooth, dark chocolate", caffeine: "Medium", beginner: "★★★★☆", harvest: "Spring and autumn. Wet-piling (wo dui) fermentation takes 45-60 days.", flavor: { aroma: "Damp earth, aged wood, dark chocolate, old books", taste: "Smooth, earthy, woody, dark chocolate bitterness, zero astringency, naturally sweet finish", color: "Dark mahogany, opaque, like black coffee", body: "Full, thick, velvety, almost chewy" }, brewing: { temp: "212°F (100°C)", timeGongfu: "15-30 seconds", timeWestern: "3-5 minutes", vessel: "Yixing clay pot (dedicated to shou) or gaiwan", ratio: "5g per 100ml (gongfu)", infusions: "8-15+" }, buying: { priceEntry: "$10-25 / 357g cake (standard fermentation)", priceAdvance: "$50-150+ / 357g cake (Menghai/Dayi factory, premium leaf grade, aged)", qualityCheck: "Pressed cake intact and firm. Dry aroma: clean earth, wood, no fishy or moldy notes. Fishy smell indicates poor fermentation, avoid. Liquor should be clear dark red, not murky.", searchKeywords: "Shou Pu-erh, ripe Pu-erh, cooked Pu-erh, Menghai Pu-erh, Dayi Pu-erh, Yunnan dark tea", commonScams: "Poorly fermented shou with fishy/musty odor. Fake vintage claims, most shou dates to 1973 at earliest. Low-quality plantation material fermented to mask defects." }, history: "Shou Pu-erh developed in 1973 to accelerate aging. Wet-piling ferments tea in 45-60 days, approximating decades of aging. It democratized Pu-erh, making the earthy profile accessible immediately.", idealFor: "Coffee drinkers switching to tea. After heavy meals (aids digestion). Cold winter evenings. The most beginner-friendly Pu-erh and best value in dark tea." },
-  { id: "gunpowder-green", name: "Gunpowder Green (Zhu Cha)", nameChinese: "珠茶", type: "Green", origin: "Zhejiang (primarily Pingshui region)", flavorShort: "Bold, smoky, vegetal, assertive", caffeine: "Medium", beginner: "★★★☆☆", harvest: "Spring and summer. Tightly rolled into small pellets resembling gunpowder grains.", flavor: { aroma: "Smoky, vegetal, slightly metallic", taste: "Bold, assertive, smoky-vegetal, slightly astringent, brisk finish", color: "Golden-green to amber", body: "Medium-full, brisk, astringent" }, brewing: { temp: "175°F (80°C)", timeGongfu: "30-45 seconds", timeWestern: "2-3 minutes", vessel: "Glass or porcelain", ratio: "1.5-2g per 200ml", infusions: "2-3" }, buying: { priceEntry: "$5-10 / 100g", priceAdvance: "$15-25 / 100g (high-grade, tight roll, consistent size)", qualityCheck: "Tightly rolled pellets of uniform size. Should unfurl gradually when brewed. Avoid loose, broken, or dusty pellets.", searchKeywords: "Gunpowder green tea, Zhu Cha, pearl tea, Chinese green tea, Pingshui Gunpowder", commonScams: "Lower-grade dust rolled to look like pellets. Machine-harvested with inconsistent size. Over-fired versions taste burnt." }, history: "Named for its resemblance to gunpowder grains. A major Chinese export to North Africa and the Middle East, foundation of Moroccan mint tea. Tight rolling preserves freshness during shipping. Budget-friendly with real character.", idealFor: "Those who find most green teas too delicate. Excellent base for Moroccan mint tea. Great value daily green tea." },
-  { id: "anji-bai-cha", name: "Anji Bai Cha", nameChinese: "安吉白茶", type: "Green", origin: "Anji County, Zhejiang", flavorShort: "Delicate, sweet, umami, extraordinary smoothness", caffeine: "Low", beginner: "★★★★★", harvest: "Early spring only (late March to early April). Unique albino mutation, leaves are pale jade-white in early spring.", flavor: { aroma: "Subtle chestnut, fresh spring water, faint floral", taste: "Exceptionally smooth and sweet, high theanine from albino mutation gives savory umami character. Zero bitterness.", color: "Very pale jade, almost translucent", body: "Light, ethereal, silken" }, brewing: { temp: "170°F (75°C)", timeGongfu: "30-45 seconds", timeWestern: "2-3 minutes", vessel: "Tall clear glass", ratio: "2-3g per 200ml", infusions: "3-4" }, buying: { priceEntry: "$20-40 / 100g (standard grade)", priceAdvance: "$60-150+ / 100g (pure bud, early harvest, core origin)", qualityCheck: "Leaves pale jade-green to almost white, the prized albino characteristic. Long, needle-like shape. Any bitterness means it's not genuine.", searchKeywords: "Anji Bai Cha, Anji white tea, Zhejiang green tea, high theanine tea, umami green tea", commonScams: "True Anji Bai Cha only harvested in early spring when leaves show albino trait. Counterfeits use regular green tea from non-Anji regions. Despite the name, it's a green tea not a white tea." }, history: "Despite its name (Bai Cha means white tea), Anji Bai Cha is a green tea. Discovered in the 1980s in Anji. The albino mutation causes high theanine retention (3-4x normal), giving it uniquely smooth, umami character. Rapidly becoming one of China's most sought-after modern teas.", idealFor: "Those who find most green teas too bitter or grassy. The smoothest green tea you'll ever taste. Excellent cold-brewed. The ultimate beginner green tea." },
-];
-
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.slice(0, 6).map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+]);
 ---
 
-<BaseLayout
-  title="Chinese Tea Guide: Types, Brewing & Culture"
-  description="Discover China’s six major tea categories, famous regional teas, traditional brewing methods, tea culture, and how to choose the perfect tea."
-  schema={pageSchema}
-  qaPageSchema={qaPageSchema}
->
+<BaseLayout {title} {description} schemaJson={schemaJson}>
 
-<!-- ========== HERO ========== -->
-<section class="min-h-[85dvh] flex items-center relative overflow-hidden">
-  <div class="absolute inset-0">
-    <img
-      src="/images/chinese-tea-hero.webp"
-      alt="Traditional Chinese tea ceremony setup with gaiwan and tea cups on a wooden tea tray"
-      class="w-full h-full object-cover"
-      loading="eager"
-      fetchpriority="high"
-      width="1600"
-      height="900"
-    />
-    <div class="absolute inset-0 bg-gradient-to-br from-leaf-950/90 via-leaf-900/85 to-zinc-900/85"></div>
-  </div>
-  <div class="absolute inset-0 opacity-3" style="background-image: radial-gradient(circle at 20% 50%, #4db87f 1px, transparent 1px); background-size: 40px 40px;"></div>
-
-  <div class="relative z-10 max-w-7xl mx-auto px-4 py-20 w-full">
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
-      <div class="max-w-xl">
-        <p class="text-leaf-300 text-sm font-mono uppercase tracking-[0.18em] mb-4">The Practical Guide</p>
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[1.05] text-white mb-6">
-          Chinese Tea:<br/>
-          <span class="text-leaf-300">Complete Guide</span> to Types, Brewing &amp; Culture
-        </h1>
-        <p class="text-lg text-zinc-300 leading-relaxed mb-8 max-w-lg">
-          Discover China's six major tea categories, famous regional teas, traditional brewing methods,
-          and how to find the perfect cup for your taste.
-        </p>
-        <div class="flex flex-wrap gap-4">
-          <a href="#finder" class="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-400 text-zinc-900 font-semibold rounded-xl transition-colors">
-            Find Your Tea
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-          <a href="#types" class="inline-flex items-center gap-2 px-6 py-3 border border-zinc-600 hover:border-zinc-400 text-white font-semibold rounded-xl transition-colors">
-            Explore Tea Types
-          </a>
-        </div>
-      </div>
-      <div class="hidden lg:block">
-        <div class="relative">
-          <div class="absolute -inset-4 rounded-2xl bg-gradient-to-br from-leaf-500/20 to-amber-500/10 blur-2xl"></div>
-          <img
-            src="/images/chinese-tea-brewing.webp"
-            alt="Gongfu tea brewing with hot water being poured into a gaiwan"
-            class="relative rounded-2xl shadow-2xl w-full max-w-lg"
-            loading="lazy"
-            width="600"
-            height="400"
-          />
-        </div>
-      </div>
+  <!-- Hero — the ceremonial stage (Hamada-style three-zone composition) -->
+  <section class="relative min-h-[100dvh] overflow-hidden bg-[#f7faf8]">
+    <!-- Photo backdrop with a pale ceremonial wash -->
+    <div class="absolute inset-0" aria-hidden="true">
+      <img src="/images/chinese-tea-hero.avif" alt="" class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async" width="1920" height="1080" />
+      <div class="absolute inset-0 bg-gradient-to-b from-[#f7faf8]/60 via-[#f7faf8]/75 to-[#f7faf8]/95"></div>
     </div>
-  </div>
-</section>
+    <canvas id="js-canvas-container" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
 
-
-<!-- ========== 3-STEP GUIDE ========== -->
-<section class="max-w-7xl mx-auto px-4 pb-16 -mt-6 relative z-10">
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <a href="#types" class="group bg-white rounded-xl border border-zinc-200 p-5 hover:shadow-md hover:border-leaf-200 transition-all">
-      <div class="w-10 h-10 rounded-full bg-leaf-100 text-leaf-700 flex items-center justify-center font-bold mx-auto mb-3 group-hover:bg-leaf-600 group-hover:text-white transition-colors">1</div>
-      <h3 class="font-semibold text-center text-zinc-900 mb-1">Know the Types</h3>
-      <p class="text-sm text-center text-zinc-500">Green, white, oolong, black &amp; more — understand the 6 categories at a glance</p>
-    </a>
-    <a href="#finder" class="group bg-white rounded-xl border border-zinc-200 p-5 hover:shadow-md hover:border-leaf-200 transition-all">
-      <div class="w-10 h-10 rounded-full bg-leaf-100 text-leaf-700 flex items-center justify-center font-bold mx-auto mb-3 group-hover:bg-leaf-600 group-hover:text-white transition-colors">2</div>
-      <h3 class="font-semibold text-center text-zinc-900 mb-1">Match Your Taste</h3>
-      <p class="text-sm text-center text-zinc-500">Tell us what flavors you enjoy — we’ll recommend the right tea for your palate</p>
-    </a>
-    <a href="#brewing" class="group bg-white rounded-xl border border-zinc-200 p-5 hover:shadow-md hover:border-leaf-200 transition-all">
-      <div class="w-10 h-10 rounded-full bg-leaf-100 text-leaf-700 flex items-center justify-center font-bold mx-auto mb-3 group-hover:bg-leaf-600 group-hover:text-white transition-colors">3</div>
-      <h3 class="font-semibold text-center text-zinc-900 mb-1">Brew Like a Pro</h3>
-      <p class="text-sm text-center text-zinc-500">Master water temperature, steeping time, and the right teaware for a perfect cup</p>
-    </a>
-  </div>
-</section>
-
-<!-- ========== WHAT IS CHINESE TEA ========== -->
-<section class="max-w-7xl mx-auto px-4 py-20">
-  <div class="max-w-3xl">
-    <p class="text-leaf-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">The Essentials</p>
-    <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-6">
-      What Is Chinese Tea?
-    </h2>
-    <p class="text-lg text-zinc-600 leading-relaxed mb-4">
-      Chinese tea is more than a beverage — it's a 4,000-year-old tradition woven into daily life, art, philosophy, and medicine. Unlike the tea bags found in most Western supermarkets, authentic Chinese tea is made from whole leaves of the <em>Camellia sinensis</em> plant, processed using methods refined over centuries.
-    </p>
-    <p class="text-lg text-zinc-600 leading-relaxed mb-4">
-      What makes Chinese tea unique is its <strong>staggering variety</strong>: six major categories based on oxidation level and processing — from fresh, unoxidized green tea to aged, fermented pu-erh. Each category contains hundreds of named varieties tied to specific mountains, villages, and terroirs.
-      <span class="block mt-3 text-base">The earliest written record comes from <a href="https://en.wikipedia.org/wiki/The_Classic_of_Tea" target="_blank" rel="noopener" class="text-leaf-600 underline hover:text-leaf-700">Lu Yu’s <em>The Classic of Tea</em> (茶经, 760 CE)</a>, which elevated tea from medicine to cultural art form. What began on the misty slopes of <a href="https://en.wikipedia.org/wiki/History_of_tea" target="_blank" rel="noopener" class="text-leaf-600 underline hover:text-leaf-700">Yunnan</a> — the botanical birthplace of Camellia sinensis — spread across China and eventually the world.</span>
-    </p>
-    <p class="text-lg text-zinc-600 leading-relaxed">
-      Whether you're looking for a daily morning cup, a meditative brewing ritual, or a tea to age like fine wine, Chinese tea has something for every palate.
-    </p>
-  </div>
-</section>
-
-<!-- ========== SIX TYPES OF CHINESE TEA ========== -->
-<section id="types" class="bg-bone-50 py-20">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-14">
-      <p class="text-leaf-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">The Foundation</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-4">
-        The Six Types of Chinese Tea
-      </h2>
-      <p class="text-zinc-500 max-w-2xl mx-auto">
-        Chinese tea is classified by oxidation level and processing method. Each type has a distinct flavor profile, brewing temperature, and character.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="tea-type-cards">
-      <!-- Green Tea -->
-      <div class="group bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-lg hover:border-leaf-200 transition-all duration-300 cursor-pointer" data-type="green">
-        <div class="w-12 h-12 rounded-xl overflow-hidden mb-4 group-hover:scale-110 transition-transform"><img src="/images/green-tea.webp" alt="Green tea leaves" class="w-full h-full object-cover" loading="lazy" width="48" height="48" /></div>
-        <h3 class="font-semibold text-lg text-zinc-900 mb-1">Green Tea <span class="text-sm font-normal text-zinc-400">绿茶</span></h3>
-        <p class="text-sm text-zinc-500 mb-1">Unoxidized · Fresh · Vegetal</p>
-        <p class="text-xs text-zinc-400 mb-3 leading-relaxed">Leaves are <strong>pan-fired or oven-dried</strong> immediately after picking to halt oxidation, preserving their green color and fresh character. The most ancient tea processing method, dating back over 1,500 years. Best consumed within 6-12 months of harvest for peak freshness.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700">Longjing</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700">Biluochun</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700">Maofeng</span>
-        </div>
-        <p class="text-xs text-zinc-400 mt-3">Brew: 160-175°F · 2-3 min</p>
-      </div>
-
-      <!-- White Tea -->
-      <div class="group bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-lg hover:border-leaf-200 transition-all duration-300 cursor-pointer" data-type="white">
-        <div class="w-12 h-12 rounded-xl overflow-hidden mb-4 group-hover:scale-110 transition-transform"><img src="/images/white-tea.webp" alt="White tea buds" class="w-full h-full object-cover" loading="lazy" width="48" height="48" /></div>
-        <h3 class="font-semibold text-lg text-zinc-900 mb-1">White Tea <span class="text-sm font-normal text-zinc-400">白茶</span></h3>
-        <p class="text-sm text-zinc-500 mb-1">Minimal Processing · Delicate · Sweet</p>
-        <p class="text-xs text-zinc-400 mb-3 leading-relaxed">The <strong>least processed of all teas</strong> — white tea is simply withered and dried, with no rolling, pan-firing, or oxidation. This minimal intervention preserves the leaf's natural sweetness and delicate character. White tea is made from <strong>young buds and leaves</strong> covered in fine silvery down, which gives the tea its name. It's the most forgiving to brew and the gentlest on the palate — the ideal starting point for any tea journey.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-amber-50 text-amber-700">Silver Needle</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-amber-50 text-amber-700">White Peony</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-amber-50 text-amber-700">Shou Mei</span>
-        </div>
-        <p class="text-xs text-zinc-400 mt-3">Brew: 175-185°F · 3-5 min</p>
-      </div>
-
-      <!-- Yellow Tea -->
-      <div class="group bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-lg hover:border-leaf-200 transition-all duration-300 cursor-pointer" data-type="yellow">
-        <div class="w-12 h-12 rounded-xl overflow-hidden mb-4 group-hover:scale-110 transition-transform"><img src="/images/yellow-tea.webp" alt="Yellow tea leaves" class="w-full h-full object-cover" loading="lazy" width="48" height="48" /></div>
-        <h3 class="font-semibold text-lg text-zinc-900 mb-1">Yellow Tea <span class="text-sm font-normal text-zinc-400">黄茶</span></h3>
-        <p class="text-sm text-zinc-500 mb-1">Lightly Oxidized · Mellow · Rare</p>
-        <p class="text-xs text-zinc-400 mb-3 leading-relaxed">The <strong>rarest category</strong> — only a handful of producers still make it. After pan-firing like green tea, leaves undergo <strong>men huan</strong> (sealing yellow): a gentle, multi-hour sweat that removes grassy notes and creates a uniquely mellow, almost buttery character. A true connoisseur’s find.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-yellow-50 text-yellow-700">Junshan Yinzhen</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-yellow-50 text-yellow-700">Mengding Huangya</span>
-        </div>
-        <p class="text-xs text-zinc-400 mt-3">Brew: 175-185°F · 2-3 min</p>
-      </div>
-
-      <!-- Oolong Tea -->
-      <div class="group bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-lg hover:border-leaf-200 transition-all duration-300 cursor-pointer" data-type="oolong">
-        <div class="w-12 h-12 rounded-xl overflow-hidden mb-4 group-hover:scale-110 transition-transform"><img src="/images/oolong-tea.webp" alt="Oolong tea leaves" class="w-full h-full object-cover" loading="lazy" width="48" height="48" /></div>
-        <h3 class="font-semibold text-lg text-zinc-900 mb-1">Oolong Tea <span class="text-sm font-normal text-zinc-400">乌龙茶</span></h3>
-        <p class="text-sm text-zinc-500 mb-1">Partially Oxidized · Floral to Roasted</p>
-        <p class="text-xs text-zinc-400 mb-3 leading-relaxed">The <strong>most diverse category</strong> — oxidation ranges from 10% (floral Tie Guan Yin) to 70% (roasted Da Hong Pao). Leaves are bruised, rolled, and sometimes roasted. Many oolongs are <strong>tightly rolled into balls</strong> that unfurl across 5-8+ infusions, each steep revealing new layers.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-orange-50 text-orange-700">Tie Guan Yin</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-orange-50 text-orange-700">Da Hong Pao</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-orange-50 text-orange-700">Dan Cong</span>
-        </div>
-        <p class="text-xs text-zinc-400 mt-3">Brew: 185-205°F · 30-60s</p>
-      </div>
-
-      <!-- Black Tea -->
-      <div class="group bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-lg hover:border-leaf-200 transition-all duration-300 cursor-pointer" data-type="black">
-        <div class="w-12 h-12 rounded-xl overflow-hidden mb-4 group-hover:scale-110 transition-transform"><img src="/images/black-tea.webp" alt="Black tea leaves" class="w-full h-full object-cover" loading="lazy" width="48" height="48" /></div>
-        <h3 class="font-semibold text-lg text-zinc-900 mb-1">Black Tea <span class="text-sm font-normal text-zinc-400">红茶</span></h3>
-        <p class="text-sm text-zinc-500 mb-1">Fully Oxidized · Malty · Robust</p>
-        <p class="text-xs text-zinc-400 mb-3 leading-relaxed">Called <strong>hong cha</strong> (red tea) in Chinese — named for the reddish liquor, not the leaf. The leaves are fully oxidized before drying, creating deep, malty flavors. Chinese black teas are generally <strong>smoother and less astringent</strong> than Indian varieties and are excellent without milk.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-red-50 text-red-700">Keemun</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-red-50 text-red-700">Dian Hong</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-red-50 text-red-700">Lapsang</span>
-        </div>
-        <p class="text-xs text-zinc-400 mt-3">Brew: 195-212°F · 3-5 min</p>
-      </div>
-
-      <!-- Dark Tea -->
-      <div class="group bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-lg hover:border-leaf-200 transition-all duration-300 cursor-pointer" data-type="dark">
-        <div class="w-12 h-12 rounded-xl overflow-hidden mb-4 group-hover:scale-110 transition-transform"><img src="/images/dark-tea.webp" alt="Dark tea cake" class="w-full h-full object-cover" loading="lazy" width="48" height="48" /></div>
-        <h3 class="font-semibold text-lg text-zinc-900 mb-1">Dark Tea <span class="text-sm font-normal text-zinc-400">黑茶</span></h3>
-        <p class="text-sm text-zinc-500 mb-1">Post-Fermented · Earthy · Aged</p>
-        <p class="text-xs text-zinc-400 mb-3 leading-relaxed">Unlike other teas, dark tea undergoes <strong>microbial fermentation</strong> after initial processing — similar to composting or aging cheese. Pu-erh is the most famous, but the category also includes Liu Bao and Fu Zhuan. Many dark teas <strong>improve with age</strong> like fine wine, developing complex earthy, woody, and medicinal notes over decades.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-stone-100 text-stone-700">Pu-erh</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-stone-100 text-stone-700">Liu Bao</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-stone-100 text-stone-700">Tian Jian</span>
-        </div>
-        <p class="text-xs text-zinc-400 mt-3">Brew: 200-212°F · 30-60s</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ========== TEA COMPARISON MATRIX ========== -->
-<div class="max-w-7xl mx-auto px-4 pb-16">
-  <div class="text-center mb-8">
-    <p class="text-leaf-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">At a Glance</p>
-    <h3 class="text-2xl font-bold tracking-tight text-zinc-900">Quick Comparison</h3>
-  </div>
-  <div class="overflow-x-auto rounded-2xl border border-zinc-200">
-    <table class="w-full text-sm">
-      <thead>
-        <tr class="bg-bone-50 text-left">
-          <th class="px-5 py-3 font-semibold text-zinc-700">Type</th>
-          <th class="px-5 py-3 font-semibold text-zinc-700">Oxidation</th>
-          <th class="px-5 py-3 font-semibold text-zinc-700">Caffeine</th>
-          <th class="px-5 py-3 font-semibold text-zinc-700">Brew Temp</th>
-          <th class="px-5 py-3 font-semibold text-zinc-700">Beginner</th>
-          <th class="px-5 py-3 font-semibold text-zinc-700">Price Range</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="bg-white hover:bg-leaf-50/50 transition-colors cursor-pointer" data-filter-type="Green">
-          <td class="px-5 py-3 font-medium text-zinc-800">Green</td>
-          <td class="px-5 py-3 text-zinc-500">0% (unoxidized)</td>
-          <td class="px-5 py-3 text-zinc-500">Medium</td>
-          <td class="px-5 py-3 text-zinc-500">160-175&deg;F</td>
-          <td class="px-5 py-3"><span class="text-zinc-700">★★★★★</span></td>
-          <td class="px-5 py-3 text-zinc-500">$5-40 / 100g</td>
-        </tr>
-        <tr class="bg-bone-50/50 hover:bg-leaf-50/50 transition-colors cursor-pointer" data-filter-type="White">
-          <td class="px-5 py-3 font-medium text-zinc-800">White</td>
-          <td class="px-5 py-3 text-zinc-500">0% (unoxidized)</td>
-          <td class="px-5 py-3 text-zinc-500">Low</td>
-          <td class="px-5 py-3 text-zinc-500">175-185&deg;F</td>
-          <td class="px-5 py-3"><span class="text-zinc-700">★★★★★</span></td>
-          <td class="px-5 py-3 text-zinc-500">$10-60 / 100g</td>
-        </tr>
-        <tr class="bg-white hover:bg-leaf-50/50 transition-colors cursor-pointer" data-filter-type="Yellow">
-          <td class="px-5 py-3 font-medium text-zinc-800">Yellow</td>
-          <td class="px-5 py-3 text-zinc-500">5-10% (lightly oxidized)</td>
-          <td class="px-5 py-3 text-zinc-500">Low</td>
-          <td class="px-5 py-3 text-zinc-500">175-185&deg;F</td>
-          <td class="px-5 py-3"><span class="text-zinc-700">★★★★☆</span></td>
-          <td class="px-5 py-3 text-zinc-500">$15-80 / 100g</td>
-        </tr>
-        <tr class="bg-bone-50/50 hover:bg-leaf-50/50 transition-colors cursor-pointer" data-filter-type="Oolong">
-          <td class="px-5 py-3 font-medium text-zinc-800">Oolong</td>
-          <td class="px-5 py-3 text-zinc-500">10-70% (partially oxidized)</td>
-          <td class="px-5 py-3 text-zinc-500">Low-Medium</td>
-          <td class="px-5 py-3 text-zinc-500">185-205&deg;F</td>
-          <td class="px-5 py-3"><span class="text-zinc-700">★★★★☆</span></td>
-          <td class="px-5 py-3 text-zinc-500">$8-200+ / 100g</td>
-        </tr>
-        <tr class="bg-white hover:bg-leaf-50/50 transition-colors cursor-pointer" data-filter-type="Black">
-          <td class="px-5 py-3 font-medium text-zinc-800">Black</td>
-          <td class="px-5 py-3 text-zinc-500">100% (fully oxidized)</td>
-          <td class="px-5 py-3 text-zinc-500">Medium</td>
-          <td class="px-5 py-3 text-zinc-500">195-212&deg;F</td>
-          <td class="px-5 py-3"><span class="text-zinc-700">★★★★★</span></td>
-          <td class="px-5 py-3 text-zinc-500">$8-50 / 100g</td>
-        </tr>
-        <tr class="bg-bone-50/50 hover:bg-leaf-50/50 transition-colors cursor-pointer" data-filter-type="Dark">
-          <td class="px-5 py-3 font-medium text-zinc-800">Dark</td>
-          <td class="px-5 py-3 text-zinc-500">Post-fermented</td>
-          <td class="px-5 py-3 text-zinc-500">Medium-High</td>
-          <td class="px-5 py-3 text-zinc-500">200-212&deg;F</td>
-          <td class="px-5 py-3"><span class="text-zinc-700">★★★★☆</span></td>
-          <td class="px-5 py-3 text-zinc-500">$10-500+ / 357g</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- ========== FIND YOUR TEA ========== -->
-<section id="finder" class="py-20 bg-gradient-to-b from-white to-bone-50">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-12">
-      <p class="text-leaf-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">Interactive</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-4">
-        Find Your Chinese Tea
-      </h2>
-      <p class="text-zinc-500 max-w-xl mx-auto">
-        Not sure where to start? Tell us what you like, and we'll recommend the right Chinese tea for your palate.
-      </p>
-    </div>
-
-    <div class="max-w-2xl mx-auto bg-white rounded-2xl border border-zinc-200 p-8 shadow-sm" id="tea-finder">
-      <p class="font-semibold text-zinc-800 mb-4">What kind of flavors do you enjoy?</p>
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6" id="flavor-options">
-        <button class="px-4 py-3 rounded-xl border border-zinc-200 text-sm font-medium text-zinc-600 hover:border-leaf-400 hover:text-leaf-700 hover:bg-leaf-50 transition-all active:scale-[0.98]" data-flavor="fresh">Fresh & Vegetal</button>
-        <button class="px-4 py-3 rounded-xl border border-zinc-200 text-sm font-medium text-zinc-600 hover:border-leaf-400 hover:text-leaf-700 hover:bg-leaf-50 transition-all active:scale-[0.98]" data-flavor="floral">Floral & Fragrant</button>
-        <button class="px-4 py-3 rounded-xl border border-zinc-200 text-sm font-medium text-zinc-600 hover:border-leaf-400 hover:text-leaf-700 hover:bg-leaf-50 transition-all active:scale-[0.98]" data-flavor="malty">Malty & Smooth</button>
-        <button class="px-4 py-3 rounded-xl border border-zinc-200 text-sm font-medium text-zinc-600 hover:border-leaf-400 hover:text-leaf-700 hover:bg-leaf-50 transition-all active:scale-[0.98]" data-flavor="earthy">Earthy & Rich</button>
-        <button class="px-4 py-3 rounded-xl border border-zinc-200 text-sm font-medium text-zinc-600 hover:border-leaf-400 hover:text-leaf-700 hover:bg-leaf-50 transition-all active:scale-[0.98]" data-flavor="roasted">Roasted & Toasty</button>
-        <button class="px-4 py-3 rounded-xl border border-zinc-200 text-sm font-medium text-zinc-600 hover:border-leaf-400 hover:text-leaf-700 hover:bg-leaf-50 transition-all active:scale-[0.98]" data-flavor="sweet">Sweet & Delicate</button>
-      </div>
-
-      <div id="finder-result" class="hidden border-t border-zinc-100 pt-6 mt-2">
-        <div class="flex items-start gap-4 p-4 bg-leaf-50 rounded-xl border border-leaf-200">
-          <div class="w-10 h-10 rounded-lg bg-leaf-600 flex items-center justify-center flex-shrink-0 text-white font-bold text-lg">茶</div>
-          <div>
-            <p class="font-semibold text-zinc-900 mb-1" id="result-title"></p>
-            <a href="#famous" id="result-link" class="hidden items-center gap-1 text-sm font-medium text-leaf-600 hover:text-leaf-700 transition-colors mt-2"></a>
-            <p class="text-sm text-zinc-600" id="result-desc"></p>
-            <p class="text-xs text-zinc-400 mt-2" id="result-brew"></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ========== BUYING GUIDE ENTRY ========== -->
-<section class="py-16 bg-gradient-to-b from-bone-50 to-white">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-10">
-      <p class="text-amber-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">Ready to Buy?</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-4">
-        How to Buy Authentic Chinese Tea
-      </h2>
-      <p class="text-zinc-500 max-w-xl mx-auto">
-        The tea market can be confusing. Here’s what to look for before you spend a dollar — so you get the real thing, not a supermarket imitation.
-      </p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6 hover:border-leaf-200 transition-colors">
-        <div class="w-10 h-10 rounded-xl bg-leaf-50 flex items-center justify-center text-leaf-600 mb-4">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        </div>
-        <h3 class="font-semibold text-zinc-900 mb-2">1. Look for Harvest Dates</h3>
-        <p class="text-sm text-zinc-500">Freshness matters. Good vendors list the harvest season (spring/autumn) and year. Pre-Qingming green teas are at their peak. Tea is an agricultural product — treat it like fresh produce, not a pantry staple.</p>
-      </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6 hover:border-leaf-200 transition-colors">
-        <div class="w-10 h-10 rounded-xl bg-leaf-50 flex items-center justify-center text-leaf-600 mb-4">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
-        </div>
-        <h3 class="font-semibold text-zinc-900 mb-2">2. Check the Origin</h3>
-        <p class="text-sm text-zinc-500">The best vendors specify the mountain, village, or county — not just the province. “Fujian tea” means little; “Tongmu Village, Wuyi Mountains” means everything. Specificity signals quality.</p>
-      </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6 hover:border-leaf-200 transition-colors">
-        <div class="w-10 h-10 rounded-xl bg-leaf-50 flex items-center justify-center text-leaf-600 mb-4">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-        </div>
-        <h3 class="font-semibold text-zinc-900 mb-2">3. Scroll Down for Per-Tea Guides</h3>
-        <p class="text-sm text-zinc-500">Each tea below has a detailed buying guide: what to look for, common scams, price ranges, and search keywords. Click any tea row to expand its full profile with quality checks specific to that variety.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== FAMOUS TEAS EXPLORER ========== -->
-<section id="famous" class="py-20">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-12">
-      <p class="text-leaf-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">Tea Explorer</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-4">
-        Famous Chinese Teas
-      </h2>
-      <p class="text-zinc-500 max-w-xl mx-auto">
-        Click any tea to see its full profile -- flavor notes, brewing guide, buying tips, and history. Filter by type or click column headers to sort.
-      </p>
-    </div>
-
-    
-  <!-- Seasonal pick banner -->
-  <div class="max-w-5xl mx-auto mb-10 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl border border-amber-200 p-5 md:p-6">
-    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-      <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-2xl">&#9749;</div>
-      <div class="flex-1">
-        <p class="text-xs font-mono uppercase tracking-[0.15em] text-amber-600 mb-1">Seasonal Pick &middot; August 2026</p>
-        <p class="text-sm text-zinc-700 leading-relaxed">
-          <strong>Late summer calls for teas with depth.</strong> Spring-harvested white teas like Silver Needle are now perfectly rested. Roasted oolongs (Da Hong Pao) warm without overwhelming. Shou Pu-erh’s earthy richness matches the season’s slower pace. Scroll down to explore these and more with full buying guides for each.
-        </p>
-      </div>
-      <a href="#tea-silver-needle" class="flex-shrink-0 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-white text-sm font-semibold rounded-xl transition-colors whitespace-nowrap">
-        Try Silver Needle &#8594;
+    <!-- Top bar: horizontal brand + quick navigation (English-first) -->
+    <div class="absolute top-0 inset-x-0 px-8 xl:px-14 py-6 z-10 flex items-center justify-between">
+      <a href="/" class="inline-flex items-center gap-3 no-underline" aria-label="Chinese Tea Guide home">
+        <span class="w-9 h-9 rounded-[5px] bg-red-600 text-paper-50 grid place-items-center text-xl leading-none select-none shadow-[0_2px_6px_rgba(160,58,31,0.35)]" aria-hidden="true">茶</span>
+        <span class="font-accent italic text-xl font-semibold tracking-tight text-ink-900">Chinese Tea</span>
       </a>
-    </div>
-  </div>
-
-<div class="flex flex-wrap gap-2 justify-center mb-8" id="tea-filter">
-      <button class="px-4 py-1.5 rounded-full text-sm font-medium border-2 border-leaf-600 bg-leaf-600 text-white active" data-filter="all">All</button>
-      <button class="px-4 py-1.5 rounded-full text-sm font-medium border border-zinc-200 text-zinc-600 hover:border-leaf-300 hover:text-leaf-700 transition-colors" data-filter="Green">Green</button>
-      <button class="px-4 py-1.5 rounded-full text-sm font-medium border border-zinc-200 text-zinc-600 hover:border-leaf-300 hover:text-leaf-700 transition-colors" data-filter="White">White</button>
-      <button class="px-4 py-1.5 rounded-full text-sm font-medium border border-zinc-200 text-zinc-600 hover:border-leaf-300 hover:text-leaf-700 transition-colors" data-filter="Oolong">Oolong</button>
-      <button class="px-4 py-1.5 rounded-full text-sm font-medium border border-zinc-200 text-zinc-600 hover:border-leaf-300 hover:text-leaf-700 transition-colors" data-filter="Black">Black</button>
-      <button class="px-4 py-1.5 rounded-full text-sm font-medium border border-zinc-200 text-zinc-600 hover:border-leaf-300 hover:text-leaf-700 transition-colors" data-filter="Dark">Dark</button>
+      <nav class="hidden md:flex items-center gap-8" aria-label="Hero quick links">
+        {heroNav.map((l) => (
+          <a href={l.href} class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-ink-600 hover:text-accent transition-colors">{l.label}</a>
+        ))}
+      </nav>
     </div>
 
-        <div class="flex items-center gap-3">
-          <div class="relative flex-1 max-w-xs">
-            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            <input id="tea-search" type="text" placeholder="Search teas..." class="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-zinc-200 focus:border-leaf-400 focus:ring-1 focus:ring-leaf-400 outline-none transition-colors" />
-          </div>
-          <span id="tea-count" class="text-xs text-zinc-400 whitespace-nowrap"></span>
+    <!-- Bottom-center: the headline, modest width, centered -->
+    <div class="absolute inset-x-0 top-[62%] lg:top-[72%] -translate-y-1/2 px-6 z-10">
+      <div class="max-w-4xl mx-auto text-center">
+        <p class="flex items-center justify-center gap-3 font-mono text-xs font-medium tracking-[0.3em] uppercase text-accent mb-6">
+          <span class="inline-block w-8 h-px bg-accent/50"></span>
+          Chinese Tea Guide
+          <span class="inline-block w-8 h-px bg-accent/50"></span>
+        </p>
+        <h1 data-chars class="font-accent text-4xl md:text-5xl lg:text-[4.2rem] font-semibold tracking-tight leading-[1.06] text-ink-900">
+          From six types to your perfect cup
+        </h1>
+        <p class="mt-7 text-base md:text-lg text-warm-600 leading-relaxed max-w-2xl mx-auto">
+          Every type of Chinese tea comes from one plant — and everything else is craft. Practical guides to 21 famous teas, exact brewing temperatures, buying tips, and the culture behind 4,000 years of drinking.
+        </p>
+        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/teas" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 btn btn-primary text-base">Find Your Tea</a>
+          <a href="/types" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 btn btn-outline-ink text-base">Explore the Six Types</a>
         </div>
-    <div class="overflow-x-auto rounded-2xl border border-zinc-200">
-      <table class="w-full text-sm" id="tea-table">
+      </div>
+    </div>
+  </section>
+
+  <!-- Tea Detail Pages — every tea with its own guide, right under the hero -->
+  <section class="py-20">
+    <div class="section-container">
+      <div class="flex items-end justify-between mb-10 reveal">
+        <SectionHeader eyebrow="Tea Explorer" title="Tea Detail Pages" subtitle="Twenty-one iconic teas — each with its own page covering flavor profile, exact brewing parameters, buying tips, common scams, and history." headingLevel="h2" />
+        <a href="/teas" class="hidden md:inline-flex items-center gap-1.5 text-sm text-accent hover:underline flex-shrink-0 ml-6">View all 21</a>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {teas.map((t) => <TeaCard tea={t} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive explorer — filter, search, expand every tea -->
+  <section class="py-12 bg-gradient-to-b from-paper-100 to-white">
+    <div class="section-container">
+      <div class="text-center mb-10 reveal">
+        <SectionHeader eyebrow="Compare &amp; Search" title="Explore Every Tea Side by Side" subtitle="Filter by type, search by name or flavour, and click any row to expand its full brewing and buying profile." headingLevel="h2" center />
+      </div>
+      <TeaExplorer />
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var canvas = document.getElementById("js-canvas-container");
+      if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var ctx = canvas.getContext("2d");
+      var ink = [28, 25, 21];
+      var particles = [];
+      var w, h;
+      function resize() {
+        w = canvas.width = canvas.offsetWidth;
+        h = canvas.height = canvas.offsetHeight;
+        var count = Math.min(70, Math.floor((w * h) / 26000));
+        particles = [];
+        for (var i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            r: 0.6 + Math.random() * 1.8,
+            v: 0.08 + Math.random() * 0.28,
+            a: 0.05 + Math.random() * 0.16,
+            drift: (Math.random() - 0.5) * 0.12,
+          });
+        }
+      }
+      resize();
+      window.addEventListener("resize", resize);
+      function tick() {
+        ctx.clearRect(0, 0, w, h);
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+          p.y -= p.v;
+          p.x += p.drift;
+          if (p.y < -6) { p.y = h + 6; p.x = Math.random() * w; }
+          if (p.x < -6) p.x = w + 6;
+          if (p.x > w + 6) p.x = -6;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(" + ink[0] + "," + ink[1] + "," + ink[2] + "," + p.a + ")";
+          ctx.fill();
+        }
+        requestAnimationFrame(tick);
+      }
+      tick();
+    })();
+  </script>
+
+  <!-- Why this guide exists -->
+  <section class="max-w-[800px] mx-auto px-6 py-16 reveal">
+    <p class="text-sm font-medium tracking-wide text-accent/80 mb-3">Why This Guide Exists</p>
+    <p class="text-warm-700 leading-relaxed">
+      Most search results for Chinese tea give you one of three things: a <strong>Wikipedia-level overview</strong> (authoritative but impersonal), a <strong>commerce site</strong> trying to sell you tea (biased toward their inventory), or a <strong>surface-level listicle</strong> with photos and one-sentence descriptions (shallow on practical details).
+    </p>
+    <p class="text-warm-700 leading-relaxed mt-4">
+      This guide does what none of them do: it gives you <strong>actionable, experience-based information</strong> — exact brewing temperatures, realistic price ranges, common scams per tea, and quality checks — without any commercial agenda. Six types. Twenty-one famous teas. Every one with a full buying and brewing guide. Built for someone who genuinely wants to understand Chinese tea.
+    </p>
+  </section>
+
+  <!-- 3-step guide -->
+  <section class="section-container pb-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {heroSteps.map((s, i) => (
+        <a href={s.href} class="group card card-hover p-5 no-underline block">
+          <div class="w-10 h-10 rounded-full bg-leaf-100 text-accent flex items-center justify-center font-accent font-semibold mx-auto mb-3 group-hover:bg-leaf-600 group-hover:text-white transition-colors">{i + 1}</div>
+          <h3 class="font-semibold text-center text-warm-900 mb-1">{s.title}</h3>
+          <p class="text-sm text-center text-muted">{s.body}</p>
+        </a>
+      ))}
+    </div>
+    <p class="text-center mt-6 text-sm text-muted">Completely new to tea? <a href="/guides/beginners" class="text-accent underline">Start with the beginner's guide</a> — it's the shortest path to a proper cup.</p>
+  </section>
+
+  <!-- Quick comparison -->
+  <section class="section-container pb-20">
+    <div class="text-center mb-8 reveal">
+      <SectionHeader eyebrow="At a Glance" title="Quick Comparison" headingLevel="h2" center />
+    </div>
+    <div class="overflow-x-auto rounded-xl border border-paper-200 bg-white reveal">
+      <table class="w-full text-sm min-w-[760px]">
         <thead>
-          <tr class="bg-bone-50 text-left">
-            <th class="px-5 py-3 font-semibold text-zinc-700 cursor-pointer hover:text-leaf-600 transition-colors" data-sort="name">Tea Name <span class="text-zinc-400 ml-1">↕</span></th>
-            <th class="px-5 py-3 font-semibold text-zinc-700 cursor-pointer hover:text-leaf-600 transition-colors" data-sort="type">Type <span class="text-zinc-400 ml-1">↕</span></th>
-            <th class="px-5 py-3 font-semibold text-zinc-700 hidden sm:table-cell">Origin</th>
-            <th class="px-5 py-3 font-semibold text-zinc-700 hidden md:table-cell">Flavor</th>
-            <th class="px-5 py-3 font-semibold text-zinc-700 hidden lg:table-cell">Caffeine</th>
-            <th class="px-5 py-3 font-semibold text-zinc-700 hidden lg:table-cell">Beginner</th>
+          <tr class="bg-paper-100 text-left">
+            <th class="px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.15em] text-warm-500">Type</th>
+            <th class="px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.15em] text-warm-500">Oxidation</th>
+            <th class="px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.15em] text-warm-500">Caffeine</th>
+            <th class="px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.15em] text-warm-500">Brew Temp</th>
+            <th class="px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.15em] text-warm-500">Beginner</th>
+            <th class="px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.15em] text-warm-500">Price Range</th>
           </tr>
         </thead>
-        <tbody id="tea-table-body">
+        <tbody>
+          {comparisonRows.map((row, i) => {
+            const type = getTeaType(row.href.split('/').pop() ?? 'green');
+            const caffeineTone = row.caffeine.includes('High')
+              ? 'text-rose-700 bg-rose-50 border-rose-100'
+              : row.caffeine.includes('Low')
+                ? 'text-leaf-700 bg-leaf-50 border-leaf-100'
+                : 'text-amber-700 bg-amber-50 border-amber-100';
+            return (
+              <tr class={`${i % 2 === 0 ? 'bg-white' : 'bg-paper-100/40'} hover:bg-leaf-50/60 transition-colors`}>
+                <td class="px-5 py-3 font-medium text-warm-800 whitespace-nowrap">
+                  <a href={row.href} class="inline-flex items-center gap-2.5 no-underline group">
+                    <span class={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${type?.accent.bg ?? 'bg-leaf-500'}`} aria-hidden="true"></span>
+                    <span class="group-hover:text-accent group-hover:underline">{row.type}</span>
+                  </a>
+                </td>
+                <td class="px-5 py-3 text-muted whitespace-nowrap">{row.oxidation}</td>
+                <td class="px-5 py-3 whitespace-nowrap"><span class={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium border ${caffeineTone}`}>{row.caffeine}</span></td>
+                <td class="px-5 py-3 text-muted whitespace-nowrap">{row.brewTemp}</td>
+                <td class="px-5 py-3 whitespace-nowrap">
+                  <span class="text-amber-400" aria-label={`${row.beginner} out of 5 beginner-friendly`}>{'★★★★★'.slice(0, row.beginner)}</span><span class="text-paper-200">{'★★★★★'.slice(0, 5 - row.beginner)}</span>
+                </td>
+                <td class="px-5 py-3 text-muted whitespace-nowrap">{row.price}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
-  </div>
-</section>
+    <p class="mt-3 text-xs text-zinc-400 text-center">★ = beginner-friendly scale (5 = great starting point). Prices are loose-leaf ranges from specialist vendors; premium and collector lots cost far more.</p>
+  </section>
 
-<!-- ========== BREWING GUIDE ========== -->
-<section id="brewing" class="bg-bone-50 py-20">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-12">
-      <p class="text-leaf-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">How To</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-4">
-        How to Brew Chinese Tea
-      </h2>
-      <p class="text-zinc-500 max-w-xl mx-auto">
-        Each tea type has its own ideal temperature, time, and vessel. Master the basics for a perfect cup every time.
-      </p>
+  <!-- Find your tea -->
+  <section class="py-20 bg-gradient-to-b from-white to-paper-100">
+    <div class="section-container">
+      <div class="text-center mb-12 reveal">
+        <SectionHeader eyebrow="Interactive" title="Find Your Chinese Tea" subtitle="Not sure where to start? Tell us what you like, and we'll recommend the right Chinese tea for your palate." headingLevel="h2" center />
+      </div>
+      <FinderWidget />
+      <p class="text-center mt-6 text-sm text-muted">Prefer to browse? Explore every tea organized by taste in the <a href="/flavours" class="text-accent underline">Chinese Tea Flavour Guide</a>.</p>
     </div>
+  </section>
 
-    <div class="flex flex-wrap gap-2 justify-center mb-8" id="brew-tabs">
-      <button class="px-5 py-2 rounded-full text-sm font-medium bg-leaf-600 text-white active" data-brew="green">Green Tea</button>
-      <button class="px-5 py-2 rounded-full text-sm font-medium border border-zinc-200 text-zinc-600 hover:border-leaf-300 hover:text-leaf-700 transition-colors" data-brew="oolong">Oolong Tea</button>
-      <button class="px-5 py-2 rounded-full text-sm font-medium border border-zinc-200 text-zinc-600 hover:border-leaf-300 hover:text-leaf-700 transition-colors" data-brew="black">Black Tea</button>
-      <button class="px-5 py-2 rounded-full text-sm font-medium border border-zinc-200 text-zinc-600 hover:border-leaf-300 hover:text-leaf-700 transition-colors" data-brew="white">White Tea</button>
-      <button class="px-5 py-2 rounded-full text-sm font-medium border border-zinc-200 text-zinc-600 hover:border-leaf-300 hover:text-leaf-700 transition-colors" data-brew="puerh">Pu-erh</button>
-      <button class="px-5 py-2 rounded-full text-sm font-medium border border-zinc-200 text-zinc-600 hover:border-leaf-300 hover:text-leaf-700 transition-colors" data-brew="yellow">Yellow Tea</button>
-      <button class="px-5 py-2 rounded-full text-sm font-medium border border-zinc-200 text-zinc-600 hover:border-leaf-300 hover:text-leaf-700 transition-colors" data-brew="dark">Dark Tea</button>
-    </div>
-
-    <div class="max-w-2xl mx-auto bg-white rounded-2xl border border-zinc-200 p-8 shadow-sm" id="brew-content">
-      <!-- content rendered by JS -->
-    </div>
-  </div>
-</section>
-<!-- ========== WATER QUALITY GUIDE ========== -->
-<section id="water" class="py-20">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-14">
-      <p class="text-sky-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">The Foundation</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-4">
-        The Right Water for Chinese Tea
-      </h2>
-      <p class="text-zinc-500 max-w-2xl mx-auto">
-        Tea is 99% water. Lu Yu wrote in the Tea Classic that mountain spring water is best — but what does that mean for you at home?
-      </p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6">
-        <h3 class="font-semibold text-zinc-900 mb-2 flex items-center gap-2"><span class="text-sky-600">&#128167;</span> Spring Water (Bottled)</h3>
-        <p class="text-sm text-zinc-500 leading-relaxed"><strong>Ideal.</strong> Naturally balanced mineral content enhances the tea body and sweetness without masking flavor. Look for water with TDS (total dissolved solids) of <strong>30-80 ppm</strong> — this is the sweet spot for most Chinese teas. Mountain spring brands like Nongfu Spring (农夫山泉) are popular among Chinese tea drinkers for good reason.</p>
+  <!-- Brewing -->
+  <section class="py-20 bg-paper-100">
+    <div class="section-container">
+      <div class="text-center mb-12 reveal">
+        <SectionHeader eyebrow="How To" title="How to Brew Chinese Tea" subtitle="Each tea type has its own ideal temperature, time, and vessel. Master the basics for a perfect cup every time." headingLevel="h2" center />
       </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6">
-        <h3 class="font-semibold text-zinc-900 mb-2 flex items-center gap-2"><span class="text-sky-600">&#128701;</span> Filtered Water (Home)</h3>
-        <p class="text-sm text-zinc-500 leading-relaxed"><strong>The practical choice.</strong> A good activated carbon filter removes chlorine, odors, and organic compounds while preserving the helpful minerals that give tea body. This is what most serious home brewers use day to day. Replace your filter on schedule — exhausted filters do more harm than good.</p>
-      </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6">
-        <h3 class="font-semibold text-zinc-900 mb-2 flex items-center gap-2"><span class="text-amber-600">&#9888;</span> Distilled / RO Water</h3>
-        <p class="text-sm text-zinc-500 leading-relaxed"><strong>Too pure.</strong> Reverse osmosis and distilled water have almost zero mineral content. The result is a flat, thin, hollow-tasting tea — the water pulls flavor out of the leaves but has nothing to carry it. If you must use it, <strong>add a tiny pinch of mineral salt</strong> or blend 1:1 with spring water to restore body.</p>
-      </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6">
-        <h3 class="font-semibold text-zinc-900 mb-2 flex items-center gap-2"><span class="text-amber-600">&#9888;</span> Tap &amp; Hard Water</h3>
-        <p class="text-sm text-zinc-500 leading-relaxed"><strong>Depends.</strong> If your tap water tastes good on its own, it will make decent tea. If it has a noticeable chlorine taste, filter it first. <strong>Hard water</strong> (high calcium/magnesium) is a problem — the minerals bind to tea compounds, suppressing aroma and creating a dull, flat brew with surface scum. Soften hard water before brewing.</p>
+      <BrewingTabs />
+      <div class="text-center mt-10">
+        <a href="/guides/brewing" class="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">Full brewing guide — water, cold brew & teaware</a>
       </div>
     </div>
-    <div class="mt-8 max-w-5xl mx-auto text-center">
-      <p class="text-sm text-zinc-400">The simplest rule: <strong>if the water tastes good on its own, it will make good tea.</strong> If you would not drink a glass of it plain, do not brew tea with it.</p>
-    </div>
-  </div>
-</section>
+  </section>
 
-
-
-<!-- ========== 
-<!-- ========== COLD BREW GUIDE ========== -->
-<section id="coldbrew" class="py-20">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-14">
-      <p class="text-sky-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">Summer Method</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-4">Cold Brew Chinese Tea (Leng Pao)</h2>
-      <p class="text-zinc-500 max-w-2xl mx-auto">Cold brewing is not iced tea. It is a different extraction method that produces a sweeter, zero-bitter cup.</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-      <div>
-        <h3 class="font-semibold text-zinc-900 mb-4">Why Cold Brew Works</h3>
-        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Hot water rapidly extracts catechins and tannins — the compounds behind bitterness. Cold water extracts them much more slowly while still pulling out amino acids and aromatics. The result: naturally sweet, mellow tea that is almost impossible to over-brew.</p>
-        <h3 class="font-semibold text-zinc-900 mb-3 mt-6">Best Teas for Cold Brew</h3>
-        <div class="space-y-2 text-sm text-zinc-600">
-          <div class="flex gap-2"><span class="text-emerald-600 font-medium w-24 flex-shrink-0">Green</span> Longjing, Biluochun — crisp, refreshing</div>
-          <div class="flex gap-2"><span class="text-amber-600 font-medium w-24 flex-shrink-0">White</span> Silver Needle — sweet, melon-forward</div>
-          <div class="flex gap-2"><span class="text-orange-600 font-medium w-24 flex-shrink-0">Light Oolong</span> Tie Guan Yin — floral, cooling</div>
-          <div class="flex gap-2"><span class="text-red-600 font-medium w-24 flex-shrink-0">Avoid</span> Roasted, black, pu-erh — need heat</div>
-        </div>
-      </div>
-      <div>
-        <div class="bg-white rounded-2xl border border-zinc-200 p-6">
-          <h3 class="font-semibold text-zinc-900 mb-3">Method</h3>
-          <ol class="space-y-3 text-sm text-zinc-600">
-            <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-xs font-bold flex-shrink-0">1</span> <span>Add <strong>5g of tea leaves</strong> to a 500ml bottle.</span></li>
-            <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-xs font-bold flex-shrink-0">2</span> <span>Fill with <strong>cold filtered water</strong>.</span></li>
-            <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-xs font-bold flex-shrink-0">3</span> <span>Refrigerate for <strong>4 to 8 hours</strong>.</span></li>
-            <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-xs font-bold flex-shrink-0">4</span> <span>Strain, serve over ice. Leaves re-brew 1-2 more times.</span></li>
-          </ol>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-TEA BY REGION ========== -->
-<section id="regions" class="py-20">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-12">
-      <p class="text-leaf-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">Geography</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-4">
-        Chinese Tea by Region
-      </h2>
-      <p class="text-zinc-500 max-w-xl mx-auto">
-        Like wine, Chinese tea carries the character of its origin. Each province produces teas with distinct terroir and tradition.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Zhejiang -->
-      <div class="group bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-md transition-all">
-        <h3 class="font-semibold text-lg text-zinc-900 mb-2">Zhejiang <span class="text-xs font-normal text-zinc-400">浙江</span></h3>
-        <p class="text-sm text-zinc-500 mb-1">Home of China's most famous green tea, blessed with misty mountains and mild climate.</p>
-        <p class="text-xs text-zinc-400 mb-3 leading-relaxed"><strong>Terroir:</strong> West Lake (Xihu) near Hangzhou is the spiritual home of Longjing. The area's unique microclimate — mist-shrouded hills, mineral-rich spring water, and mild temperatures — produces tea with a distinctive chestnut aroma found nowhere else. Anji County's albino tea cultivar thrives in bamboo-covered mountains. <strong>Tradition:</strong> Zhejiang green teas are pan-fired rather than steamed, giving them a signature toasty warmth. Emperor Qianlong designated 18 Longjing tea bushes as imperial tribute — they still produce today. The province is the birthplace of China's modern tea industry and research.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700">Longjing</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700">Anji Bai Cha</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700">Gunpowder</span>
-        </div>
-      </div>
-
-      <!-- Fujian -->
-      <div class="group bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-md transition-all">
-        <h3 class="font-semibold text-lg text-zinc-900 mb-2">Fujian <span class="text-xs font-normal text-zinc-400">福建</span></h3>
-        <p class="text-sm text-zinc-500 mb-1">China's tea capital — produces more tea varieties than any other province.</p>
-        <p class="text-xs text-zinc-400 mb-3 leading-relaxed"><strong>Terroir:</strong> Wuyi Mountain's unique mineral-rich volcanic soil creates the legendary yan yun (rock rhythm) of Da Hong Pao and other rock teas. Anxi County's red soil and high humidity produce Tie Guan Yin's intoxicating orchid fragrance. Fuding's coastal mist nurtures the downy buds of Silver Needle. <strong>Tradition:</strong> Fujian is the origin of both gongfu tea ceremony and the modern oolong tea category. The province's tea masters developed the complex partial-oxidation techniques that range from floral Tie Guan Yin to deeply roasted Wuyi yancha — the widest spectrum of any tea category.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-orange-50 text-orange-700">Tie Guan Yin</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-orange-50 text-orange-700">Da Hong Pao</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-amber-50 text-amber-700">Silver Needle</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-red-50 text-red-700">Lapsang</span>
-        </div>
-      </div>
-
-      <!-- Yunnan -->
-      <div class="group bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-md transition-all">
-        <h3 class="font-semibold text-lg text-zinc-900 mb-2">Yunnan <span class="text-xs font-normal text-zinc-400">云南</span></h3>
-        <p class="text-sm text-zinc-500 mb-1">Birthplace of tea itself — ancient tea forests and the home of Pu-erh.</p>
-        <p class="text-xs text-zinc-400 mb-3 leading-relaxed"><strong>Terroir:</strong> Yunnan’s ancient tea forests house trees <strong>500-1,000+ years old</strong>, growing wild at 1,200-2,000m altitude. The indigenous large-leaf cultivar (da ye zhong) produces teas of extraordinary depth. <strong>Tradition:</strong> The Tea Horse Road (茶马古道) carried pressed Pu-erh cakes from Yunnan to Tibet for over a thousand years. Yunnan is the only place where tea still grows wild.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-stone-100 text-stone-700">Pu-erh</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-red-50 text-red-700">Dian Hong</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700">Yunnan Green</span>
-        </div>
-      </div>
-
-      <!-- Anhui -->
-      <div class="group bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-md transition-all">
-        <h3 class="font-semibold text-lg text-zinc-900 mb-2">Anhui <span class="text-xs font-normal text-zinc-400">安徽</span></h3>
-        <p class="text-sm text-zinc-500 mb-1">Known for its iconic Yellow Mountain teas and the world-famous Keemun black tea.</p>
-        <p class="text-xs text-zinc-400 mb-3 leading-relaxed"><strong>Terroir:</strong> Huangshan (Yellow Mountain), a UNESCO site, provides high-altitude gardens (800m+) shrouded in clouds — ideal for slow-growing, flavor-dense leaves. Qimen County’s unique soil gives Keemun its wine-like notes. <strong>Tradition:</strong> Anhui produces three of China’s Top Ten Teas. The province’s tea culture is tied to literati and poetry — Huangshan’s misty peaks inspired centuries of tea poetry.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700">Huangshan Maofeng</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-red-50 text-red-700">Keemun</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-yellow-50 text-yellow-700">Huoshan Huangya</span>
-        </div>
-      </div>
-
-      <!-- Jiangsu -->
-      <div class="group bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-md transition-all">
-        <h3 class="font-semibold text-lg text-zinc-900 mb-2">Jiangsu <span class="text-xs font-normal text-zinc-400">江苏</span></h3>
-        <p class="text-sm text-zinc-500 mb-1">Produces Biluochun, one of China's top ten teas, known for delicate fruity notes.</p>
-        <p class="text-xs text-zinc-400 mb-3 leading-relaxed"><strong>Terroir:</strong> Dongting Mountain rises from the shores of Lake Tai (Taihu), where plum, peach, and apricot trees grow among the tea bushes. The fruit blossoms' pollen infuses the tea leaves with Biluochun's signature fruity bouquet — a natural symbiosis found nowhere else. <strong>Tradition:</strong> Biluochun's name (Green Snail Spring) comes from its tightly curled shape, said to have been discovered when a tea picker carried leaves against her body. Jiangsu's tea culture is deeply intertwined with Suzhou's classical garden and literati traditions — tea appreciation here is an art form, not just a beverage.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700">Biluochun</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700">Rain Flower</span>
-        </div>
-      </div>
-
-      <!-- Guangdong -->
-      <div class="group bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-md transition-all">
-        <h3 class="font-semibold text-lg text-zinc-900 mb-2">Guangdong <span class="text-xs font-normal text-zinc-400">广东</span></h3>
-        <p class="text-sm text-zinc-500 mb-1">Famous for Phoenix Dancong oolongs with natural fruit and floral aromas.</p>
-        <p class="text-xs text-zinc-400 mb-3 leading-relaxed"><strong>Terroir:</strong> Phoenix Mountain’s volcanic soil and high altitudes (800-1,500m) produce Dan Cong teas that naturally mimic fruit and flower fragrances — no added flavoring. Each tea bush develops its own unique aroma profile. <strong>Tradition:</strong> The Chaozhou gongfu tea ceremony is the most refined in China, using tiny pots (under 100ml) and flash infusions. In Chaozhou, tea is not a hobby — it’s a way of life, consumed from morning to night.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-orange-50 text-orange-700">Phoenix Dan Cong</span>
-          <span class="px-2.5 py-0.5 text-xs rounded-full bg-orange-50 text-orange-700">Mi Lan Xiang</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== TEA CULTURE & CEREMONY ========== -->
-<section id="culture" class="bg-leaf-950 py-20 text-white">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="grid lg:grid-cols-2 gap-16 items-start">
-      <div>
-        <p class="text-leaf-300 text-sm font-mono uppercase tracking-[0.18em] mb-3">Tradition</p>
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-6">
-          Chinese Tea Culture &amp; Ceremony
-        </h2>
-        <p class="text-zinc-300 leading-relaxed mb-6">
-          Tea in China is far more than a drink — it's woven into daily life, art, poetry, and philosophy. For over 4,000 years, tea has been a medium for hospitality, meditation, and social connection.
-        </p>
-        <div class="space-y-4 mt-8">
-          <div class="flex gap-4">
-            <div class="w-10 h-10 rounded-lg bg-leaf-800 flex items-center justify-center flex-shrink-0 text-leaf-300 mt-0.5">茶</div>
-            <div>
-              <h3 class="font-semibold text-white mb-1">Gongfu Tea Ceremony</h3>
-              <p class="text-sm text-zinc-400">The Chinese approach to tea at its most refined. Using a small clay pot (often Yixing) or gaiwan, a high leaf-to-water ratio, and multiple short infusions (10-60 seconds each), gongfu cha reveals how a tea’s flavor evolves across 5-15+ steeps. Unlike the formal Japanese tea ceremony, gongfu cha is practiced casually at home — it’s less about ritual and <strong>more about the tea itself</strong>. The phrase means “tea made with skill,” and the focus is on extraction, temperature control, and appreciating the journey from first steep to last.</p>
-            </div>
-          </div>
-          <div class="flex gap-4">
-            <div class="w-10 h-10 rounded-lg bg-leaf-800 flex items-center justify-center flex-shrink-0 text-leaf-300 mt-0.5">礼</div>
-            <div>
-              <h3 class="font-semibold text-white mb-1">Tea as Hospitality</h3>
-              <p class="text-sm text-zinc-400">Serving tea to guests is a <strong>fundamental Chinese custom</strong> that predates recorded history. When you visit a Chinese home or office, tea appears before small talk begins — it’s a gesture of respect, warmth, and connection. The phrase "请喝茶" (please drink tea) is one of the most common expressions of welcome.</p>
-            </div>
-          </div>
-          <div class="flex gap-4">
-            <div class="w-10 h-10 rounded-lg bg-leaf-800 flex items-center justify-center flex-shrink-0 text-leaf-300 mt-0.5">婚</div>
-            <div>
-              <h3 class="font-semibold text-white mb-1">Wedding Tea Ceremony</h3>
-              <p class="text-sm text-zinc-400">The Chinese wedding tea ceremony is one of the <strong>most meaningful moments</strong> of the celebration. The bride and groom kneel before their parents and serve tea, formally transitioning from being “children” to “partners.” Parents often add auspicious ingredients — red dates (for early offspring), lotus seeds (for harmony), and longan (for sweetness). In return, parents offer red envelopes (hong bao) with gifts or money. This tradition appears across Chinese communities worldwide, from Beijing to San Francisco.</p>
-            </div>
-          </div>
-          <div class="flex gap-4">
-            <div class="w-10 h-10 rounded-lg bg-leaf-800 flex items-center justify-center flex-shrink-0 text-leaf-300 mt-0.5">指</div>
-            <div>
-              <h3 class="font-semibold text-white mb-1">Finger Tapping (Kou Zhi Li / 扣指礼)</h3>
-              <p class="text-sm text-zinc-400">When someone pours tea for you in China, you may see people <strong>tapping the table with their fingers</strong> instead of saying thank you. This is <strong>kou zhi li</strong> (扣指礼), a silent gesture of gratitude that dates back to the Qing Dynasty. <strong>Legend:</strong> Emperor Qianlong once traveled in disguise among commoners. When he poured tea for his servant, the servant couldn't kneel to express gratitude without revealing the emperor's identity. Instead, he bent his index and middle fingers and tapped the table — <strong>each bent finger representing a kneeling knee</strong>, a silent kowtow. The custom stuck and evolved. Today, the gesture varies by relationship: <strong>junior to senior</strong> — tap with curled knuckles (deeper respect); <strong>peers/equals</strong> — tap with two fingertips; <strong>senior to junior</strong> — tap once with a single finger. You'll see this everywhere from dim sum restaurants in Hong Kong to tea houses in Chengdu — a small gesture that carries centuries of history.</p>
-            </div>
-          </div>
-          <div class="flex gap-4">
-            <div class="w-10 h-10 rounded-lg bg-leaf-800 flex items-center justify-center flex-shrink-0 text-leaf-300 mt-0.5">禅</div>
-            <div>
-              <h3 class="font-semibold text-white mb-1">Chan and Tea (Chan Cha Yi Wei / 禅茶一味)</h3>
-              <p class="text-sm text-zinc-400">The saying <strong>chan cha yi wei</strong> (禅茶一味) — the oneness of Chan and tea — captures a thousand-year relationship between Buddhist meditation and tea drinking in China. During the Tang Dynasty, monks in Chan monasteries discovered that tea helped them <strong>stay alert during long hours of seated meditation</strong> without the agitation that other stimulants caused. The legendary founder of Chan Buddhism in China, Bodhidharma, is said to have torn off his eyelids to stay awake during meditation — and <strong>tea plants grew where they fell</strong>. Over centuries, tea became inseparable from monastic life: monasteries cultivated their own tea gardens, developed processing techniques, and used tea as both a meditation aid and a gesture of hospitality. The tea traditions of East Asia all trace back to this Chinese Chan-tea connection.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="bg-leaf-900/50 rounded-2xl border border-leaf-800 p-8">
-        <img src="/images/chinese-tea-culture.webp" alt="Chinese tea ceremony in a traditional setting" class="w-full rounded-xl mb-5" loading="lazy" width="800" height="533" />
-
-        <h3 class="font-semibold text-lg text-white mb-4">Tea Culture Quick Facts</h3>
-        <ul class="space-y-3 text-sm text-zinc-300">
-          <li class="flex gap-3"><span class="text-leaf-400 font-mono">01</span> Tea originated in China around 2737 BCE</li>
-          <li class="flex gap-3"><span class="text-leaf-400 font-mono">02</span> The "Tea Classic" (茶经) by Lu Yu was written in 760 CE</li>
-          <li class="flex gap-3"><span class="text-leaf-400 font-mono">03</span> All six tea types come from the same plant — Camellia sinensis</li>
-          <li class="flex gap-3"><span class="text-leaf-400 font-mono">04</span> China produces over 40% of the world's tea</li>
-          <li class="flex gap-3"><span class="text-leaf-400 font-mono">05</span> Yixing clay teapots are prized for absorbing tea oils over decades</li>
-          <li class="flex gap-3"><span class="text-leaf-400 font-mono">06</span> Aged pu-erh can cost as much as fine wine</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- ========== HEALTH BENEFITS ========== -->
-<section id="health" class="bg-bone-50 py-20">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-14">
-      <p class="text-leaf-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">Wellness</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-4">
-        Health Benefits of Chinese Tea
-      </h2>
-      <p class="text-zinc-500 max-w-2xl mx-auto">
-        For centuries, Chinese tea has been valued not just for flavor but for its effects on body and mind. Modern science is now catching up with tradition.
-      </p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6">
-        <div class="w-10 h-10 rounded-xl bg-leaf-100 flex items-center justify-center mb-4 text-leaf-700 font-bold">A</div>
-        <h3 class="font-semibold text-zinc-900 mb-2">Rich in Antioxidants</h3>
-        <p class="text-sm text-zinc-500 leading-relaxed">Chinese tea, especially green and white varieties, is packed with <strong>catechins</strong>, a class of polyphenol antioxidants. The most studied is <strong>EGCG</strong> (epigallocatechin gallate), which research suggests may help reduce oxidative stress and support cellular health. <a href="https://pubmed.ncbi.nlm.nih.gov/28864169/" target="_blank" rel="noopener" class="text-leaf-600 underline hover:text-leaf-700 text-xs">[source]</a> Green tea typically contains 30-40% catechins by dry weight — among the highest of any food.</p>
-      </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6">
-        <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center mb-4 text-amber-700 font-bold">Z</div>
-        <h3 class="font-semibold text-zinc-900 mb-2">Calm Focus (L-Theanine)</h3>
-        <p class="text-sm text-zinc-500 leading-relaxed">Tea is the only natural source of <strong>L-theanine</strong>, an amino acid that promotes relaxed alertness. It increases alpha brain waves — the same state associated with meditation — <a href="https://pubmed.ncbi.nlm.nih.gov/18296328/" target="_blank" rel="noopener" class="text-leaf-600 underline hover:text-leaf-700 text-xs">[source]</a> — while <strong>counteracting caffeine jitters</strong>. This is why tea drinkers describe the energy as a calm, sustained focus rather than the spike and crash of coffee. Matcha and shade-grown teas are particularly high in L-theanine.</p>
-      </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6">
-        <div class="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center mb-4 text-red-700 font-bold">HT</div>
-        <h3 class="font-semibold text-zinc-900 mb-2">Heart &amp; Metabolic Health</h3>
-        <p class="text-sm text-zinc-500 leading-relaxed">Regular tea consumption has been linked to improved cardiovascular markers in multiple large-scale studies. <a href="https://pubmed.ncbi.nlm.nih.gov/23780706/" target="_blank" rel="noopener" class="text-leaf-600 underline hover:text-leaf-700 text-xs">[source]</a> The combination of catechins and moderate caffeine may also support <strong>metabolic rate</strong>. Dark teas like Pu-erh have traditionally been consumed after heavy meals for their perceived digestive benefits — a custom now being studied for its effects on lipid metabolism.</p>
-      </div>
-    </div>
-    <div class="mt-10 bg-white rounded-2xl border border-zinc-200 p-6 md:p-8">
-      <h3 class="font-semibold text-zinc-900 mb-4">Caffeine in Chinese Tea vs. Coffee</h3>
-      <p class="text-sm text-zinc-500 leading-relaxed mb-4">An 8oz cup of coffee contains ~95mg of caffeine. Chinese tea varies widely <strong>by type and brewing method</strong>:</p>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-        <div class="p-3 bg-bone-50 rounded-lg text-center"><span class="block text-xs text-zinc-400 mb-0.5">White Tea</span><span class="font-semibold text-zinc-800">15-25mg</span></div>
-        <div class="p-3 bg-bone-50 rounded-lg text-center"><span class="block text-xs text-zinc-400 mb-0.5">Green Tea</span><span class="font-semibold text-zinc-800">25-35mg</span></div>
-        <div class="p-3 bg-bone-50 rounded-lg text-center"><span class="block text-xs text-zinc-400 mb-0.5">Oolong</span><span class="font-semibold text-zinc-800">30-45mg</span></div>
-        <div class="p-3 bg-bone-50 rounded-lg text-center"><span class="block text-xs text-zinc-400 mb-0.5">Black / Pu-erh</span><span class="font-semibold text-zinc-800">40-70mg</span></div>
-      </div>
-      <p class="text-xs text-zinc-400 mt-4">Multiple short gongfu infusions release caffeine more gradually than a single long Western steep. L-theanine in tea smooths out the caffeine curve, producing alert calm rather than a spike.</p>
-    </div>
-  </div>
-</section>
-
-
-
-<!-- ========== TEA & FOOD PAIRING ========== -->
-<section id="pairing" class="py-20 bg-bone-50">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-14">
-      <p class="text-amber-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">Pairings</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-4">
-        Chinese Tea &amp; Food Pairing
-      </h2>
-      <p class="text-zinc-500 max-w-2xl mx-auto">
-        The right tea elevates a meal. Each type of Chinese tea has natural food companions that bring out its best qualities.
-      </p>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-md hover:border-emerald-200 transition-all group">
-        <div class="flex items-start gap-4 mb-4">
-          <div class="w-14 h-14 rounded-xl bg-emerald-50 flex items-center justify-center text-3xl flex-shrink-0 group-hover:scale-110 transition-transform">&#127807;</div>
-          <div>
-            <h3 class="font-semibold text-lg text-zinc-900">Green Tea</h3>
-            <p class="text-xs text-zinc-400 mt-0.5">Seafood · Salads · Light Dim Sum</p>
-          </div>
-        </div>
-        <p class="text-sm text-zinc-500 leading-relaxed">The clean vegetal character of green tea cuts through delicate flavors without overwhelming them. Longjing with steamed fish is a Hangzhou classic. Biluochun alongside fresh spring greens makes each taste greener. Gunpowder green stands up to garlic and ginger in stir-fried dishes.</p>
-      </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-md hover:border-amber-200 transition-all group">
-        <div class="flex items-start gap-4 mb-4">
-          <div class="w-14 h-14 rounded-xl bg-amber-50 flex items-center justify-center text-3xl flex-shrink-0 group-hover:scale-110 transition-transform">&#127793;</div>
-          <div>
-            <h3 class="font-semibold text-lg text-zinc-900">White Tea</h3>
-            <p class="text-xs text-zinc-400 mt-0.5">Fresh Fruit · Mild Cheese · Pastries</p>
-          </div>
-        </div>
-        <p class="text-sm text-zinc-500 leading-relaxed">White tea subtlety disappears next to strong flavors. Serve it with food as delicate as itself. The natural sweetness of Silver Needle complements honeydew melon or plain butter cookies. White Peony holds its own with soft cheeses and light salads.</p>
-      </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-md hover:border-orange-200 transition-all group">
-        <div class="flex items-start gap-4 mb-4">
-          <div class="w-14 h-14 rounded-xl bg-orange-50 flex items-center justify-center text-3xl flex-shrink-0 group-hover:scale-110 transition-transform">&#127861;</div>
-          <div>
-            <h3 class="font-semibold text-lg text-zinc-900">Oolong</h3>
-            <p class="text-xs text-zinc-400 mt-0.5">Dim Sum · Roasted Meats · Nuts</p>
-          </div>
-        </div>
-        <p class="text-sm text-zinc-500 leading-relaxed">The most versatile pairing tea. Floral Tie Guan Yin complements har gow and siu mai beautifully. Roasted Da Hong Pao stands up to char siu and Peking duck. Dan Cong with roasted almonds is a Chaozhou ritual that has been practiced for centuries.</p>
-      </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-md hover:border-red-200 transition-all group">
-        <div class="flex items-start gap-4 mb-4">
-          <div class="w-14 h-14 rounded-xl bg-red-50 flex items-center justify-center text-3xl flex-shrink-0 group-hover:scale-110 transition-transform">&#9749;</div>
-          <div>
-            <h3 class="font-semibold text-lg text-zinc-900">Black Tea</h3>
-            <p class="text-xs text-zinc-400 mt-0.5">Breakfast · Chocolate · Baked Goods</p>
-          </div>
-        </div>
-        <p class="text-sm text-zinc-500 leading-relaxed">Keemun is the natural breakfast tea — eggs, toast, pastries, all elevated. Dian Hong with dark chocolate is a revelation; the sweet potato notes mirror cocoa richness. Lapsang Souchong holds its own against barbecue and smoked meats like nothing else.</p>
-      </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-md hover:border-stone-300 transition-all group">
-        <div class="flex items-start gap-4 mb-4">
-          <div class="w-14 h-14 rounded-xl bg-stone-100 flex items-center justify-center text-3xl flex-shrink-0 group-hover:scale-110 transition-transform">&#127858;</div>
-          <div>
-            <h3 class="font-semibold text-lg text-zinc-900">Dark Tea (Pu-erh)</h3>
-            <p class="text-xs text-zinc-400 mt-0.5">Heavy Meats · Oily Dishes · Aged Cheese</p>
-          </div>
-        </div>
-        <p class="text-sm text-zinc-500 leading-relaxed">Pu-erh is famous as a digestive aid after heavy meals. The earthy, fermented notes cut through grease and richness. Shou pu-erh after hot pot or BBQ is standard practice in Yunnan and Guangdong. Aged sheng with lamb stew is a winter ritual worth seeking out.</p>
-      </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6 hover:shadow-md hover:border-yellow-200 transition-all group">
-        <div class="flex items-start gap-4 mb-4">
-          <div class="w-14 h-14 rounded-xl bg-yellow-50 flex items-center justify-center text-3xl flex-shrink-0 group-hover:scale-110 transition-transform">&#127856;</div>
-          <div>
-            <h3 class="font-semibold text-lg text-zinc-900">Yellow Tea</h3>
-            <p class="text-xs text-zinc-400 mt-0.5">Light Soups · Tofu · Plain Congee</p>
-          </div>
-        </div>
-        <p class="text-sm text-zinc-500 leading-relaxed">Yellow tea exceptional mellow character is easily overwhelmed. Serve it before or after a meal rather than during. If pairing, stick to the simplest foods — a bowl of plain rice porridge with Huoshan Huangya is a quiet, understated luxury.</p>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- ========== TEAWARE ESSENTIALS ========== -->
-<section class="py-20">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-12">
-      <p class="text-leaf-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">Equipment</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-4">
-        Teaware Essentials
-      </h2>
-      <p class="text-zinc-500 max-w-xl mx-auto">
-        The right teaware transforms brewing from routine to ritual. Start with these fundamentals.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-      <div class="text-center p-6 bg-white rounded-2xl border border-zinc-200 hover:border-leaf-200 transition-colors">
-        <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-leaf-50 flex items-center justify-center text-3xl">🫖</div>
-        <h3 class="font-semibold text-zinc-900 mb-1">Gaiwan</h3>
-        <p class="text-xs text-zinc-500 leading-relaxed">The universal Chinese brewing vessel: bowl, lid, and saucer. Use for <strong>any tea type</strong> — the porcelain is neutral and won’t absorb flavors. The lid doubles as a strainer. Beginner-friendly and easy to clean. <span class="text-zinc-400 mt-1 block">Price: $8-20 for a basic porcelain gaiwan (100-150ml).</span></p>
-      </div>
-      <div class="text-center p-6 bg-white rounded-2xl border border-zinc-200 hover:border-leaf-200 transition-colors">
-        <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-leaf-50 flex items-center justify-center text-3xl">🫗</div>
-        <h3 class="font-semibold text-zinc-900 mb-1">Yixing Teapot</h3>
-        <p class="text-xs text-zinc-500 leading-relaxed">Handcrafted from <strong>zisha (purple clay)</strong> found only in Yixing, Jiangsu. The unglazed, porous clay <strong>absorbs tea oils over time</strong>, enhancing flavor with each use. <strong>Dedicate one pot to one tea type</strong> (never mix green and pu-erh in the same Yixing pot). Not for beginners — start with a gaiwan first. <span class="text-zinc-400 mt-1 block">Price: $30-200+ depending on clay quality and craftsmanship.</span></p>
-      </div>
-      <div class="text-center p-6 bg-white rounded-2xl border border-zinc-200 hover:border-leaf-200 transition-colors">
-        <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-leaf-50 flex items-center justify-center text-3xl">☕</div>
-        <h3 class="font-semibold text-zinc-900 mb-1">Fairness Pitcher (Gong Dao Bei)</h3>
-        <p class="text-xs text-zinc-500 leading-relaxed">The <strong>unsung hero of gongfu brewing</strong>. After steeping, pour tea from the gaiwan or teapot into the pitcher first — this <strong>equalizes the strength</strong> across all cups. Without it, the first pour is weak and the last pour is over-steeped. Glass pitchers let you admire the tea’s color. <span class="text-zinc-400 mt-1 block">Price: $10-30 for borosilicate glass.</span></p>
-      </div>
-      <div class="text-center p-6 bg-white rounded-2xl border border-zinc-200 hover:border-leaf-200 transition-colors">
-        <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-leaf-50 flex items-center justify-center text-3xl">🧋</div>
-        <h3 class="font-semibold text-zinc-900 mb-1">Aroma + Tasting Cups</h3>
-        <p class="text-xs text-zinc-500 leading-relaxed">Gongfu brewing uses <strong>two cups per person</strong>: a tall, narrow <strong>aroma cup</strong> (wen xiang bei) to capture fragrance, and a wide <strong>tasting cup</strong> (pin ming bei) for sipping. Pour from aroma cup into tasting cup, then <strong>inhale the empty aroma cup</strong> — the fragrance lingers. For casual brewing, any small (30-60ml) porcelain cup works. <span class="text-zinc-400 mt-1 block">Price: $5-25 for a set of 4-6 cups.</span></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== BUYING GUIDE ========== -->
-<section id="buying" class="py-20">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-14">
-      <p class="text-amber-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">Practical Advice</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-4">
-        How to Buy Authentic Chinese Tea
-      </h2>
-      <p class="text-zinc-500 max-w-2xl mx-auto">
-        The Chinese tea market is vast and unregulated. Counterfeits are common. Here is how to shop with confidence.
-      </p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6">
-        <h3 class="font-semibold text-zinc-900 mb-3 flex items-center gap-2"><span class="text-leaf-600">&#10003;</span> What to Look For</h3>
-        <ul class="space-y-2 text-sm text-zinc-600">
-          <li><strong>Harvest date:</strong> Freshness matters. Look for spring harvest dates for green, white, and oolong teas. Vendors who hide the harvest date are usually selling old stock.</li>
-          <li><strong>Specific origin:</strong> Good tea names the mountain, village, or county. A tea from Shifeng is far more meaningful than just Zhejiang green tea.</li>
-          <li><strong>Cultivar:</strong> Premium vendors specify the tea plant variety. Different cultivars of the same tea type can taste radically different.</li>
-          <li><strong>Whole, intact leaves:</strong> Quality loose leaf tea should look like whole leaves, not dust. After brewing, the leaves should be intact and identifiable.</li>
-          <li><strong>Dry aroma:</strong> Good tea smells good in the bag. A tea with no fragrance when dry will have no fragrance when brewed.</li>
-        </ul>
-      </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6">
-        <h3 class="font-semibold text-zinc-900 mb-3 flex items-center gap-2"><span class="text-amber-600">&#9888;</span> Red Flags to Avoid</h3>
-        <ul class="space-y-2 text-sm text-zinc-600">
-          <li><strong>No origin listed:</strong> If the tea just says Chinese Green Tea with no specific origin, assume it is the lowest-quality bulk commodity tea.</li>
-          <li><strong>Suspiciously low prices:</strong> If a famous tea like Longjing is $5 per 100g, it is almost certainly fake. Premium Chinese teas cost more because skilled hand-processing is expensive.</li>
-          <li><strong>Broken leaves or dust:</strong> Tea bags are almost always filled with the lowest grade of leaf fragments. Loose leaf with many broken pieces signals machine harvesting and rough handling.</li>
-          <li><strong>Artificial fragrance:</strong> Some teas are sprayed with flavoring to mask low quality. Natural tea aroma evolves across infusions; artificial scents fade after the first steep.</li>
-          <li><strong>Vague tasting notes:</strong> If a vendor cannot describe a tea beyond smooth or delicious, they either do not know the tea or it is not worth knowing.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="mt-10 bg-amber-50 rounded-2xl border border-amber-200 p-6 md:p-8 max-w-5xl mx-auto">
-      <h3 class="font-semibold text-zinc-900 mb-3">Price Reality Check by Tea Type</h3>
-      <p class="text-sm text-zinc-600 mb-4">These are realistic price ranges for good-quality tea from reputable sources. Prices below these ranges are red flags.</p>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
-        <div class="p-3 bg-white rounded-lg"><span class="block text-xs text-zinc-400 mb-0.5">Green Tea</span><span class="font-semibold text-zinc-800">$8-30 / 100g</span><span class="block text-xs text-zinc-400">premium $40-100+</span></div>
-        <div class="p-3 bg-white rounded-lg"><span class="block text-xs text-zinc-400 mb-0.5">White Tea</span><span class="font-semibold text-zinc-800">$10-25 / 100g</span><span class="block text-xs text-zinc-400">Silver Needle $50-100+</span></div>
-        <div class="p-3 bg-white rounded-lg"><span class="block text-xs text-zinc-400 mb-0.5">Oolong</span><span class="font-semibold text-zinc-800">$8-30 / 100g</span><span class="block text-xs text-zinc-400">Wuyi yancha $30-300+</span></div>
-        <div class="p-3 bg-white rounded-lg"><span class="block text-xs text-zinc-400 mb-0.5">Black Tea</span><span class="font-semibold text-zinc-800">$8-20 / 100g</span><span class="block text-xs text-zinc-400">premium $25-70</span></div>
-        <div class="p-3 bg-white rounded-lg"><span class="block text-xs text-zinc-400 mb-0.5">Pu-erh (Shou)</span><span class="font-semibold text-zinc-800">$10-25 / 357g cake</span><span class="block text-xs text-zinc-400">aged $50-150+</span></div>
-        <div class="p-3 bg-white rounded-lg"><span class="block text-xs text-zinc-400 mb-0.5">Pu-erh (Sheng)</span><span class="font-semibold text-zinc-800">$15-40 / 357g cake</span><span class="block text-xs text-zinc-400">famous mountain $100-500+</span></div>
-      </div>
-    </div>
-    <div class="mt-6 max-w-5xl mx-auto">
-      <p class="text-xs text-zinc-400 text-center">Each tea in our <a href="#famous" class="text-leaf-600 underline">Famous Teas table</a> above includes specific buying advice, quality checks, and common scams to watch for.</p>
-    </div>
-  </div>
-</section>
-
-
-
-
-<!-- ========== 
-<!-- ========== TEA STORAGE GUIDE ========== -->
-<section id="storage" class="py-20 bg-bone-50">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-14">
-      <p class="text-leaf-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">Preservation</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-4">How to Store Chinese Tea</h2>
-      <p class="text-zinc-500 max-w-2xl mx-auto">Proper storage keeps fresh tea vibrant for months or helps aged teas develop complexity over decades.</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6">
-        <h3 class="font-semibold text-zinc-900 mb-3 flex items-center gap-2"><span class="text-emerald-600">Fresh</span> Green, White, Yellow</h3>
-        <ul class="space-y-2 text-sm text-zinc-600">
-          <li><strong>Airtight opaque container</strong> — ceramic, tin, or dark glass. Light and air are enemies.</li>
-          <li><strong>Cool, dark place</strong> at room temperature. Never refrigerate; condensation ruins leaves.</li>
-          <li><strong>Consume within 6 to 12 months</strong> of harvest. These teas do not improve with age.</li>
-          <li><strong>Avoid:</strong> fridge, sunlight, plastic bags (absorb odors), proximity to spices or coffee.</li>
-        </ul>
-      </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6">
-        <h3 class="font-semibold text-zinc-900 mb-3 flex items-center gap-2"><span class="text-orange-600">Aged</span> Oolong and Black Tea</h3>
-        <ul class="space-y-2 text-sm text-zinc-600">
-          <li><strong>Light oolongs</strong> store like green tea — airtight, cool, under a year.</li>
-          <li><strong>Roasted oolongs</strong> keep 1 to 2 years. Some are intentionally aged.</li>
-          <li><strong>Black tea</strong> 1 to 2 years airtight. More forgiving but still fades.</li>
-          <li>All benefit from a <strong>dedicated tea cabinet</strong>, not the kitchen spice rack.</li>
-        </ul>
-      </div>
-      <div class="bg-white rounded-2xl border border-zinc-200 p-6">
-        <h3 class="font-semibold text-zinc-900 mb-3 flex items-center gap-2"><span class="text-stone-600">Aging</span> Dark Tea and Pu-erh</h3>
-        <ul class="space-y-2 text-sm text-zinc-600">
-          <li><strong>Breathable storage</strong> — not airtight. Pu-erh needs airflow to age.</li>
-          <li><strong>Stable environment</strong> — moderate humidity (60-70%), away from sun and vents.</li>
-          <li><strong>Away from strong odors</strong> — pu-erh absorbs everything like a sponge.</li>
-          <li><strong>Common mistake:</strong> sealing pu-erh in plastic stops aging. Let cakes breathe.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-ABOUT / TRUST ========== -->
-<section class="py-16">
-  <div class="max-w-3xl mx-auto px-4">
-    <div class="bg-white rounded-2xl border border-zinc-200 p-8 md:p-10">
-      <div class="flex flex-col md:flex-row gap-8 items-start">
-        <div class="flex-shrink-0">
-          <div class="w-16 h-16 rounded-2xl bg-leaf-600 flex items-center justify-center text-white text-2xl font-bold">&#33590;</div>
-        </div>
+  <!-- Regions teaser -->
+  <section class="py-20 reveal">
+    <div class="section-container">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
-          <p class="text-leaf-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">About This Guide</p>
-          <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-zinc-900 mb-4">
-            Why You Can Trust Us
-          </h2>
-          <p class="text-zinc-600 leading-relaxed mb-4">
-              <p class="text-zinc-600 leading-relaxed mb-4"><strong>Written by tea enthusiasts with 10+ years of gongfu brewing experience.</strong> Every tea on this page has been blind-tasted, side-by-side compared, and brewed multiple ways. Our methodology: we buy teas at market prices (never free samples), steep them blind, and only recommend what stands up to repeat tasting.</p>
-              <p class="text-zinc-600 leading-relaxed mb-4">We’ve sampled 200+ Chinese teas across 5 tea-producing provinces, consulted with 3 tea masters, and spent over a decade brewing gongfu style. Every recommendation comes from direct experience.</p>
-          </p>
-          <p class="text-zinc-600 leading-relaxed mb-4">
-            We don’t accept sponsorships from tea vendors. We don’t earn commissions on the teas we recommend. We just want you to drink better tea.
-          <p class="text-zinc-600 leading-relaxed mb-4">
-            Most search results for Chinese tea give you one of three things: a <strong>Wikipedia-level overview</strong> (authoritative but impersonal), a <strong>commerce site</strong> trying to sell you tea (biased toward their inventory), or a <strong>surface-level listicle</strong> with photos and one-sentence descriptions (shallow on practical details). This guide does what none of them do: it gives you <strong>actionable, experience-based information</strong> — exact brewing temperatures, realistic price ranges, common scams per tea, and quality checks — without any commercial agenda. We built this for someone who genuinely wants to understand Chinese tea, not just skim a list.
-          </p>
-          </p>
-          <div class="flex flex-wrap gap-4 text-xs text-zinc-400">
-            <span class="flex items-center gap-1.5">
-              <svg class="w-4 h-4 text-leaf-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              Updated August 2026
-            </span>
-            <span class="flex items-center gap-1.5">
-              <svg class="w-4 h-4 text-leaf-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              Quarterly reviews
-            </span>
-            <span class="flex items-center gap-1.5">
-              <svg class="w-4 h-4 text-leaf-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              No sponsored recommendations
-            </span>
+          <SectionHeader eyebrow="Geography" title="Chinese Tea by Region" subtitle="Like wine, Chinese tea carries the character of its origin. Each province produces teas with distinct terroir and tradition — from Longjing's chestnut aroma in Zhejiang to Pu-erh's ancient forests in Yunnan." headingLevel="h2" />
+          <div class="mt-8 flex flex-wrap gap-3">
+            {['Zhejiang', 'Fujian', 'Yunnan', 'Anhui', 'Jiangsu', 'Guangdong'].map((r) => (
+              <a href="/regions" class="px-4 py-2 border border-paper-200 rounded-full text-sm text-warm-700 hover:text-accent hover:border-leaf-300 hover:bg-leaf-50/60 transition">{r}</a>
+            ))}
           </div>
+        </div>
+        <div class="relative">
+          <div class="absolute -inset-4 rounded-xl bg-gradient-to-br from-leaf-200/40 to-amber-200/20 blur-2xl"></div>
+          <img src="/images/chinese-tea-hero.webp" alt="Gongfu tea brewing with hot water being poured into a gaiwan" class="relative rounded-xl shadow-xl w-full" loading="lazy" width="800" height="533" />
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ========== FAQ ========== -->
-<section id="faq" class="bg-bone-50 py-20">
-  <div class="max-w-3xl mx-auto px-4">
-    <div class="text-center mb-12">
-      <p class="text-leaf-600 text-sm font-mono uppercase tracking-[0.18em] mb-3">Questions</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 mb-4">
-        Frequently Asked Questions
-      </h2>
-    </div>
-
-    <div class="space-y-3">
-      {faqData.map((item, i) => (
-        <details class="group bg-white rounded-xl border border-zinc-200 overflow-hidden">
-          <summary class="px-6 py-4 cursor-pointer font-medium text-zinc-800 hover:text-leaf-700 transition-colors list-none flex items-center justify-between">
-            {item.q}
-            <svg class="w-5 h-5 text-zinc-400 group-open:rotate-180 transition-transform flex-shrink-0 ml-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </summary>
-          <div class="px-6 pb-4 text-zinc-600 text-sm leading-relaxed">
-            <p set:html={item.a} />
+  <!-- Culture teaser -->
+  <section class="bg-leaf-950 py-20 text-white">
+    <div class="section-container">
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <div class="reveal">
+          <SectionHeader eyebrow="Tradition" title="Chinese Tea Culture & Ceremony" subtitle="Tea in China is far more than a drink — it's woven into daily life, art, poetry, and philosophy. For over 4,000 years, tea has been a medium for hospitality, meditation, and social connection." headingLevel="h2" dark />
+          <blockquote class="pullquote text-leaf-200 mt-8 border-l-2 border-leaf-600 pl-6">“Tea is water with a memory of stone and sky.”</blockquote>
+          <div class="mt-8 space-y-4">
+            {cultureEntries.slice(0, 3).map((e) => (
+              <div class="flex gap-4">
+                <div class="w-10 h-10 rounded-lg bg-leaf-800 flex items-center justify-center flex-shrink-0 text-leaf-300 mt-0.5">{e.mark}</div>
+                <div>
+                  <h3 class="font-semibold text-white mb-1">{e.title}</h3>
+                  <p class="text-sm text-leaf-100/70 line-clamp-3">{e.body}</p>
+                </div>
+              </div>
+            ))}
           </div>
-        </details>
-      ))}
+          <a href="/culture" class="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-leaf-300 hover:text-white transition-colors">Read the full culture guide →</a>
+        </div>
+        <div class="bg-leaf-900/50 rounded-xl border border-leaf-800 p-8 reveal">
+          <img src="/images/chinese-tea-culture.webp" alt="Chinese tea ceremony in a traditional setting" class="w-full rounded-lg mb-5" loading="lazy" width="800" height="533" />
+          <h3 class="font-semibold text-lg text-white mb-4">Tea Culture Quick Facts</h3>
+          <ul class="space-y-3 text-sm text-leaf-100/80">
+            {cultureFacts.map((f, i) => (
+              <li class="flex gap-3"><span class="text-leaf-400 font-mono">{String(i + 1).padStart(2, '0')}</span> {f}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FAQ Schema -->
-<script type="application/ld+json" set:html={faqSchema} />
+  <!-- Trust signals -->
+  <section class="section-container py-20 reveal">
+    <SectionHeader eyebrow="Why Trust This Site" title="Written by People Who Drink the Tea" subtitle="The bar is high for advice you're going to act on. Here's how we meet it." headingLevel="h2" />
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="border-t-2 border-accent pt-4"><div class="flex items-center gap-2 mb-2"><BadgeCheck class="w-5 h-5 text-accent flex-shrink-0" /><h3 class="font-semibold text-lg">Verified Parameters</h3></div><p class="text-sm text-muted leading-relaxed">Every temperature, price, and ratio is based on direct market data and re-checked quarterly.</p></div>
+      <div class="border-t-2 border-accent pt-4"><div class="flex items-center gap-2 mb-2"><FlaskConical class="w-5 h-5 text-accent flex-shrink-0" /><h3 class="font-semibold text-lg">Blind Tasted</h3></div><p class="text-sm text-muted leading-relaxed">Every tea is brewed blind, multiple ways, before it earns a recommendation. We buy at market prices — never free samples.</p></div>
+      <div class="border-t-2 border-accent pt-4"><div class="flex items-center gap-2 mb-2"><HandCoins class="w-5 h-5 text-accent flex-shrink-0" /><h3 class="font-semibold text-lg">No Sponsorships</h3></div><p class="text-sm text-muted leading-relaxed">We accept no sponsorships from vendors and earn no commissions on teas we recommend.</p></div>
+      <div class="border-t-2 border-accent pt-4"><div class="flex items-center gap-2 mb-2"><SearchX class="w-5 h-5 text-accent flex-shrink-0" /><h3 class="font-semibold text-lg">No AI Fluff</h3></div><p class="text-sm text-muted leading-relaxed">Every paragraph answers a real question a tea drinker would ask. No padding, no recycled text.</p></div>
+    </div>
+  </section>
 
+  <CTACard primaryHref="/teas" primaryLabel="Browse All Teas" secondaryHref="/guides/buying" secondaryLabel="Read the Buying Guide" />
 
-<!-- ========== SEO TEA DETAILS (structured data for search engines) ========== -->
-<section aria-label="Tea details for search indexing" style="display:none">
-  {teaDetails.map((tea) => (
-    <article id={"seo-" + tea.id}>
-      <h2>{tea.name} ({tea.nameChinese})</h2>
-      <p>{tea.type} tea from {tea.origin}. {tea.flavorShort}.</p>
-      <h3>Flavor Profile</h3>
-      <p>Aroma: {tea.flavor.aroma}. Taste: {tea.flavor.taste}. Color: {tea.flavor.color}. Body: {tea.flavor.body}. Caffeine: {tea.caffeine}. Harvest: {tea.harvest}.</p>
-      <h3>Brewing Guide</h3>
-      <p>Water: {tea.brewing.temp}. Gongfu: {tea.brewing.timeGongfu}. Western: {tea.brewing.timeWestern}. Vessel: {tea.brewing.vessel}. Ratio: {tea.brewing.ratio}. Infusions: {tea.brewing.infusions}.</p>
-      <h3>Buying Guide</h3>
-      <p>Entry: {tea.buying.priceEntry}. Premium: {tea.buying.priceAdvance}. Quality: {tea.buying.qualityCheck}. Watch out: {tea.buying.commonScams}. Search: {tea.buying.searchKeywords}.</p>
-      <h3>History</h3>
-      <p>{tea.history}</p>
-      <p><strong>Ideal for:</strong> {tea.idealFor}</p>
-    </article>
-  ))}
-</section>
+  <RelatedLinks links={relatedSearchLinks} />
 
-<!-- ========== BACK TO TOP ========== -->
-<button id="back-to-top" class="fixed bottom-6 right-6 z-50 w-11 h-11 rounded-xl bg-leaf-600 text-white shadow-lg hover:bg-leaf-700 transition-all opacity-0 pointer-events-none flex items-center justify-center" aria-label="Back to top" title="Back to top">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
-</button>
-<script>
-  (function(){var b=document.getElementById('back-to-top');window.addEventListener('scroll',function(){if(window.scrollY>600){b.classList.remove('opacity-0','pointer-events-none')}else{b.classList.add('opacity-0','pointer-events-none')}});b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();
-</script>
-<!-- ========== SCROLL SPY ========== -->
-<style>
-  nav a.nav-active { color: var(--color-leaf-600); }
-</style>
-<script>
-  (function(){var links=document.querySelectorAll('nav a[href^="#"]');var sections=[];links.forEach(function(l){var id=l.getAttribute('href').replace('#','');var s=document.getElementById(id);if(s)sections.push({section:s,link:l})});var observer=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){links.forEach(function(l){l.classList.remove('nav-active')});var match=sections.find(function(s){return s.section===e.target});if(match)match.link.classList.add('nav-active')}})},{rootMargin:'-20% 0px -70% 0px'});sections.forEach(function(s){observer.observe(s.section)})})();
-</script>
-
-<!-- ========== CLIENT-SIDE SCRIPTS ========== -->
-<script src="/tea-guide.js" is:inline></script>
-
-
-<style>
-  .tea-detail-row:not(.hidden) { display: table-row; animation: detailExpand 0.3s ease-out; }
-  @keyframes detailExpand { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
-  .expand-icon { transition: transform 0.25s ease; }
-  .tea-row:focus-visible { outline: 2px solid var(--color-leaf-500); outline-offset: -2px; border-radius: 0; }
-
-</style>
+  <!-- FAQ preview -->
+  <section class="section-container py-20">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-12 reveal">
+        <SectionHeader eyebrow="Questions" title="Frequently Asked Questions" headingLevel="h2" center />
+      </div>
+      <FaqList faqs={faqs.slice(0, 6)} />
+      <div class="text-center mt-8">
+        <a href="/faq" class="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">All {faqs.length} questions & answers</a>
+      </div>
+    </div>
+  </section>
 
 </BaseLayout>
-
-

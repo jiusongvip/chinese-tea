@@ -1,0 +1,67 @@
+---
+import { teaTypes } from "../data/teaTypes";
+import { teas } from "../data/teas";
+---
+
+<footer class="border-t border-paper-200 bg-leaf-950 text-leaf-100 mt-24">
+  <div class="max-w-[1200px] mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-5 gap-10">
+    <div>
+      <h4 class="font-display text-sm font-semibold text-white mb-4">Tea Types</h4>
+      <ul class="space-y-2">
+        {teaTypes.map((t) => (
+          <li><a href={`/types/${t.slug}`} class="text-sm text-leaf-200/80 hover:text-white transition-colors">{t.name}</a></li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-display text-sm font-semibold text-white mb-4">Famous Teas</h4>
+      <ul class="space-y-2">
+        {teas.slice(0, 8).map((t) => (
+          <li><a href={`/teas/${t.slug}`} class="text-sm text-leaf-200/80 hover:text-white transition-colors">{t.name}</a></li>
+        ))}
+        <li><a href="/best-teas" class="text-sm text-leaf-300 hover:text-white transition-colors font-medium">Best Chinese Teas →</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-display text-sm font-semibold text-white mb-4">Guides</h4>
+      <ul class="space-y-2">
+        <li><a href="/guides" class="text-sm text-leaf-200/80 hover:text-white transition-colors">All Guides</a></li>
+        <li><a href="/guides/beginners" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Start Here</a></li>
+        <li><a href="/guides/production" class="text-sm text-leaf-200/80 hover:text-white transition-colors">How Tea Is Made</a></li>
+        <li><a href="/guides/oolong-styles" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Four Families of Oolong</a></li>
+        <li><a href="/guides/brewing" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Brewing Guide</a></li>
+        <li><a href="/guides/buying" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Buying Guide</a></li>
+        <li><a href="/flavours" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Flavour Guide</a></li>
+        <li><a href="/guides/storage" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Storage Guide</a></li>
+        <li><a href="/guides/water" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Water Guide</a></li>
+        <li><a href="/teaware" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Teaware Essentials</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-display text-sm font-semibold text-white mb-4">Learn</h4>
+      <ul class="space-y-2">
+        <li><a href="/regions" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Tea by Region</a></li>
+        <li><a href="/culture" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Tea Culture</a></li>
+        <li><a href="/health" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Health Benefits</a></li>
+        <li><a href="/pairing" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Food Pairing</a></li>
+        <li><a href="/tasting-terms" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Tasting Terms</a></li>
+        <li><a href="/faq" class="text-sm text-leaf-200/80 hover:text-white transition-colors">FAQ</a></li>
+        <li><a href="/blog" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-display text-sm font-semibold text-white mb-4">Site</h4>
+      <ul class="space-y-2">
+        <li><a href="/about" class="text-sm text-leaf-200/80 hover:text-white transition-colors">About &amp; Contact</a></li>
+        <li><a href="/privacy" class="text-sm text-leaf-200/80 hover:text-white transition-colors">Privacy Policy</a></li>
+      </ul>
+      <p class="text-xs text-leaf-300/60 mt-6 leading-relaxed">Independent, reader-supported guide to Chinese tea. No sponsored recommendations.</p>
+    </div>
+  </div>
+  <div class="border-t border-leaf-800/60">
+    <div class="max-w-[1200px] mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-xs text-leaf-200/60">Chinese Tea Guide &mdash; practical, experience-based information on Chinese tea.</p>
+      <p class="text-xs text-leaf-200/60">Prices and harvesting seasons last verified: August 2026.</p>
+    </div>
+  </div>
+</footer>

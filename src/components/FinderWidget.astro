@@ -1,0 +1,84 @@
+---
+import { finderRecommendations } from '../data/content';
+
+const finderData = JSON.stringify(
+  Object.fromEntries(
+    finderRecommendations.map((r) => [
+      r.flavor,
+      {
+        flavor: r.flavor,
+        teaSlug: r.teaSlug,
+        title: r.title,
+        desc: r.desc,
+        brew: r.brew,
+        label: r.label,
+      },
+    ])
+  )
+);
+---
+
+<div class="max-w-2xl mx-auto card p-8 shadow-sm" id="tea-finder">
+  <p class="font-semibold text-warm-800 mb-4">What kind of flavors do you enjoy?</p>
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6" id="flavor-options">
+    {finderRecommendations.map((rec) => (
+      <button
+        type="button"
+        class="px-4 py-3 rounded-lg border border-paper-200 text-sm font-medium text-warm-600 hover:border-leaf-400 hover:text-accent hover:bg-leaf-50 transition-all active:scale-[0.98]"
+        data-flavor={rec.flavor}
+      >
+        {rec.label}
+      </button>
+    ))}
+  </div>
+
+  <div id="finder-result" class="hidden border-t border-paper-200 pt-6 mt-2" aria-live="polite">
+    <div class="flex items-start gap-4 p-4 bg-leaf-50 rounded-lg border border-leaf-200">
+      <div class="w-10 h-10 rounded-lg bg-leaf-600 flex items-center justify-center flex-shrink-0 text-white font-bold text-lg">茶</div>
+      <div>
+        <p class="font-semibold text-warm-900 mb-1" id="result-title"></p>
+        <a href="/teas" id="result-link" class="hidden items-center gap-1 text-sm font-medium text-accent hover:text-accent-dark transition-colors mt-2"></a>
+        <p class="text-sm text-muted" id="result-desc"></p>
+        <p class="text-xs text-zinc-400 mt-2" id="result-brew"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" set:html={finderData} id="finder-data" is:inline></script>
+
+<script is:inline>
+  (function () {
+    var dataEl = document.getElementById('finder-data');
+    var flavorBtns = document.querySelectorAll('#flavor-options [data-flavor]');
+    var resultDiv = document.getElementById('finder-result');
+    if (!dataEl || !resultDiv) return;
+    var recommendations = {};
+    try { recommendations = JSON.parse(dataEl.textContent || '{}'); } catch (e) { recommendations = {}; }
+
+    flavorBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var rec = recommendations[btn.getAttribute('data-flavor')];
+        if (!rec) return;
+        flavorBtns.forEach(function (b) {
+          b.classList.remove('border-leaf-600', 'bg-leaf-50', 'text-accent');
+          b.classList.add('border-paper-200', 'text-warm-600');
+        });
+        btn.classList.add('border-leaf-600', 'bg-leaf-50', 'text-accent');
+        btn.classList.remove('border-paper-200');
+        document.getElementById('result-title').textContent = rec.title;
+        var link = document.getElementById('result-link');
+        link.textContent = 'Read the full guide \u2192';
+        link.setAttribute('href', '/teas/' + rec.teaSlug);
+        link.classList.remove('hidden');
+        link.classList.add('inline-flex');
+        document.getElementById('result-desc').textContent = rec.desc;
+        document.getElementById('result-brew').textContent = rec.brew;
+        resultDiv.classList.remove('hidden');
+        setTimeout(function () {
+          resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 60);
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ArrowRight } from '@lucide/astro';
+import { teas } from '../data/teas';
+import { teaTypes } from '../data/teaTypes';
+
+const title = 'Page Not Found';
+const description = 'This page doesn\'t exist. Find your way back to the tea guide.';
+---
+
+<BaseLayout {title} {description} noindex>
+
+  <section class="section-container py-24 text-center">
+    <p class="text-7xl font-display font-bold text-leaf-300 mb-4">404</p>
+    <h1 class="font-display text-3xl md:text-4xl font-semibold text-warm-900 mb-4">This cup is empty</h1>
+    <p class="text-muted max-w-md mx-auto mb-8">The page you're looking for doesn't exist — but the tea is still brewing. Try one of these instead.</p>
+    <div class="flex flex-wrap justify-center gap-3 mb-12">
+      <a href="/" class="btn btn-primary px-6 py-3">Back to Home <ArrowRight class="w-4 h-4" /></a>
+      <a href="/teas" class="btn border border-paper-200 px-6 py-3 text-warm-700 hover:text-accent hover:border-leaf-300">All Teas</a>
+      <a href="/types" class="btn border border-paper-200 px-6 py-3 text-warm-700 hover:text-accent hover:border-leaf-300">The Six Types</a>
+    </div>
+    <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-3">
+      {teas.slice(0, 6).map((t) => (
+        <a href={`/teas/${t.slug}`} class="card card-hover p-4 no-underline block text-left">
+          <span class="font-medium text-warm-800">{t.name}</span>
+          <span class="block text-xs text-muted mt-0.5">{t.origin}</span>
+        </a>
+      ))}
+    </div>
+    <div class="mt-8 flex flex-wrap justify-center gap-2">
+      {teaTypes.map((t) => (
+        <a href={`/types/${t.slug}`} class={`px-3 py-1 text-xs font-bold rounded-full ${t.accent.badge}`}>{t.name}</a>
+      ))}
+    </div>
+  </section>
+
+</BaseLayout>

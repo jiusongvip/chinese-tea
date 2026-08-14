@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CTACard from '../components/CTACard.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import { cultureEntries, cultureFacts } from '../data/content';
+import { articleSchema } from '../data/schemas';
+
+const title = 'Chinese Tea Culture & Ceremony';
+const description = 'Gongfu tea ceremony, tea as hospitality, the wedding tea ceremony, kou zhi li finger tapping, and the thousand-year bond between Chan Buddhism and tea.';
+
+const schemaJson = JSON.stringify(articleSchema({
+  title,
+  description,
+  canonicalURL: 'https://chinese-tea.com/culture',
+  image: 'https://chinese-tea.com/images/chinese-tea-culture.webp',
+  datePublished: '2026-08-01',
+  dateModified: '2026-08-12',
+}));
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson} ogImage="/images/chinese-tea-culture.webp">
+
+  <section class="relative bg-leaf-950 text-white overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+      <img src="/images/chinese-tea-culture.webp" alt="Chinese tea ceremony in a traditional setting" class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async" width="1200" height="800" />
+      <div class="absolute inset-0 bg-gradient-to-b from-leaf-950/70 via-leaf-950/85 to-leaf-950"></div>
+    </div>
+    <div class="relative z-10 section-container py-16 md:py-20">
+      <h1 class="text-4xl md:text-5xl font-display font-bold tracking-tight max-w-3xl">Chinese Tea Culture &amp; Ceremony</h1>
+      <p class="mt-4 text-lg text-leaf-100/85 max-w-2xl">Tea in China is far more than a drink — it's woven into daily life, art, poetry, and philosophy. For over 4,000 years, tea has been a medium for hospitality, meditation, and social connection.</p>
+    </div>
+  </section>
+
+  <section class="section-container py-16">
+    <div class="max-w-3xl mx-auto">
+      <SectionHeader eyebrow="Tradition" title="The Customs That Define Chinese Tea" headingLevel="h2" />
+      <div class="card p-5 bg-paper-100 mt-6">
+        <p class="text-sm text-muted leading-relaxed">New here? Start with the full story — <a href="/blog/history-of-chinese-tea" class="text-accent underline">the history of Chinese tea</a>, from the Shen Nung legend and the Tang dynasty tea masters to the Tea Horse Road and modern China.</p>
+      </div>
+      <div class="mt-10 space-y-10">
+        {cultureEntries.map((e) => (
+          <article class="flex gap-5">
+            <div class="w-12 h-12 rounded-lg bg-leaf-100 text-accent flex items-center justify-center text-xl flex-shrink-0 mt-1">{e.mark}</div>
+            <div>
+              <h3 class="font-semibold text-xl text-warm-900 mb-2">{e.title}</h3>
+              <p class="text-muted leading-relaxed text-sm md:text-base">{e.body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-leaf-950 py-16 text-white">
+    <div class="section-container">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <SectionHeader eyebrow="Quick Facts" title="Tea Culture in Numbers" headingLevel="h2" dark />
+          <ul class="mt-8 space-y-3 text-sm text-leaf-100/80">
+            {cultureFacts.map((f, i) => (
+              <li class="flex gap-3"><span class="text-leaf-400 font-mono">{String(i + 1).padStart(2, '0')}</span> {f}</li>
+            ))}
+          </ul>
+        </div>
+        <div class="bg-leaf-900/50 rounded-xl border border-leaf-800 p-8">
+          <h3 class="font-semibold text-lg text-white mb-3">The Tea Classic (茶经)</h3>
+          <p class="text-sm text-leaf-100/75 leading-relaxed">Written by Lu Yu in 760 CE, <em>The Classic of Tea</em> is the world's first complete treatise on tea — covering cultivation, processing, brewing, water quality, and tea ware. It elevated tea from folk medicine to a cultural art form and set standards that still shape Chinese tea today.</p>
+          <p class="text-sm text-leaf-100/75 leading-relaxed mt-4">The spirit of chan cha yi wei (禅茶一味) — the oneness of meditation and tea — runs through every tradition above. To understand Chinese tea is to understand why a nation of over a billion people has made a single leaf the centerpiece of hospitality for four millennia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/teas" primaryLabel="Taste the Culture" secondaryHref="/regions" secondaryLabel="Where It Comes From" />
+
+  <RelatedLinks links={[
+    { href: '/guides/brewing', label: 'gongfu brewing at home' },
+    { href: '/teaware', label: 'gaiwan and yixing pots' },
+    { href: '/types/oolong', label: 'oolong for gongfu' },
+    { href: '/about', label: 'about this guide' },
+  ]} />
+
+</BaseLayout>

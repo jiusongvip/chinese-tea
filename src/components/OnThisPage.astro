@@ -1,0 +1,63 @@
+---
+export interface Props {
+  title?: string;
+  items: { id: string; label: string }[];
+}
+
+const { title = 'On this page', items = [] } = Astro.props;
+---
+
+<nav class="hidden lg:block" aria-label="On this page">
+  <div class="sticky top-24">
+    <p class="text-xs font-semibold tracking-[0.2em] uppercase text-accent mb-3">{title}</p>
+    <ul class="border-l border-paper-200 space-y-1 toc-list">
+      {items.map((item) => (
+        <li>
+          <a href={`#${item.id}`} class="toc-link block py-1 pl-4 -ml-px border-l-2 border-transparent text-sm text-muted hover:text-accent hover:border-leaf-300 transition-colors">
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<!-- Mobile dropdown -->
+<div class="lg:hidden mb-6">
+  <details class="card">
+    <summary class="px-4 py-3 cursor-pointer font-medium text-sm text-warm-800 list-none flex items-center justify-between">
+      On this page
+      <svg class="w-4 h-4 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </summary>
+    <ul class="px-4 pb-3 space-y-1 border-t border-paper-200 pt-2">
+      {items.map((item) => (
+        <li><a href={`#${item.id}`} class="block py-1.5 text-sm text-muted hover:text-accent transition-colors">{item.label}</a></li>
+      ))}
+    </ul>
+  </details>
+</div>
+
+<style>
+  .toc-link.active { border-color: var(--color-accent); color: var(--color-accent); }
+</style>
+
+<script is:inline>
+  const links = Array.from(document.querySelectorAll('a.toc-link'));
+  if (links.length && 'IntersectionObserver' in window) {
+    const sections = links
+      .map((l) => document.getElementById(l.getAttribute('href')?.replace('#', '') || ''))
+      .filter((s) => s);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const id = e.target.id;
+            links.forEach((l) => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -70% 0px' }
+    );
+    sections.forEach((s) => observer.observe(s));
+  }
+</script>

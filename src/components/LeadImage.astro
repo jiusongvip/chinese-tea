@@ -1,0 +1,17 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  ratio?: string;
+}
+
+const { src, alt, caption, ratio = 'h-56 md:h-72' } = Astro.props;
+---
+
+<figure class="max-w-3xl">
+  <div class="rounded-lg overflow-hidden border border-paper-200 bg-white shadow-[0_1px_2px_rgba(16,24,32,0.04),0_12px_28px_-14px_rgba(16,24,32,0.14)]">
+    <img src={src} alt={alt} loading="lazy" decoding="async" class={`w-full object-cover ${ratio}`} />
+  </div>
+  {caption && <figcaption class="mt-2 text-xs text-zinc-400 text-center tracking-wide">{caption}</figcaption>}
+</figure>

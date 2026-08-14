@@ -1,0 +1,50 @@
+---
+import { brewingGuides } from '../data/brewingGuides';
+---
+
+<div>
+  <div class="flex flex-wrap gap-2 justify-center mb-8" id="brew-tabs" role="tablist" aria-label="Brewing guide by tea type">
+    {brewingGuides.map((g, i) => (
+      <button
+        type="button"
+        role="tab"
+        aria-selected={i === 0 ? 'true' : 'false'}
+        aria-controls={`brew-panel-${g.slug}`}
+        class={`px-5 py-2 rounded-full text-sm font-medium transition-colors ${i === 0 ? 'bg-leaf-600 text-white active' : 'border border-paper-200 text-warm-600 hover:border-leaf-300 hover:text-accent'}`}
+        data-brew={g.slug}
+      >
+        {g.name}
+      </button>
+    ))}
+  </div>
+
+  <div class="max-w-2xl mx-auto card p-8 shadow-sm" id="brew-content">
+    {brewingGuides.map((g, i) => (
+      <div id={`brew-panel-${g.slug}`} role="tabpanel" class={i === 0 ? '' : 'hidden'}>
+        <h3 class="text-xl font-bold text-warm-900 mb-6">{g.title}</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="p-4 bg-paper-100 rounded-lg"><p class="text-xs text-zinc-400 uppercase tracking-wider mb-1">Water Temperature</p><p class="font-semibold text-warm-800">{g.temp}</p></div>
+          <div class="p-4 bg-paper-100 rounded-lg"><p class="text-xs text-zinc-400 uppercase tracking-wider mb-1">Steeping Time</p><p class="font-semibold text-warm-800">{g.time}</p></div>
+          <div class="p-4 bg-paper-100 rounded-lg"><p class="text-xs text-zinc-400 uppercase tracking-wider mb-1">Best Vessel</p><p class="font-semibold text-warm-800">{g.vessel}</p></div>
+          <div class="p-4 bg-paper-100 rounded-lg"><p class="text-xs text-zinc-400 uppercase tracking-wider mb-1">Leaf-to-Water Ratio</p><p class="font-semibold text-warm-800">{g.ratio}</p></div>
+        </div>
+        <div class="mt-6 p-4 bg-leaf-50 rounded-lg border border-leaf-200">
+          <p class="text-sm font-semibold text-leaf-800 mb-1">Pro Tips</p>
+          <p class="text-sm text-accent">{g.tips}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script is:inline>
+  const tabs = document.querySelectorAll('#brew-tabs [data-brew]');
+  const panels = document.querySelectorAll('#brew-content [role="tabpanel"]');
+  tabs.forEach((tab) => tab.addEventListener('click', () => {
+    tabs.forEach((t) => { t.classList.remove('bg-leaf-600', 'text-white', 'active'); t.classList.add('border', 'border-paper-200', 'text-warm-600'); t.setAttribute('aria-selected', 'false'); });
+    tab.classList.add('bg-leaf-600', 'text-white', 'active'); tab.classList.remove('border-paper-200', 'text-warm-600'); tab.setAttribute('aria-selected', 'true');
+    panels.forEach((p) => p.classList.add('hidden'));
+    const panel = document.getElementById('brew-panel-' + tab.dataset.brew);
+    if (panel) panel.classList.remove('hidden');
+  }));
+</script>

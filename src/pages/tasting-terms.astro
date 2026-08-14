@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CTACard from '../components/CTACard.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import { tastingTermCategories } from '../data/tastingTerms';
+import { articleSchema } from '../data/schemas';
+import LeadImage from '../components/LeadImage.astro';
+
+const title = 'Chinese Tea Tasting Terms';
+const description = 'The essential Chinese tea tasting vocabulary explained in plain English — hui gan, yan yun, shan yun, mouthfeel, aroma notes, and processing terms with pinyin.';
+
+const schemaJson = JSON.stringify(articleSchema({
+  title,
+  description,
+  canonicalURL: 'https://chinese-tea.com/tasting-terms',
+  image: 'https://chinese-tea.com/images/chinese-tea-og.webp',
+  datePublished: '2026-08-01',
+  dateModified: '2026-08-12',
+}));
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="Vocabulary" title="Chinese Tea Tasting Terms" subtitle="Have you ever had difficulty describing the taste of something? Professionals use hundreds of terms for tea. These are the ones that actually come up — in plain English, with the Chinese and pinyin." headingLevel="h1" />
+    <div class="mt-8"><LeadImage src="/images/chinese-tea-og.webp" alt="Chinese tea and teaware" caption="The vocabulary of the cup" /></div>
+  </section>
+
+  <!-- Category quick nav -->
+  <nav class="section-container py-6 reveal" aria-label="Term categories">
+    <div class="flex flex-wrap gap-2">
+      {tastingTermCategories.map((c) => (
+        <a href={`#${c.name.toLowerCase().replace(/[^a-z]+/g, '-')}`} class="px-4 py-1.5 rounded-full border border-paper-200 text-sm font-medium text-warm-700 hover:text-accent hover:border-leaf-300 hover:bg-leaf-50/60 transition">{c.name}</a>
+      ))}
+    </div>
+  </nav>
+
+  <section class="section-container pb-16 space-y-14">
+    {tastingTermCategories.map((c) => (
+      <div id={c.name.toLowerCase().replace(/[^a-z]+/g, '-')} class="scroll-mt-24">
+        <div class="flex items-center gap-3 mb-1">
+          <span class="inline-block h-6 w-1.5 rounded-full bg-accent"></span>
+          <h2 class="font-display text-2xl md:text-3xl font-semibold text-warm-900">{c.name}</h2>
+        </div>
+        <p class="text-sm text-muted mb-5">{c.blurb}</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {c.terms.map((t) => (
+            <div class="card p-5">
+              <div class="flex items-baseline gap-3 mb-1">
+                <h3 class="font-semibold text-warm-900">{t.term}</h3>
+                <span class="text-sm text-zinc-400">{t.zh}</span>
+                <span class="text-xs text-zinc-400 font-mono">{t.pinyin}</span>
+              </div>
+              <p class="text-sm text-muted leading-relaxed">{t.definition}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <section class="section-container pb-16 max-w-3xl reveal">
+    <div class="card p-6 bg-paper-100">
+      <h3 class="font-semibold text-warm-900 mb-2">Hear these in context</h3>
+      <p class="text-xs text-muted leading-relaxed">The best way to learn the vocabulary is to meet the teas that earn it. <a href="/teas/da-hong-pao" class="text-accent underline">Da Hong Pao</a> is where yan yun lives, <a href="/teas/tie-guan-yin" class="text-accent underline">Tie Guan Yin</a> is the classic for hua xiang, and aged <a href="/teas/pu-erh-sheng" class="text-accent underline">sheng pu-erh</a> is where zhang xiang and hui gan come together.</p>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/flavours" primaryLabel="Find Tea by Flavour" secondaryHref="/teas" secondaryLabel="Browse All Teas" />
+
+  <RelatedLinks links={[
+    { href: '/flavours', label: 'chinese tea flavour guide' },
+    { href: '/culture', label: 'tea culture terms' },
+    { href: '/teas/pu-erh-sheng', label: 'hui gan in aged tea' },
+    { href: '/teas/da-hong-pao', label: 'what is yan yun' },
+  ]} />
+
+</BaseLayout>

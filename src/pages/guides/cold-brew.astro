@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import CTACard from '../../components/CTACard.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { coldBrew } from '../../data/content';
+import { articleSchema } from '../../data/schemas';
+import LeadImage from '../../components/LeadImage.astro';
+
+const title = 'Cold Brew Chinese Tea (Leng Pao)';
+const description = 'Cold brew is not iced tea. Learn the leng pao method — a sweeter, zero-bitter way to brew Chinese tea, plus which teas work best.';
+
+const schemaJson = JSON.stringify(articleSchema({
+  title,
+  description,
+  canonicalURL: 'https://chinese-tea.com/guides/cold-brew',
+  image: 'https://chinese-tea.com/images/chinese-tea-og.webp',
+  datePublished: '2026-08-01',
+  dateModified: '2026-08-12',
+}));
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="Summer Method" title="Cold Brew Chinese Tea (Leng Pao)" subtitle="Cold brewing is not iced tea. It is a different extraction method that produces a sweeter, zero-bitter cup." headingLevel="h1" />
+    <div class="mt-8"><LeadImage src="/images/green-tea.webp" alt="Green tea leaves" caption="Cold brew — sweeter, zero bitter" /></div>
+  </section>
+
+  <section class="section-container py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <div class="reveal">
+        <SectionHeader eyebrow="The Science" title="Why Cold Brew Works" headingLevel="h2" />
+        <p class="mt-4 text-sm text-muted leading-relaxed">{coldBrew.why}</p>
+        <h3 class="font-semibold text-warm-900 mb-3 mt-8">Best Teas for Cold Brew</h3>
+        <div class="space-y-2 text-sm text-warm-700">
+          {coldBrew.best.map((b) => (
+            <div class="flex gap-2"><span class={`font-medium w-24 flex-shrink-0 ${b.tone}`}>{b.label}</span> {b.note}</div>
+          ))}
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="card p-6">
+          <SectionHeader eyebrow="Method" title="How to Cold Brew" headingLevel="h2" />
+          <ol class="mt-5 space-y-3 text-sm text-muted">
+            {coldBrew.method.map((s, i) => (
+              <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-xs font-bold flex-shrink-0">{i + 1}</span> <span class="leading-relaxed">{s}</span></li>
+            ))}
+          </ol>
+          <div class="mt-6 p-4 bg-leaf-50 rounded-lg border border-leaf-200 text-sm text-accent leading-relaxed">
+            <strong class="text-leaf-800">Pro tip:</strong> cold brew is impossible to over-brew. Even an overnight steep stays sweet and clean. Start with 4 hours and experiment.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/guides/brewing" primaryLabel="Hot Brew Guide" secondaryHref="/teas" secondaryLabel="Find a Cold-Brew Tea" />
+
+  <RelatedLinks links={[
+    { href: '/guides/water', label: 'best water for cold brew' },
+    { href: '/teas/silver-needle', label: 'cold brew silver needle' },
+    { href: '/guides/storage', label: 'storing your tea' },
+  ]} />
+
+</BaseLayout>

@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import CTACard from '../../components/CTACard.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { waterCards } from '../../data/content';
+import { articleSchema } from '../../data/schemas';
+import FaIcon from '../../components/FaIcon.astro';
+import { faMountainSun, faFilter, faWater, faFaucet, type IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import LeadImage from '../../components/LeadImage.astro';
+
+const title = 'The Right Water for Chinese Tea';
+const description = 'Tea is 99% water. Which water to use for Chinese tea — spring, filtered, distilled, or tap — and how mineral content affects the taste of your brew.';
+
+const schemaJson = JSON.stringify(articleSchema({
+  title,
+  description,
+  canonicalURL: 'https://chinese-tea.com/guides/water',
+  image: 'https://chinese-tea.com/images/chinese-tea-og.webp',
+  datePublished: '2026-08-01',
+  dateModified: '2026-08-12',
+}));
+
+const icons: Record<string, IconDefinition> = {
+  spring: faMountainSun,
+  filter: faFilter,
+  distill: faWater,
+  tap: faFaucet,
+};
+
+const tones: Record<string, string> = {
+  good: 'text-emerald-700',
+  warn: 'text-amber-700',
+};
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="The Foundation" title="The Right Water for Chinese Tea" subtitle="Tea is 99% water. Lu Yu wrote in the Tea Classic that mountain spring water is best — but what does that mean for you at home?" headingLevel="h1" />
+    <div class="mt-8"><LeadImage src="/images/chinese-tea-brewing.avif" alt="Water being poured over tea leaves" caption="Tea is 99% water" /></div>
+  </section>
+
+  <section class="section-container py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+      {waterCards.map((c) => (
+        <div class="card p-6">
+          <h3 class="font-semibold text-warm-900 mb-2 flex items-center gap-2"><span class="text-leaf-600"><FaIcon icon={icons[c.icon]} size={22} /></span> {c.title}</h3>
+          <p class="text-sm text-muted leading-relaxed"><strong class={tones[c.tone]}>{c.verdict}</strong> {c.body}</p>
+        </div>
+      ))}
+    </div>
+    <div class="mt-8 max-w-5xl mx-auto text-center">
+      <p class="text-sm text-muted">The simplest rule: <strong class="text-warm-900">if the water tastes good on its own, it will make good tea.</strong> If you would not drink a glass of it plain, do not brew tea with it.</p>
+    </div>
+  </section>
+
+  <section class="bg-paper-100 py-16">
+    <div class="section-container max-w-3xl">
+      <SectionHeader eyebrow="Why It Matters" title="What Minerals Do to Tea" headingLevel="h2" />
+      <div class="mt-6 space-y-4 text-sm text-muted leading-relaxed">
+        <p class="card p-6"><strong class="text-warm-900">Calcium &amp; magnesium (hardness):</strong> These minerals bind to catechins and caffeine, suppressing aroma and muting flavor. Too much and you get a dull, flat brew with a scummy film on top. Soften hard water before brewing.</p>
+        <p class="card p-6"><strong class="text-warm-900">Bicarbonate (alkalinity):</strong> High-alkaline water makes tea darker and flatter, killing the bright, crisp notes of green and white teas.</p>
+        <p class="card p-6"><strong class="text-warm-900">Trace minerals (the sweet spot):</strong> A small amount of calcium and magnesium — around 30-80 ppm TDS — actually helps extract flavor and carries sweetness. This is why bottled spring water so often makes noticeably better tea than tap.</p>
+      </div>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/guides/brewing" primaryLabel="Back to Brewing Guide" secondaryHref="/guides/cold-brew" secondaryLabel="Cold Brew Method" />
+
+  <RelatedLinks links={[
+    { href: '/guides/brewing', label: 'brewing temperatures' },
+    { href: '/guides/cold-brew', label: 'cold brew at home' },
+    { href: '/types/green', label: 'green tea with spring water' },
+  ]} />
+
+</BaseLayout>

@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import OnThisPage from '../../components/OnThisPage.astro';
+import LeadImage from '../../components/LeadImage.astro';
+import CTACard from '../../components/CTACard.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { articleSchema } from '../../data/schemas';
+
+const title = 'How Chinese Tea Is Made: From Leaf to Cup';
+const description = 'The complete Chinese tea production journey — harvesting, withering, fixing, rolling, oxidation, drying, roasting, and aging — and which of the six tea types takes which path.';
+
+const schemaJson = JSON.stringify(articleSchema({
+  title,
+  description,
+  canonicalURL: 'https://chinese-tea.com/guides/production',
+  image: 'https://chinese-tea.com/images/chinese-tea-og.webp',
+  datePublished: '2026-08-01',
+  dateModified: '2026-08-12',
+}));
+
+const steps = [
+  {
+    id: 'harvest',
+    name: 'Harvesting',
+    zh: '采摘',
+    pinyin: 'cǎizhāi',
+    body: 'Everything starts with the pick. Leaves are harvested by hand, usually as one bud with one or two young leaves. Timing decides grade: the earliest spring picks (pre-Qingming, before early April) are the most prized, when the bud is smallest and most concentrated. A skilled picker gathers only a few kilograms of finished tea per day.',
+    types: ['green', 'white', 'yellow', 'oolong', 'black', 'dark'],
+  },
+  {
+    id: 'withering',
+    name: 'Withering',
+    zh: '萎凋',
+    pinyin: 'wěidiāo',
+    body: 'Fresh leaves are spread out and left to lose moisture for several hours to a few days. This softens the leaf so it can be rolled without breaking, and starts the chemistry. For white tea, withering is the entire story — no heat, no rolling, just time, which is why white tea carries that natural honey-and-hay character.',
+    types: ['white', 'oolong', 'black'],
+  },
+  {
+    id: 'fixing',
+    name: 'Fixing',
+    zh: '杀青',
+    pinyin: 'shāqīng',
+    body: 'The "kill-green" step: heat is applied to deactivate the enzymes that drive oxidation. Do it early and the leaf stays green and fresh — that is green tea. Chinese greens are pan-fired in a hot wok or drum, which builds the toasty, nutty character; Japanese greens are steamed instead. Yellow tea fixes exactly like green tea, then takes one extra step (see below).',
+    types: ['green', 'yellow', 'oolong'],
+  },
+  {
+    id: 'sealing-yellow',
+    name: 'Sealing the Yellow',
+    zh: '焖黄',
+    pinyin: 'mèn huáng',
+    body: 'Yellow tea\u2019s defining step: the warm, just-fixed leaves are wrapped in cloth or paper and left to sweat for hours. Residual heat and moisture slowly break down chlorophylls and mellow the grassy edge, producing green tea\u2019s freshness with a softer, honeyed roundness. The step is labor-intensive and often skipped — genuine yellow tea is genuinely rare.',
+    types: ['yellow'],
+  },
+  {
+    id: 'rolling',
+    name: 'Rolling & Shaping',
+    zh: '揉捻',
+    pinyin: 'róuniǎn',
+    body: 'The leaf is rolled or twisted to break down cell walls, releasing the juices that drive later reactions and shaping the leaf into its final form — Longjing\u2019s flat spears, oolong\u2019s tight pellets, black tea\u2019s wiry twists. Broken leaves from careless rolling lose flavor fast; whole-leaf grades are prized precisely because the structure survives.',
+    types: ['oolong', 'black', 'green', 'dark'],
+  },
+  {
+    id: 'oxidation',
+    name: 'Oxidation',
+    zh: '氧化',
+    pinyin: 'yǎnghuà',
+    body: 'With cell walls broken, enzymes react with oxygen — the same browning that turns a cut apple brown. The producer watches the leaf and stops the process with heat at the chosen moment: oolong anywhere from ~10% to ~85%, black tea as completely as possible. This single variable is what turns the same plant into everything from pale floral oolong to dark mahogany black tea.',
+    types: ['oolong', 'black'],
+  },
+  {
+    id: 'drying',
+    name: 'Drying & Firing',
+    zh: '干燥',
+    pinyin: 'gānzào',
+    body: 'Final heat dries the leaf to ~3-5% moisture, halting every remaining reaction and locking in the character. This is the last step for most teas. Drying also stabilizes the leaf for storage — which is why black tea, already fully oxidized, keeps so well, while fresh green teas begin fading the moment they\u2019re packed.',
+    types: ['green', 'white', 'yellow', 'oolong', 'black'],
+  },
+  {
+    id: 'roasting',
+    name: 'Roasting',
+    zh: '焙火',
+    pinyin: 'bèihuǒ',
+    body: 'An optional extra for the boldest oolongs: the dried leaf is roasted over charcoal, building depth that oxidation alone cannot produce. Wuyi rock oolongs like Da Hong Pao are the classic example — the roast creates the warm, mineral yan yun ("rock rhyme") and can be repeated across seasons to evolve the tea\u2019s character over years.',
+    types: ['oolong', 'black'],
+  },
+  {
+    id: 'fermentation-aging',
+    name: 'Microbial Fermentation & Aging',
+    zh: '发酵与陈化',
+    pinyin: 'fājiào yǔ chénhuà',
+    body: 'Dark tea (hei cha) takes a different route entirely: after basic processing, microorganisms ferment the leaf over time. Sheng pu-erh is sun-dried, pressed into cakes, and left to age naturally for years or decades. Shou pu-erh, invented in the 1970s, accelerates the process with a controlled wet-piling fermentation that achieves in months what aging achieves over years. Some aged whites and roasted oolongs also improve with years of careful storage.',
+    types: ['dark'],
+  },
+];
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="From Leaf to Cup" title="How Chinese Tea Is Made" subtitle="Every Chinese tea is the same plant pushed through a different sequence of the same steps. Learn the eight steps and the whole category map clicks into place." headingLevel="h1" />
+    <p class="mt-3 text-xs text-zinc-400 flex items-center gap-1.5"><span class="inline-block w-1.5 h-1.5 rounded-full bg-accent"></span> Last updated August 2026.</p>
+    <div class="mt-8"><LeadImage src="/images/chinese-tea-hero.webp" alt="Traditional Chinese tea ceremony setup" caption="From leaf to cup — every step changes the tea" /></div>
+  </section>
+
+  <div class="section-container pt-8">
+    <div class="lg:grid lg:grid-cols-[220px_1fr] lg:gap-10">
+      <OnThisPage items={steps.map((s) => ({ id: s.id, label: s.name }))} />
+      <div class="space-y-8 pb-8">
+        {steps.map((s, i) => (
+          <section id={s.id} class="card p-6 md:p-8 scroll-mt-24 reveal">
+            <div class="flex items-center gap-4 mb-3">
+              <span class="w-10 h-10 rounded-lg bg-leaf-100 text-accent flex items-center justify-center font-display font-bold">{i + 1}</span>
+              <div>
+                <h2 class="font-display text-xl md:text-2xl font-semibold text-warm-900">{s.name}</h2>
+                <p class="text-xs text-zinc-400">{s.zh} — {s.pinyin}</p>
+              </div>
+            </div>
+            <p class="text-sm text-muted leading-relaxed">{s.body}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {s.types.map((slug) => (
+                <a href={`/types/${slug}`} class="px-2.5 py-1 text-xs font-bold rounded-full bg-paper-100 text-warm-700 border border-paper-200 hover:border-leaf-300 hover:text-accent transition">See how it works for {slug} tea</a>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <section class="section-container pb-16 max-w-3xl reveal">
+    <div class="card p-6 bg-paper-100">
+      <h3 class="font-semibold text-warm-900 mb-2">The whole map in one line</h3>
+      <p class="text-sm text-muted leading-relaxed">Green = fixed early. White = withered and dried. Yellow = green plus a secret sweat. Oolong = bruised, then oxidation stopped partway. Black = oxidized fully. Dark = fermented by microbes. Explore each path on its <a href="/types" class="text-accent underline">type page</a>, or jump straight to the teas themselves in the <a href="/teas" class="text-accent underline">famous teas</a> directory.</p>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/types" primaryLabel="Explore the Six Types" secondaryHref="/guides/brewing" secondaryLabel="Now Brew It" />
+
+  <RelatedLinks links={[
+    { href: '/types', label: 'six types of chinese tea' },
+    { href: '/tasting-terms', label: 'tea processing terminology' },
+    { href: '/types/green', label: 'how green tea is made' },
+    { href: '/types/dark', label: 'how pu-erh is made' },
+    { href: '/types/oolong', label: 'how oolong is made' },
+  ]} />
+
+</BaseLayout>

@@ -1,0 +1,30 @@
+---
+export interface Props {
+  char?: string;
+  size?: number;
+  class?: string;
+}
+
+const { char = '茶', size = 64 } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 100 100"
+  width={size}
+  height={size}
+  role="img"
+  aria-label={char}
+  class="select-none"
+>
+  <text
+    x="50"
+    y="74"
+    text-anchor="middle"
+    font-size="84"
+    font-family="Noto Serif SC, Source Han Serif SC, Songti SC, SimSun, serif"
+    font-weight="600"
+    fill="currentColor"
+  >
+    {char}
+  </text>
+</svg>

@@ -1,0 +1,47 @@
+---
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import type { Tea } from '../data/teas';
+import { getTeaType } from '../data/teaTypes';
+import { ArrowRight } from '@lucide/astro';
+
+interface Props {
+  tea: Tea;
+}
+
+const { tea } = Astro.props;
+const type = getTeaType(tea.type);
+const badge = type?.accent.badge ?? 'bg-zinc-100 text-zinc-700';
+
+// A unique per-tea photo dropped into public/images/teas/{slug}.{avif|webp|jpg|png},
+// otherwise an ink-seal cover with the tea's own character.
+const base = path.join(process.cwd(), 'public', 'images', 'teas');
+const ext = (['avif', 'webp', 'jpg', 'png'] as const).find((e) => existsSync(path.join(base, tea.slug + '.' + e)));
+const photo = ext ? `/images/teas/${tea.slug}.${ext}` : null;
+---
+
+<a href={`/teas/${tea.slug}`} class="group card card-hover overflow-hidden flex flex-col no-underline">
+  {photo ? (
+    <div class="aspect-[3/2] overflow-hidden bg-paper-100 relative">
+      <img src={photo} alt={`${tea.name} (${tea.nameChinese})`} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" width="640" height="427" />
+      <span class={`absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded ${badge}`}>{type?.nameShort}</span>
+    </div>
+  ) : (
+    <div class={`aspect-[3/2] relative overflow-hidden ${type?.accent.bg}`}>
+      <div class="absolute inset-0 flex flex-col items-center justify-center gap-1 p-6 text-center">
+        <span class="font-serif text-7xl leading-none select-none" aria-hidden="true">{tea.char}</span>
+        <span class={`text-[10px] font-mono uppercase tracking-[0.25em] opacity-70 ${type?.accent.text}`}>{type?.nameShort} tea</span>
+      </div>
+      <span class={`absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded ${badge}`}>{type?.nameShort}</span>
+    </div>
+  )}
+  <div class="p-4 flex flex-col flex-1">
+    <h3 class="font-display font-semibold text-lg leading-tight">{tea.name} <span class="text-sm font-normal text-zinc-400">{tea.nameChinese}</span></h3>
+    <p class="text-xs text-muted mb-1">{tea.origin}</p>
+    <p class="text-xs text-zinc-500 mt-auto mb-3 leading-relaxed">{tea.flavorShort}</p>
+    <div class="flex items-center justify-between gap-2">
+      <p class="text-xs font-medium text-accent">Full guide + buying tips</p>
+      <ArrowRight class="w-4 h-4 text-leaf-400 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
+    </div>
+  </div>
+</a>

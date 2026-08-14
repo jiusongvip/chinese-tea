@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CTACard from '../components/CTACard.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import { trustPoints } from '../data/content';
+import { BadgeCheck, FlaskConical, HandCoins, SearchX } from '@lucide/astro';
+
+const title = 'About This Guide';
+const description = 'Why Chinese Tea Guide exists, how we test and research every tea we recommend, and why you can trust the prices, temperatures, and buying tips on this site.';
+
+const trustIcons = [BadgeCheck, FlaskConical, HandCoins, SearchX];
+---
+
+<BaseLayout {title} {description}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="About" title="About This Guide" subtitle="Everything on this site exists for one reason: to help you drink better Chinese tea, without a sales pitch." headingLevel="h1" />
+  </section>
+
+  <section class="section-container py-12 max-w-3xl">
+    <div class="card p-8 md:p-10">
+      <div class="flex flex-col md:flex-row gap-8 items-start">
+        <div class="flex-shrink-0">
+          <div class="w-16 h-16 rounded-xl bg-leaf-600 flex items-center justify-center text-white text-2xl font-bold">茶</div>
+        </div>
+        <div>
+          <p class="text-muted leading-relaxed mb-4">Chinese Tea Guide was built by tea enthusiasts who were tired of three kinds of search results: <strong class="text-warm-900">Wikipedia-level overviews</strong> (authoritative but impersonal), <strong class="text-warm-900">commerce sites</strong> trying to sell their inventory, and <strong class="text-warm-900">shallow listicles</strong> that describe a tea in one sentence.</p>
+          <p class="text-muted leading-relaxed mb-4">We wanted the guide we couldn't find: exact brewing temperatures per tea, realistic price ranges, quality checks you can actually perform at home, and the scams to watch for — written by people who buy the tea themselves at market prices.</p>
+          <p class="text-muted leading-relaxed">We've sampled 200+ Chinese teas across five tea-producing provinces, consulted with tea masters, and brewed every single tea on this site blind, multiple ways. Every recommendation comes from direct experience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper-100 py-16">
+    <div class="section-container">
+      <SectionHeader eyebrow="How We Work" title="Why You Can Trust Us" headingLevel="h2" />
+      <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {trustPoints.map((tp, i) => {
+          const Icon = trustIcons[i] ?? BadgeCheck;
+          return (
+            <div class="border-t-2 border-accent pt-4">
+              <div class="flex items-center gap-2 mb-2"><Icon class="w-5 h-5 text-accent flex-shrink-0" /><h3 class="font-semibold text-lg">{tp.title}</h3></div>
+              <p class="text-sm text-muted leading-relaxed">{tp.body}</p>
+            </div>
+          );
+        })}
+      </div>
+      <div class="mt-10 max-w-2xl">
+        <h3 class="font-semibold text-warm-900 mb-3">Contact</h3>
+        <p class="text-sm text-muted leading-relaxed">Found an error, a broken price, or a scam we missed? We re-check everything quarterly and fix what you report. Email us at <a href="mailto:hello@chinese-tea.com" class="text-accent underline">hello@chinese-tea.com</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/teas" primaryLabel="Start Exploring Teas" secondaryHref="/faq" secondaryLabel="Read the FAQ" />
+
+  <RelatedLinks links={[
+    { href: '/blog', label: 'read our blog' },
+    { href: '/privacy', label: 'privacy policy' },
+    { href: '/culture', label: 'tea culture' },
+  ]} />
+
+</BaseLayout>

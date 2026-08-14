@@ -1,0 +1,161 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import OnThisPage from '../../components/OnThisPage.astro';
+import LeadImage from '../../components/LeadImage.astro';
+import CTACard from '../../components/CTACard.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { articleSchema } from '../../data/schemas';
+
+const title = 'Chinese Tea for Beginners: Start Here';
+const description = 'The shortest path from "I like tea" to a proper gongfu cup — which teas to start with, the three rules that matter, the gear you need, and the first-week mistakes to skip.';
+
+const schemaJson = JSON.stringify(articleSchema({
+  title,
+  description,
+  canonicalURL: 'https://chinese-tea.com/guides/beginners',
+  image: 'https://chinese-tea.com/images/chinese-tea-og.webp',
+  datePublished: '2026-08-01',
+  dateModified: '2026-08-12',
+}));
+
+const starterTeas = [
+  { slug: 'silver-needle', name: 'Silver Needle', type: 'White tea', why: 'The most forgiving tea in the world — impossible to over-brew, lowest caffeine, gentle sweetness.' },
+  { slug: 'keemun', name: 'Keemun', type: 'Black tea', why: 'Your bridge from Western black tea — smooth, malty, no bitterness, works with or without milk.' },
+  { slug: 'longjing', name: 'Longjing', type: 'Green tea', why: 'The most famous Chinese tea — learn to taste a classic and you can taste every other green.' },
+  { slug: 'tie-guan-yin', name: 'Tie Guan Yin', type: 'Oolong tea', why: 'The perfect entry oolong — floral, creamy, and built for the multiple-infusion gongfu method.' },
+  { slug: 'anji-bai-cha', name: 'Anji Bai Cha', type: 'Green tea', why: 'The smoothest green tea you\'ll ever drink — zero bitterness, savory umami, almost impossible to ruin.' },
+];
+
+const equipment = [
+  { name: 'A gaiwan ($8-20)', body: 'A bowl, lid, and saucer. Neutral porcelain, one vessel for every tea. The lid is your strainer.' },
+  { name: 'A fairness pitcher ($10-30)', body: 'Equalizes strength across cups so every pour tastes the same.' },
+  { name: 'Two or three small cups ($5-25)', body: 'Gongfu servings are 30-60ml — you drink many of them.' },
+  { name: 'A variable-temperature kettle', body: 'The single best upgrade. Green at 175°F, oolong at 195-205°F, pu-erh at 212°F.' },
+];
+
+const rules = [
+  { title: 'Right temperature', body: 'Boiling water destroys green and white teas. Use a kettle that holds temperature, or let boiled water sit for a minute before pouring. When in doubt, cooler is safer.' },
+  { title: 'Right ratio', body: 'Gongfu uses about 5g of leaf per 100ml — a third of the vessel full of dry leaf. Undershooting the leaf is the number-one beginner mistake.' },
+  { title: 'Rinse, then taste', body: 'Pour hot water over the leaves and discard it immediately. It wakes the leaves, and the first real steep is the one you drink.' },
+];
+
+const mistakes = [
+  'Using boiling water on delicate teas — the #1 cause of "my green tea is bitter".',
+  'Too little leaf for gongfu brewing — the cup comes out watery and weak.',
+  'Over-steeping Western style: 5 minutes turns a good tea bitter. 2-3 minutes is plenty.',
+  'Judging a tea on the first steep alone — oolongs and pu-erhs reveal themselves across 5-8 infusions.',
+  'Storing tea in the fridge or an open bag — airtight, opaque, cool, away from spices.',
+];
+
+const plan = [
+  { day: 'Day 1-2', tea: 'Silver Needle', note: 'Learn what untouched tea tastes like. Brew it Western style — it is nearly impossible to ruin.' },
+  { day: 'Day 3-4', tea: 'Keemun', note: 'The familiar bridge. Compare it side-by-side with your usual black tea.' },
+  { day: 'Day 5', tea: 'Longjing', note: 'Now the classic. Try it in a glass and watch the leaves dance.' },
+  { day: 'Day 6-7', tea: 'Tie Guan Yin', note: 'Your first gongfu session — the rolled balls unfurl across 5+ infusions. This is where it clicks.' },
+];
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="Start Here" title="Chinese Tea for Beginners" subtitle="You don't need a tea table, a collection of teaware, or a vocabulary of tasting terms. You need a few teas, one vessel, and three rules. This is the shortest honest path to a proper cup." headingLevel="h1" />
+    <p class="mt-3 text-xs text-zinc-400 flex items-center gap-1.5"><span class="inline-block w-1.5 h-1.5 rounded-full bg-accent"></span> Last updated August 2026.</p>
+    <div class="mt-8"><LeadImage src="/images/chinese-tea-culture.webp" alt="Chinese tea ceremony in a traditional setting" caption="Your first proper cup is closer than you think" /></div>
+  </section>
+
+  <div class="section-container pt-8">
+    <div class="lg:grid lg:grid-cols-[220px_1fr] lg:gap-10">
+      <OnThisPage items={[
+        { id: 'starter-teas', label: 'Start with these teas' },
+        { id: 'gear', label: 'The gear you need' },
+        { id: 'rules', label: 'The three rules' },
+        { id: 'week', label: 'Your first week' },
+        { id: 'mistakes', label: 'First-week mistakes' },
+      ]} />
+      <div class="space-y-12 pb-8">
+        <section id="starter-teas" class="scroll-mt-24 reveal">
+          <SectionHeader eyebrow="Step 1" title="Start with These Five Teas" subtitle="Each one teaches you a different part of the map — and all five are forgiving enough for week one." headingLevel="h2" />
+          <div class="mt-6 space-y-4">
+            {starterTeas.map((t) => (
+              <a href={`/teas/${t.slug}`} class="card card-hover p-5 no-underline flex gap-4 items-start group">
+                <div class="flex-shrink-0">
+                  <span class="block w-16 h-16 rounded-lg overflow-hidden"><img src={`/images/${t.type.split(' ')[0].toLowerCase()}-tea.webp`} alt={t.name} class="w-full h-full object-cover" loading="lazy" width="64" height="64" /></span>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-warm-900 group-hover:text-accent transition-colors">{t.name} <span class="text-xs font-normal text-zinc-400">{t.type}</span></h3>
+                  <p class="text-sm text-muted leading-relaxed mt-1">{t.why}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section id="gear" class="scroll-mt-24 reveal">
+          <SectionHeader eyebrow="Step 2" title="The Gear You Actually Need" subtitle="Under $100 total. Everything else is optional." headingLevel="h2" />
+          <div class="mt-6 grid sm:grid-cols-2 gap-4">
+            {equipment.map((e) => (
+              <div class="card p-5">
+                <h3 class="font-semibold text-warm-900 mb-1">{e.name}</h3>
+                <p class="text-sm text-muted leading-relaxed">{e.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="rules" class="scroll-mt-24 reveal">
+          <SectionHeader eyebrow="Step 3" title="The Three Rules That Matter" subtitle="Everything else is refinement." headingLevel="h2" />
+          <div class="mt-6 space-y-3">
+            {rules.map((r, i) => (
+              <div class="card p-5 flex gap-4">
+                <span class="w-8 h-8 rounded-full bg-leaf-100 text-accent flex items-center justify-center text-sm font-bold flex-shrink-0">{i + 1}</span>
+                <div>
+                  <h3 class="font-semibold text-warm-900 mb-1">{r.title}</h3>
+                  <p class="text-sm text-muted leading-relaxed">{r.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="week" class="scroll-mt-24 reveal">
+          <SectionHeader eyebrow="Step 4" title="Your First Week, Planned" subtitle="One tea per step — by the weekend you'll be brewing gongfu." headingLevel="h2" />
+          <div class="mt-6 space-y-3">
+            {plan.map((p) => (
+              <div class="card p-5 flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-5">
+                <span class="flex-shrink-0 text-xs font-bold px-2.5 py-1 rounded-full bg-leaf-100 text-accent w-max">{p.day}</span>
+                <div>
+                  <h3 class="font-semibold text-warm-900">{p.tea}</h3>
+                  <p class="text-sm text-muted leading-relaxed mt-0.5">{p.note}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="mistakes" class="scroll-mt-24 reveal">
+          <SectionHeader eyebrow="Before You Start" title="First-Week Mistakes to Skip" headingLevel="h2" />
+          <div class="mt-6 space-y-2.5">
+            {mistakes.map((m) => (
+              <div class="card p-4 flex gap-3">
+                <span class="text-amber-500 flex-shrink-0 mt-0.5">✕</span>
+                <p class="text-sm text-muted leading-relaxed">{m}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <CTACard primaryHref="/teas" primaryLabel="Browse All Teas" secondaryHref="/guides/brewing" secondaryLabel="Full Brewing Guide" />
+
+  <RelatedLinks links={[
+    { href: '/guides/brewing', label: 'how to brew chinese tea' },
+    { href: '/guides/production', label: 'how chinese tea is made' },
+    { href: '/guides/buying', label: 'buying your first tea' },
+    { href: '/teaware', label: 'teaware essentials' },
+    { href: '/teas/silver-needle', label: 'best tea for beginners' },
+  ]} />
+
+</BaseLayout>

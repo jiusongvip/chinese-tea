@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import BrewingTabs from '../../components/BrewingTabs.astro';
+import LeadImage from '../../components/LeadImage.astro';
+import CTACard from '../../components/CTACard.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { articleSchema } from '../../data/schemas';
+
+const title = 'How to Brew Chinese Tea';
+const description = 'The complete Chinese tea brewing guide — gongfu vs Western style, exact water temperatures for each tea type, leaf-to-water ratios, and the teaware you need.';
+
+const schemaJson = JSON.stringify(articleSchema({
+  title,
+  description,
+  canonicalURL: 'https://chinese-tea.com/guides/brewing',
+  image: 'https://chinese-tea.com/images/chinese-tea-brewing.avif',
+  datePublished: '2026-08-01',
+  dateModified: '2026-08-12',
+}));
+
+const gongfuSteps = [
+  'Heat your vessel — rinse a gaiwan or Yixing pot with boiling water.',
+  'Add 5g of tea (about 1-2 tablespoons) for a 100ml vessel.',
+  'Pour a quick rinse of hot water and discard it immediately. This "wakens" the leaves.',
+  'Brew the first infusion for 10-60 seconds depending on the tea.',
+  'Pour into a fairness pitcher so every cup is equal strength.',
+  'Add 5-15 seconds to each subsequent steep — the flavors evolve every round.',
+];
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson} ogImage="/images/chinese-tea-brewing.avif">
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="How To" title="How to Brew Chinese Tea" subtitle="There are two paths: gongfu style (small vessel, multiple short infusions) and Western style (larger pot, longer steep). Both produce excellent tea — this guide covers when to use each and the exact parameters per tea type." headingLevel="h1" />
+    <div class="mt-8"><LeadImage src="/images/chinese-tea-brewing.avif" alt="Hot water being poured into a gaiwan" caption="Gongfu cha — small vessel, many infusions" /></div>
+  </section>
+
+  <section class="section-container py-12">
+    <BrewingTabs />
+  </section>
+
+  <section class="bg-paper-100 py-16">
+    <div class="section-container">
+      <SectionHeader eyebrow="Gongfu Style" title="The Gongfu Method, Step by Step" subtitle="The traditional Chinese approach: a high leaf-to-water ratio and many short infusions, each revealing a new layer of the tea." headingLevel="h2" />
+      <div class="mt-8 max-w-3xl mx-auto">
+        <ol class="space-y-3">
+          {gongfuSteps.map((s, i) => (
+            <li class="card p-4 flex gap-4 items-start">
+              <span class="w-8 h-8 rounded-full bg-leaf-100 text-accent flex items-center justify-center text-sm font-bold flex-shrink-0">{i + 1}</span>
+              <p class="text-sm text-warm-700 leading-relaxed pt-1">{s}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-container py-16">
+    <div class="max-w-3xl mx-auto">
+      <SectionHeader eyebrow="Which Style?" title="Gongfu vs Western Brewing" headingLevel="h2" />
+      <div class="mt-8 space-y-6">
+        <div class="card p-6">
+          <h3 class="font-semibold text-warm-900 mb-2">Choose gongfu when</h3>
+          <ul class="space-y-2 text-sm text-muted list-disc pl-5">
+            <li>You have a quality oolong, pu-erh, or Dan Cong — teas built for many infusions.</li>
+            <li>You want to taste how a tea evolves from first steep to last.</li>
+            <li>You're drinking alone or with one or two friends (small vessel = small servings).</li>
+          </ul>
+        </div>
+        <div class="card p-6">
+          <h3 class="font-semibold text-warm-900 mb-2">Choose Western when</h3>
+          <ul class="space-y-2 text-sm text-muted list-disc pl-5">
+            <li>You're brewing for several people at once.</li>
+            <li>You want a quick, familiar cup — big pot, 2-5 minutes, done.</li>
+            <li>You're drinking greens, whites, or blacks as an everyday cup.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="mt-8 text-sm text-muted leading-relaxed">The golden rule across both styles: <strong>if the water tastes good on its own, it will make good tea.</strong> See the <a href="/guides/water" class="text-accent underline">water guide</a> for the full breakdown, and the <a href="/guides/cold-brew" class="text-accent underline">cold brew guide</a> for the zero-bitter summer method.</p>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/teas" primaryLabel="Find a Tea to Brew" secondaryHref="/teaware" secondaryLabel="Teaware Essentials" />
+
+  <RelatedLinks links={[
+    { href: '/guides/water', label: 'best water for chinese tea' },
+    { href: '/guides/cold-brew', label: 'cold brew chinese tea' },
+    { href: '/teaware', label: 'gaiwan vs yixing teapot' },
+    { href: '/guides/buying', label: 'how much tea to buy' },
+    { href: '/types/green', label: 'green tea brewing temperature' },
+    { href: '/types/oolong', label: 'oolong gongfu guide' },
+  ]} />
+
+</BaseLayout>

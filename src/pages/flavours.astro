@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import FinderWidget from '../components/FinderWidget.astro';
+import CTACard from '../components/CTACard.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import { flavourBuckets } from '../data/flavours';
+import { getTea } from '../data/teas';
+import TeaVisual from '../components/TeaVisual.astro';
+import { articleSchema } from '../data/schemas';
+import { ArrowRight } from '@lucide/astro';
+
+const title = 'Chinese Tea Flavour Guide: Find Tea by Taste';
+const description = 'Find Chinese tea by flavor — floral, fresh and grassy, fruity, nutty, honey-sweet, malty, smoky, or earthy. Every famous tea mapped to the tastes it delivers.';
+
+const schemaJson = JSON.stringify([
+  articleSchema({
+    title,
+    description,
+    canonicalURL: 'https://chinese-tea.com/flavours',
+    image: 'https://chinese-tea.com/images/chinese-tea-og.webp',
+    datePublished: '2026-08-01',
+    dateModified: '2026-08-12',
+  }),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Chinese teas by flavour',
+    itemListElement: flavourBuckets.flatMap((b, bi) =>
+      b.teas.map((slug, ti) => {
+        const tea = getTea(slug);
+        return {
+          '@type': 'Product',
+          name: tea?.name ?? slug,
+          url: tea ? `https://chinese-tea.com/teas/${slug}` : undefined,
+          position: bi * 10 + ti + 1,
+        };
+      })
+    ),
+  },
+]);
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="By Taste" title="Chinese Tea Flavour Guide" subtitle="Not sure what a 'vegetal' or 'earthy' tea tastes like? Every famous tea on this site is mapped to the flavors it actually delivers — find your cup by the taste you're craving, not by category name." headingLevel="h1" />
+  </section>
+
+  <!-- Bucket quick nav -->
+  <nav class="section-container py-6 reveal" aria-label="Flavour buckets">
+    <div class="flex flex-wrap gap-2">
+      {flavourBuckets.map((b) => (
+        <a href={`#${b.slug}`} class={`px-4 py-1.5 rounded-full border text-sm font-medium transition ${b.accent}`}>{b.name}</a>
+      ))}
+    </div>
+  </nav>
+
+  <!-- Buckets -->
+  <section class="section-container pb-16 space-y-14">
+    {flavourBuckets.map((b) => (
+      <div id={b.slug} class="scroll-mt-24">
+        <div class="flex items-center gap-3 mb-2">
+          <span class={`inline-block h-6 w-1.5 rounded-full ${b.accent.split(' ')[0].replace('bg', 'bg')}`}></span>
+          <h2 class="font-display text-2xl md:text-3xl font-semibold text-warm-900">{b.name}</h2>
+        </div>
+        <p class="text-sm text-muted mb-5 max-w-2xl">{b.blurb}</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {b.teas.map((slug) => {
+            const tea = getTea(slug);
+            if (!tea) return null;
+            return (
+              <a href={`/teas/${tea.slug}`} class="group card card-hover p-5 no-underline flex flex-col">
+                <div class="flex items-center gap-3 mb-2">
+                  <TeaVisual tea={tea} />
+                  <div>
+                    <h3 class="font-semibold text-warm-900 leading-tight group-hover:text-accent transition-colors">{tea.name} <span class="text-xs font-normal text-zinc-400">{tea.nameChinese}</span></h3>
+                    <p class="text-xs text-zinc-400">{tea.origin}</p>
+                  </div>
+                </div>
+                <p class="text-xs text-muted leading-relaxed mt-auto">{tea.flavorShort}</p>
+                <span class="mt-3 inline-flex items-center gap-1 text-xs font-medium text-accent">Full guide <ArrowRight class="w-3 h-3 text-leaf-400 group-hover:translate-x-0.5 transition-transform" /></span>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <!-- Interactive finder -->
+  <section class="bg-paper-100 py-16">
+    <div class="section-container">
+      <div class="text-center mb-10 reveal">
+        <SectionHeader eyebrow="Still Unsure?" title="Tell Us the Taste You Want" subtitle="Answer one question and we'll pick the tea for you." headingLevel="h2" center />
+      </div>
+      <FinderWidget />
+    </div>
+  </section>
+
+  <section class="section-container py-12 max-w-3xl reveal">
+    <div class="card p-6 bg-paper-100">
+      <h3 class="font-semibold text-warm-900 mb-2">New to describing tea?</h3>
+      <p class="text-xs text-muted leading-relaxed">Professionals use hundreds of terms for the taste of tea. We've distilled the essential vocabulary — hui gan, yan yun, mouthfeel, and more — into a plain-English <a href="/tasting-terms" class="text-accent underline">Chinese tea tasting terms</a> guide.</p>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/teas" primaryLabel="Browse All Teas" secondaryHref="/tasting-terms" secondaryLabel="Tasting Terms Glossary" />
+
+  <RelatedLinks links={[
+    { href: '/tasting-terms', label: 'chinese tea tasting terms' },
+    { href: '/teas/longjing', label: 'nutty green tea' },
+    { href: '/teas/tie-guan-yin', label: 'floral oolong tea' },
+    { href: '/teas/pu-erh-shou', label: 'earthy tea' },
+    { href: '/teas/lapsang-souchong', label: 'smoky tea' },
+    { href: '/guides/buying', label: 'buy by flavor profile' },
+  ]} />
+
+</BaseLayout>

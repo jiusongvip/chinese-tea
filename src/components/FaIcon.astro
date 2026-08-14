@@ -1,0 +1,29 @@
+---
+export interface FaIconDef {
+  iconName: string;
+  icon: [number, number, string[], string, string | string[]];
+}
+
+interface Props {
+  icon: FaIconDef;
+  size?: number;
+  label?: string;
+}
+
+const { icon, size = 18, label } = Astro.props;
+const [width, height, , , paths] = icon.icon;
+const d = Array.isArray(paths) ? paths.join("") : paths;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox={`0 0 ${width} ${height}`}
+  width={size}
+  height={size}
+  fill="currentColor"
+  aria-hidden={label ? undefined : "true"}
+  role={label ? "img" : undefined}
+>
+  {label && <title>{label}</title>}
+  <path d={d} />
+</svg>

@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import FaqList from '../components/FaqList.astro';
+import CTACard from '../components/CTACard.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import { faqs } from '../data/faq';
+import { faqSchema, qaSchema } from '../data/schemas';
+
+const title = 'Frequently Asked Questions';
+const description = 'Answers to the most common questions about Chinese tea — the types, brewing, gongfu ceremony, caffeine, storage, buying, and reusing tea leaves.';
+
+const schemaJson = JSON.stringify([...qaSchema(faqs), faqSchema(faqs)]);
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="Questions" title="Frequently Asked Questions" subtitle="Everything beginners ask about Chinese tea — answered directly, without the fluff." headingLevel="h1" />
+  </section>
+
+  <section class="section-container py-12">
+    <div class="max-w-3xl mx-auto">
+      <FaqList faqs={faqs} />
+    </div>
+  </section>
+
+  <section class="section-container pb-16 max-w-3xl">
+    <div class="card p-6 bg-paper-100">
+      <h3 class="font-semibold text-warm-900 mb-2">Still have a question?</h3>
+      <p class="text-sm text-muted leading-relaxed">Email us at <a href="mailto:hello@chinese-tea.com" class="text-accent underline">hello@chinese-tea.com</a>. Real questions get real answers — and if we get the same one twice, it becomes a page.</p>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/teas" primaryLabel="Explore the Teas" secondaryHref="/guides/brewing" secondaryLabel="Brewing Guide" />
+
+  <RelatedLinks links={[
+    { href: '/types', label: 'types of chinese tea' },
+    { href: '/guides/brewing', label: 'how to brew chinese tea' },
+    { href: '/guides/buying', label: 'where to buy authentic tea' },
+    { href: '/guides/storage', label: 'how to store tea' },
+  ]} />
+
+</BaseLayout>

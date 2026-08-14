@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import TypeCard from '../../components/TypeCard.astro';
+import CTACard from '../../components/CTACard.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { teaTypes } from '../../data/teaTypes';
+import { comparisonRows } from '../../data/content';
+
+const title = 'The Six Types of Chinese Tea: A Complete Guide';
+const description = 'All six Chinese tea types explained by their processing — fixing, withering, sealing the yellow, rocking the green, oxidation, and fermentation — plus brewing temperatures and how to choose.';
+---
+
+<BaseLayout {title} {description}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="The Foundation" title="The Six Types of Chinese Tea: A Complete Guide" subtitle="Every type of tea comes from one plant. What makes green tea green, black tea black, and oolong something in between is what happens to the leaf after it's picked." headingLevel="h1" />
+    <p class="mt-3 text-xs text-zinc-400 flex items-center gap-1.5"><span class="inline-block w-1.5 h-1.5 rounded-full bg-accent"></span> Last updated August 2026 — processing, prices, and brewing parameters re-verified.</p>
+  </section>
+
+  <!-- Framework intro -->
+  <section class="section-container py-10 max-w-3xl reveal">
+    <p class="text-warm-700 leading-relaxed">All tea — every type, every style, every country of origin — comes from one plant: <em>Camellia sinensis</em>. What makes green tea green, black tea black, and oolong something in between isn't the plant or where it's grown. It's what happens to the leaf after it's picked.</p>
+    <p class="text-warm-700 leading-relaxed mt-4">The six Chinese tea types — green, white, yellow, oolong, black, and dark — are defined almost entirely by their processing. Each category is keyed to one defining step: <strong class="text-warm-900">fixing</strong> for green, <strong class="text-warm-900">withering</strong> for white, <strong class="text-warm-900">sealing the yellow</strong> for yellow, <strong class="text-warm-900">edge-bruising</strong> for oolong, <strong class="text-warm-900">full oxidation</strong> for black, and <strong class="text-warm-900">microbial fermentation</strong> for dark tea. Understand that one fact and the whole category map clicks into place.</p>
+  </section>
+
+  <!-- Processing at a glance -->
+  <section class="section-container py-8 reveal">
+    <div class="overflow-x-auto rounded-xl border border-paper-200 bg-white">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="bg-paper-100 text-left">
+            <th class="px-5 py-3 font-semibold text-warm-700">Type</th>
+            <th class="px-5 py-3 font-semibold text-warm-700">Defining step</th>
+            <th class="px-5 py-3 font-semibold text-warm-700">Chinese term</th>
+            <th class="px-5 py-3 font-semibold text-warm-700 hidden md:table-cell">Literal meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          {teaTypes.map((t, i) => (
+            <tr class={`${i % 2 === 0 ? 'bg-white' : 'bg-paper-100/50'} hover:bg-leaf-50/60 transition-colors`}>
+              <td class="px-5 py-3 font-medium text-warm-800"><a href={`/types/${t.slug}`} class="hover:text-accent hover:underline no-underline">{t.name}</a></td>
+              <td class="px-5 py-3 text-muted">{t.process.term}</td>
+              <td class="px-5 py-3 text-warm-800">{t.process.zh} <span class="text-zinc-400 font-normal">{t.namePinyin}</span></td>
+              <td class="px-5 py-3 text-muted hidden md:table-cell">{t.process.literal}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-5 card p-5 bg-paper-100">
+      <h3 class="font-semibold text-warm-900 mb-1">Why they're called the "six colors"</h3>
+      <p class="text-xs text-muted leading-relaxed">In the traditional Chinese classification, the six types are also called the <strong class="text-warm-800">six colors</strong> (六茶六色): <strong class="text-warm-800">green tea</strong> 绿茶, <strong class="text-warm-800">white tea</strong> 白茶, <strong class="text-warm-800">yellow tea</strong> 黄茶, <strong class="text-warm-800">qing cha</strong> 青茶 (blue-green — this is oolong, which is why older sources sometimes call oolong "blue tea"), <strong class="text-warm-800">hong cha</strong> 红茶 (red tea — what the West calls black tea), and <strong class="text-warm-800">hei cha</strong> 黑茶 (dark tea, the fermented category that includes pu-erh).</p>
+    </div>
+  </section>
+
+  <!-- Type cards -->
+  <section class="section-container py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {teaTypes.map((t) => <TypeCard type={t} />)}
+    </div>
+  </section>
+
+  <!-- Comparison table -->
+  <section class="section-container pb-12">
+    <SectionHeader eyebrow="At a Glance" title="Compare the Six Types" headingLevel="h2" center />
+    <div class="mt-8 overflow-x-auto rounded-xl border border-paper-200 bg-white">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="bg-paper-100 text-left">
+            <th class="px-5 py-3 font-semibold text-warm-700">Type</th>
+            <th class="px-5 py-3 font-semibold text-warm-700">Oxidation</th>
+            <th class="px-5 py-3 font-semibold text-warm-700">Caffeine</th>
+            <th class="px-5 py-3 font-semibold text-warm-700">Brew Temp</th>
+            <th class="px-5 py-3 font-semibold text-warm-700">Beginner</th>
+            <th class="px-5 py-3 font-semibold text-warm-700">Price Range</th>
+          </tr>
+        </thead>
+        <tbody>
+          {comparisonRows.map((row, i) => (
+            <tr class={`${i % 2 === 0 ? 'bg-white' : 'bg-paper-100/50'} hover:bg-leaf-50/60 transition-colors`}>
+              <td class="px-5 py-3 font-medium text-warm-800"><a href={row.href} class="hover:text-accent hover:underline no-underline">{row.type}</a></td>
+              <td class="px-5 py-3 text-muted">{row.oxidation}</td>
+              <td class="px-5 py-3 text-muted">{row.caffeine}</td>
+              <td class="px-5 py-3 text-muted">{row.brewTemp}</td>
+              <td class="px-5 py-3 text-zinc-500">{'★★★★★'.slice(0, row.beginner)}{'☆☆☆☆☆'.slice(0, 5 - row.beginner)}</td>
+              <td class="px-5 py-3 text-muted">{row.price}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- One line for each -->
+  <section class="bg-paper-100 py-16">
+    <div class="section-container max-w-3xl">
+      <SectionHeader eyebrow="Recap" title="One Line for Each Type" subtitle="If you remember nothing else from this guide, remember these six sentences." headingLevel="h2" />
+      <div class="mt-8 space-y-3">
+        {teaTypes.map((t) => (
+          <div class="card p-5 flex gap-4 items-start">
+            <a href={`/types/${t.slug}`} class={`mt-1 flex-shrink-0 px-2.5 py-1 text-xs font-bold rounded-full ${t.accent.badge}`}>{t.nameShort}</a>
+            <p class="text-sm text-warm-700 leading-relaxed">{t.oneLiner}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Misconceptions -->
+  <section class="section-container py-16 max-w-4xl">
+    <SectionHeader eyebrow="Straight Answers" title="Common Misconceptions, Corrected" subtitle="The same wrong ideas show up in every comment section. Here's the accurate version of each." headingLevel="h2" />
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+      {teaTypes.flatMap((t) => t.misconceptions).map((m, i) => (
+        <div class="card p-5 flex gap-3">
+          <span class="text-amber-500 flex-shrink-0 mt-0.5">✕</span>
+          <p class="text-sm text-muted leading-relaxed">{m}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- What's not tea -->
+  <section class="bg-leaf-950 py-16 text-white">
+    <div class="section-container max-w-4xl">
+      <SectionHeader eyebrow="Boundary" title="What's Not One of the Six" subtitle="The six categories cover only tea-leaf tea — every one of them comes from Camellia sinensis." headingLevel="h2" dark />
+      <div class="mt-6 grid md:grid-cols-2 gap-6">
+        <div class="bg-leaf-900/50 rounded-xl border border-leaf-800 p-6">
+          <h3 class="font-semibold text-white mb-2">Flower & herbal infusions are not tea</h3>
+          <p class="text-sm text-leaf-100/75 leading-relaxed">Chamomile, peppermint, rooibos, and chrysanthemum 'teas' are infusions of other plants — no Camellia sinensis leaf, no caffeine, and they follow none of the six processing paths. The Chinese tea tradition focuses on the craft of transforming a single kind of leaf.</p>
+        </div>
+        <div class="bg-leaf-900/50 rounded-xl border border-leaf-800 p-6">
+          <h3 class="font-semibold text-white mb-2">Jasmine tea is the one exception</h3>
+          <p class="text-sm text-leaf-100/75 leading-relaxed">Jasmine tea (hua cha, 花茶) is real tea — tea leaves scented with fresh jasmine blossoms over several nights. It's a flavoring step applied to an already-made green or white tea, which is why it isn't one of the six types even though it's genuinely tea.</p>
+        </div>
+      </div>
+      <a href="/faq" class="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-leaf-300 hover:text-white transition-colors">Is herbal tea actually tea? →</a>
+    </div>
+  </section>
+
+  <!-- Attribution -->
+  <section class="section-container pb-4">
+    <div class="max-w-3xl mx-auto">
+      <div class="card p-5 bg-paper-100">
+        <h3 class="font-semibold text-warm-900 mb-2">Further reading</h3>
+        <p class="text-xs text-muted leading-relaxed">The processing framework used here — defining each type by its one decisive step — draws on the classification work of <a href="https://teaepicure.com/about-tony/" target="_blank" rel="noopener" class="text-accent underline">Tony Gebely</a>, author of <em>Tea: A User's Guide</em> and the Tea Epicure blog. If you want to go deeper into how tea is made, his work is the clearest thinking on the subject.</p>
+      </div>
+    </div>
+  </section>
+
+  <CTACard primaryHref="/teas" primaryLabel="Explore the Famous Teas" secondaryHref="/guides/brewing" secondaryLabel="Brewing Guide" />
+
+  <RelatedLinks links={[
+    { href: '/types/green', label: 'types of chinese green tea' },
+    { href: '/types/oolong', label: 'what is qing cha (blue tea)' },
+    { href: '/types/dark', label: 'dark tea vs pu-erh' },
+    { href: '/types/black', label: 'why is black tea called red tea' },
+    { href: '/flavours', label: 'chinese tea flavour guide' },
+    { href: '/faq', label: 'is herbal tea actually tea' },
+  ]} />
+
+</BaseLayout>

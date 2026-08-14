@@ -1,0 +1,257 @@
+---
+import { teas, stars, type TeaTypeSlug } from '../data/teas';
+import { getTeaType } from '../data/teaTypes';
+import TeaVisual from './TeaVisual.astro';
+import FaIcon from './FaIcon.astro';
+import { faCircleCheck, faTriangleExclamation, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
+const filters: { slug: 'all' | TeaTypeSlug; label: string }[] = [
+  { slug: 'all', label: 'All' },
+  { slug: 'green', label: 'Green' },
+  { slug: 'white', label: 'White' },
+  { slug: 'yellow', label: 'Yellow' },
+  { slug: 'oolong', label: 'Oolong' },
+  { slug: 'black', label: 'Black' },
+  { slug: 'dark', label: 'Dark' },
+];
+---
+
+<div>
+  <div class="flex flex-wrap gap-2 justify-center mb-8" id="tea-filter">
+    {filters.map((f) => (
+      <button
+        type="button"
+        class={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${f.slug === 'all' ? 'border-2 border-leaf-600 bg-leaf-600 text-white active' : 'border-paper-200 text-warm-600 hover:border-leaf-300 hover:text-accent'}`}
+        data-filter={f.slug}
+      >
+        {f.label}
+      </button>
+    ))}
+  </div>
+
+  <div class="flex items-center gap-3 mb-4 justify-center">
+    <div class="relative flex-1 max-w-xs">
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="tea-search" type="text" placeholder="Search teas..." class="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-paper-200 focus:border-leaf-400 focus:ring-1 focus:ring-leaf-400 outline-none transition-colors bg-white" />
+    </div>
+    <span id="tea-count" class="text-xs text-zinc-400 whitespace-nowrap"></span>
+  </div>
+
+  <div class="overflow-x-auto rounded-xl border border-paper-200 bg-white">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="bg-paper-100 text-left">
+          <th class="px-5 py-3 font-semibold text-warm-700 cursor-pointer hover:text-accent transition-colors" data-sort="name">Tea Name <span class="text-zinc-400 ml-1">↕</span></th>
+          <th class="px-5 py-3 font-semibold text-warm-700 cursor-pointer hover:text-accent transition-colors" data-sort="type">Type <span class="text-zinc-400 ml-1">↕</span></th>
+          <th class="px-5 py-3 font-semibold text-warm-700 hidden sm:table-cell">Origin</th>
+          <th class="px-5 py-3 font-semibold text-warm-700 hidden md:table-cell">Flavor</th>
+          <th class="px-5 py-3 font-semibold text-warm-700 hidden lg:table-cell">Caffeine</th>
+          <th class="px-5 py-3 font-semibold text-warm-700 hidden lg:table-cell">Beginner</th>
+        </tr>
+      </thead>
+      <tbody id="tea-table-body">
+        {teas.map((t, i) => {
+          const type = getTeaType(t.type);
+          const rowBg = i % 2 === 0 ? 'bg-white' : 'bg-paper-100/50';
+          return (
+            <Fragment>
+              <tr class={`${rowBg} tea-row cursor-pointer group relative`} data-tea-id={t.slug} data-type={t.type} tabindex="0" role="button" aria-expanded="false">
+                <td class="px-5 py-3 font-medium text-warm-800 group-hover:text-accent transition-colors">
+                  <span class="inline-flex items-center gap-2">
+                    <svg class="w-4 h-4 text-zinc-300 group-hover:text-accent transition-transform expand-icon flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    <a href={`/teas/${t.slug}`} class="hover:underline no-underline"><span>{t.name} <span class="text-zinc-400 font-normal text-xs ml-1">{t.nameChinese}</span></span></a>
+                  </span>
+                </td>
+                <td class="px-5 py-3"><span class={`px-2 py-0.5 text-xs rounded-full ${type?.accent.chip ?? ''} whitespace-nowrap`}>{type?.nameShort}</span></td>
+                <td class="px-5 py-3 text-muted hidden sm:table-cell">{t.origin}</td>
+                <td class="px-5 py-3 text-muted hidden md:table-cell">{t.flavorShort}</td>
+                <td class="px-5 py-3 text-muted hidden lg:table-cell">{t.caffeine}</td>
+                <td class="px-5 py-3 text-zinc-500 hidden lg:table-cell">{stars(t.beginner)}</td>
+              </tr>
+              <tr class={`${rowBg} tea-detail-row hidden`} id={`detail-${t.slug}`} data-tea-id={t.slug}>
+                <td colspan="6" class="p-0 bg-paper-100/60 border-t border-leaf-200">
+                  <div class="px-5 sm:px-8 py-6 md:py-8">
+                    <div class="flex items-center gap-3 mb-6">
+                      <div class="w-10 h-10 flex-shrink-0"><TeaVisual tea={t} /></div>
+                      <div>
+                        <h4 class="text-lg font-bold text-warm-900">{t.name}</h4>
+                        <p class="text-sm text-zinc-400">{t.nameChinese} &middot; {type?.name} &middot; {t.origin}</p>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                      <div>
+                        <h5 class="text-xs font-mono uppercase tracking-[0.15em] text-accent mb-3">Flavor Profile</h5>
+                        <div class="space-y-2.5 text-sm">
+                          <div class="flex gap-2"><span class="text-zinc-400 w-16 flex-shrink-0">Aroma</span><span class="text-warm-700">{t.flavor.aroma}</span></div>
+                          <div class="flex gap-2"><span class="text-zinc-400 w-16 flex-shrink-0">Taste</span><span class="text-warm-700">{t.flavor.taste}</span></div>
+                          <div class="flex gap-2"><span class="text-zinc-400 w-16 flex-shrink-0">Color</span><span class="text-warm-700">{t.flavor.color}</span></div>
+                          <div class="flex gap-2"><span class="text-zinc-400 w-16 flex-shrink-0">Body</span><span class="text-warm-700">{t.flavor.body}</span></div>
+                        </div>
+                        <div class="mt-3 flex flex-wrap gap-3 text-xs text-zinc-500">
+                          <span class="px-2 py-1 bg-white rounded-md border border-paper-200">Caffeine: {t.caffeine}</span>
+                          <span class="px-2 py-1 bg-white rounded-md border border-paper-200">Beginner: {stars(t.beginner)}</span>
+                        </div>
+                      </div>
+                      <div>
+                        <h5 class="text-xs font-mono uppercase tracking-[0.15em] text-accent mb-3">Brewing Guide</h5>
+                        <div class="grid grid-cols-2 gap-x-6 gap-y-2.5 text-sm">
+                          <div><span class="text-zinc-400 block text-xs">Water</span><span class="text-warm-800 font-medium">{t.brewing.temp}</span></div>
+                          <div><span class="text-zinc-400 block text-xs">Vessel</span><span class="text-warm-800 font-medium">{t.brewing.vessel}</span></div>
+                          <div><span class="text-zinc-400 block text-xs">Gongfu Time</span><span class="text-warm-800 font-medium">{t.brewing.timeGongfu}</span></div>
+                          <div><span class="text-zinc-400 block text-xs">Western Time</span><span class="text-warm-800 font-medium">{t.brewing.timeWestern}</span></div>
+                          <div><span class="text-zinc-400 block text-xs">Ratio</span><span class="text-warm-800 font-medium">{t.brewing.ratio}</span></div>
+                          <div><span class="text-zinc-400 block text-xs">Infusions</span><span class="text-warm-800 font-medium">{t.brewing.infusions}</span></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mb-6 p-4 sm:p-5 bg-white rounded-lg border border-paper-200">
+                      <h5 class="text-xs font-mono uppercase tracking-[0.15em] text-amber-600 mb-3">Buying Guide</h5>
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4 text-sm">
+                        <div class="p-3 bg-paper-100 rounded-lg"><span class="text-zinc-400 block text-xs mb-0.5">Entry Level</span><span class="text-warm-800 font-medium">{t.buying.priceEntry}</span></div>
+                        <div class="p-3 bg-paper-100 rounded-lg"><span class="text-zinc-400 block text-xs mb-0.5">Premium / Collector</span><span class="text-warm-800 font-medium">{t.buying.priceAdvance}</span></div>
+                      </div>
+                      <div class="space-y-3 text-sm">
+                        <div class="flex gap-2"><span class="text-accent mt-0.5 flex-shrink-0"><FaIcon icon={faCircleCheck} size={15} /></span><span><strong class="text-warm-700">Quality Check:</strong> <span class="text-muted">{t.buying.qualityCheck}</span></span></div>
+                        <div class="flex gap-2"><span class="text-amber-500 mt-0.5 flex-shrink-0"><FaIcon icon={faTriangleExclamation} size={15} /></span><span><strong class="text-warm-700">Watch Out:</strong> <span class="text-muted">{t.buying.commonScams}</span></span></div>
+                        <div class="flex gap-2"><span class="text-zinc-400 mt-0.5 flex-shrink-0"><FaIcon icon={faMagnifyingGlass} size={14} /></span><span><strong class="text-warm-700">Search:</strong> <span class="text-zinc-500">{t.buying.searchKeywords}</span></span></div>
+                      </div>
+                    </div>
+                    <div class="mb-5 text-sm">
+                      <h5 class="text-xs font-mono uppercase tracking-[0.15em] text-zinc-400 mb-2">History and Background</h5>
+                      <p class="text-muted leading-relaxed">{t.history}</p>
+                    </div>
+                    <div class="p-3 bg-leaf-50 rounded-lg border border-leaf-100 text-sm">
+                      <span class="font-semibold text-leaf-800">Ideal For: </span><span class="text-accent">{t.idealFor}</span>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-paper-200">
+                      <a href={`/teas/${t.slug}`} class="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-dark transition-colors">Open the full {t.name} guide →</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </Fragment>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+  <p class="text-xs text-zinc-400 text-center mt-6">Click any tea to expand its full profile — flavor, brewing, buying tips, and history. Press <kbd class="px-1.5 py-0.5 bg-paper-100 rounded border border-paper-200">/</kbd> to focus search.</p>
+</div>
+
+<script is:inline>
+  const tbody = document.getElementById('tea-table-body');
+  if (tbody) {
+    let sortKey = 'name';
+    let sortAsc = true;
+    let currentFilter = 'all';
+
+    function visibleTeaRows() {
+      return Array.from(tbody.querySelectorAll('tr.tea-row'));
+    }
+
+    function apply() {
+      const term = (document.getElementById('tea-search')?.value || '').toLowerCase();
+      const countEl = document.getElementById('tea-count');
+      let count = 0;
+      visibleTeaRows().forEach((row) => {
+        const detail = document.getElementById('detail-' + row.dataset.teaId);
+        const passesType = currentFilter === 'all' || row.dataset.type === currentFilter;
+        const hay = (row.textContent + ' ' + (detail ? detail.textContent : '')).toLowerCase();
+        const passesSearch = !term || hay.includes(term);
+        const show = passesType && passesSearch;
+        row.classList.toggle('hidden', !show);
+        if (detail && !show) detail.classList.add('hidden');
+        if (show) count++;
+      });
+      if (countEl) countEl.textContent = count + ' of ' + tbody.querySelectorAll('tr.tea-row').length + ' teas';
+    }
+
+    function sortRows() {
+      const rows = visibleTeaRows();
+      rows.sort((a, b) => {
+        let va = a.dataset.sortName || a.textContent || '';
+        let vb = b.dataset.sortName || b.textContent || '';
+        if (sortKey === 'name') { va = (a.dataset.sortName || a.textContent).toLowerCase(); vb = (b.dataset.sortName || b.textContent).toLowerCase(); }
+        else { va = (a.dataset.sortType || a.textContent).toLowerCase(); vb = (b.dataset.sortType || b.textContent).toLowerCase(); }
+        return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+      });
+      rows.forEach((row) => {
+        const detail = document.getElementById('detail-' + row.dataset.teaId);
+        if (detail) tbody.appendChild(detail);
+        tbody.appendChild(row);
+      });
+    }
+
+    document.querySelectorAll('tr.tea-row').forEach((row) => {
+      const nameCell = row.querySelector('a');
+      row.dataset.sortName = nameCell ? nameCell.textContent.trim() : row.textContent.trim();
+      const typeCell = row.querySelectorAll('td')[1];
+      row.dataset.sortType = typeCell ? typeCell.textContent.trim() : '';
+    });
+
+    const searchInput = document.getElementById('tea-search');
+    if (searchInput) {
+      let timer;
+      searchInput.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(apply, 150); });
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        const s = document.getElementById('tea-search');
+        if (s) s.focus();
+      }
+    });
+
+    document.querySelectorAll('[data-sort]').forEach((th) => th.addEventListener('click', () => {
+      const key = th.dataset.sort;
+      sortKey === key ? (sortAsc = !sortAsc) : (sortKey = key, sortAsc = true);
+      sortRows();
+    }));
+
+    const filterBtns = document.querySelectorAll('#tea-filter [data-filter]');
+    filterBtns.forEach((btn) => btn.addEventListener('click', () => {
+      filterBtns.forEach((b) => { b.className = 'px-4 py-1.5 rounded-full text-sm font-medium border border-paper-200 text-warm-600 hover:border-leaf-300 hover:text-accent transition-colors'; });
+      btn.className = 'px-4 py-1.5 rounded-full text-sm font-medium border-2 border-leaf-600 bg-leaf-600 text-white active';
+      currentFilter = btn.dataset.filter;
+      apply();
+    }));
+
+    function toggleDetail(teaId, open) {
+      const detail = document.getElementById('detail-' + teaId);
+      const row = tbody.querySelector('tr.tea-row[data-tea-id="' + teaId + '"]');
+      if (!detail || !row) return;
+      const icon = row.querySelector('.expand-icon');
+      const willOpen = open !== undefined ? open : detail.classList.contains('hidden');
+      tbody.querySelectorAll('tr.tea-detail-row:not(.hidden)').forEach((d) => {
+        if (d.dataset.teaId !== teaId) { d.classList.add('hidden'); const oi = tbody.querySelector('tr.tea-row[data-tea-id="' + d.dataset.teaId + '"] .expand-icon'); if (oi) oi.style.transform = ''; tbody.querySelector('tr.tea-row[data-tea-id="' + d.dataset.teaId + '"]')?.setAttribute('aria-expanded', 'false'); }
+      });
+      if (willOpen) {
+        detail.classList.remove('hidden');
+        if (icon) icon.style.transform = 'rotate(90deg)';
+        row.setAttribute('aria-expanded', 'true');
+        history.replaceState(null, '', '#tea-' + teaId);
+        setTimeout(() => { const r = detail.getBoundingClientRect(); if (r.bottom > window.innerHeight) detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 80);
+      } else {
+        detail.classList.add('hidden');
+        if (icon) icon.style.transform = '';
+        row.setAttribute('aria-expanded', 'false');
+        if (window.location.hash === '#tea-' + teaId) history.replaceState(null, '', window.location.pathname);
+      }
+    }
+
+    tbody.addEventListener('click', (e) => {
+      const row = e.target.closest('tr.tea-row');
+      if (row && !e.target.closest('a')) toggleDetail(row.dataset.teaId);
+    });
+    tbody.addEventListener('keydown', (e) => {
+      const row = e.target.closest('tr.tea-row');
+      if (row && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggleDetail(row.dataset.teaId); }
+    });
+
+    if (window.location.hash && window.location.hash.startsWith('#tea-')) {
+      setTimeout(() => toggleDetail(window.location.hash.replace('#tea-', ''), true), 250);
+    }
+
+    apply();
+  }
+</script>

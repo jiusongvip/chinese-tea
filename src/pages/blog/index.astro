@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import { ArrowRight } from '@lucide/astro';
+
+const title = 'Tea Blog';
+const description = 'Long-form guides on Chinese tea — gongfu brewing at home, green vs white tea, and more.';
+
+const posts = [
+  {
+    href: '/blog/history-of-chinese-tea',
+    title: 'The History of Chinese Tea: From Legend to 4,000 Years',
+    excerpt: 'Shen Nung\u2019s accident, the Tang dynasty\u2019s tea masters, the Tea Horse Road, and how the world\u2019s oldest tea culture keeps reinventing itself.',
+    date: 'August 12, 2026',
+    read: '9 min read',
+    featured: true,
+  },
+  {
+    href: '/blog/gongfu-brewing-at-home',
+    title: 'Gongfu Brewing at Home: The Setup You Actually Need',
+    excerpt: 'You don\'t need a $200 tea table. Here\'s the honest starter setup — what to buy, what to skip, and the three habits that matter more than any gear.',
+    date: 'August 10, 2026',
+    read: '6 min read',
+  },
+  {
+    href: '/blog/green-vs-white-tea',
+    title: 'Green vs White Tea: What\'s the Difference (and Which Is for You)',
+    excerpt: 'Both come from the same plant and neither is oxidized — so why do they taste so different? The processing, the picking, and how to choose.',
+    date: 'August 4, 2026',
+    read: '7 min read',
+  },
+];
+---
+
+<BaseLayout {title} {description}>
+
+  <section class="section-container pt-12 pb-4 reveal">
+    <SectionHeader eyebrow="Journal" title="Tea Blog" subtitle="Long-form, practical writing about Chinese tea — the stuff that deserves more than a table cell." headingLevel="h1" />
+  </section>
+
+  <section class="section-container py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+      {posts.map((p) => (
+        <a href={p.href} class={`group card card-hover p-6 flex flex-col no-underline ${p.featured ? 'md:col-span-2 bg-paper-100' : ''}`}>
+          {p.featured && <p class="text-xs font-semibold tracking-[0.2em] uppercase text-accent mb-3">Featured</p>}
+          <p class="text-xs text-zinc-400 mb-3">{p.date} &middot; {p.read}</p>
+          <h2 class="font-display font-semibold text-xl leading-snug mb-2 group-hover:text-accent transition-colors">{p.title}</h2>
+          <p class="text-sm text-muted leading-relaxed mb-6">{p.excerpt}</p>
+          <span class="mt-auto inline-flex items-center gap-1.5 text-sm font-medium text-accent">Read the article <ArrowRight class="w-4 h-4 text-leaf-400 group-hover:translate-x-1 transition-transform" /></span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <RelatedLinks links={[
+    { href: '/guides/brewing', label: 'brewing guide' },
+    { href: '/teas', label: 'famous teas' },
+    { href: '/types/green', label: 'green tea types' },
+    { href: '/types/white', label: 'white tea types' },
+  ]} />
+
+</BaseLayout>

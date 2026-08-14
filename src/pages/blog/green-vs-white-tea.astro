@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+
+const title = 'Green vs White Tea: What\'s the Difference';
+const description = 'Green and white tea come from the same plant and neither is oxidized — so why do they taste so different? Processing, picking, caffeine, and how to choose.';
+---
+
+<BaseLayout
+  {title}
+  {description}
+  articleType="BlogPosting"
+  author="Chinese Tea Guide"
+  datePublished="2026-08-04"
+  dateModified="2026-08-12"
+>
+
+  <article class="section-container py-12 max-w-[760px]">
+    <h1 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-warm-900 mb-6">{title}</h1>
+    <p class="text-xs text-zinc-400 mb-6">Reading time: 7 minutes</p>
+
+    <p class="text-warm-700 leading-relaxed mb-6">It's one of the most confusing facts in tea: green tea and white tea both come from the <em>Camellia sinensis</em> plant, and neither one is oxidized. Yet a good Longjing and a good Silver Needle could not taste more different. The difference is entirely in what happens after the leaves are picked — and it tells you which one you want.</p>
+
+    <h2 class="font-display text-2xl font-semibold text-warm-900 mt-10 mb-4">What happens in the first two hours</h2>
+    <p class="text-warm-700 leading-relaxed mb-4">The moment a leaf is picked, enzymes inside it begin oxidizing — the same process that browns a cut apple. Everything that follows is a race to stop or manage that oxidation.</p>
+    <p class="text-warm-700 leading-relaxed mb-6"><strong class="text-warm-900">Green tea</strong> is heat-treated within hours of picking. Chinese greens are pan-fired in wok-like drums at high heat, which kills the enzymes and locks in the leaf's green color and vegetal freshness. That heat is why Chinese green teas taste toasty and nutty — Longjing's signature chestnut note is literally cooked into the leaf.</p>
+    <p class="text-warm-700 leading-relaxed mb-6"><strong class="text-warm-900">White tea</strong> never gets heat near it. It's simply withered — spread out and left to slowly lose moisture — and then gently dried. No rolling, no firing, no oxidation control. The leaf keeps more of what it is: delicate, naturally sweet, almost fragile. That's why white tea is often called the least processed tea in the world.</p>
+
+    <h2 class="font-display text-2xl font-semibold text-warm-900 mt-10 mb-4">What it means in the cup</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+      <div class="card p-5">
+        <h3 class="font-semibold text-warm-900 mb-2">Green tea</h3>
+        <ul class="space-y-2 text-sm text-muted list-disc pl-5 leading-relaxed">
+          <li>Toasty, nutty, sometimes grassy or chestnut</li>
+          <li>Medium caffeine (25-35mg per cup)</li>
+          <li>Needs careful water temperature — boiling water burns it</li>
+          <li>Best within 6-12 months of harvest</li>
+        </ul>
+      </div>
+      <div class="card p-5">
+        <h3 class="font-semibold text-warm-900 mb-2">White tea</h3>
+        <ul class="space-y-2 text-sm text-muted list-disc pl-5 leading-relaxed">
+          <li>Sweet, melon, hay, almost floral — zero bitterness</li>
+          <li>Lowest caffeine of any tea (15-25mg)</li>
+          <li>Nearly impossible to over-brew</li>
+          <li>Aged whites are a category of their own — they evolve for decades</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="font-display text-2xl font-semibold text-warm-900 mt-10 mb-4">Which should you start with?</h2>
+    <p class="text-warm-700 leading-relaxed mb-4">If you already drink coffee or black tea, start with <strong class="text-warm-900">green tea</strong> — try <a href="/teas/longjing" class="text-accent underline">Longjing</a> for the classic toasty-chestnut profile, or <a href="/teas/anji-bai-cha" class="text-accent underline">Anji Bai Cha</a> for a green that's almost unnaturally smooth.</p>
+    <p class="text-warm-700 leading-relaxed mb-4">If you're new to tea entirely, sensitive to caffeine, or think you don't like tea, start with <strong class="text-warm-900">white</strong> — <a href="/teas/silver-needle" class="text-accent underline">Silver Needle</a> is the purest expression of the leaf there is, and it's the most forgiving tea to brew on the planet.</p>
+    <p class="text-warm-700 leading-relaxed mb-6">And if you can't choose? You don't have to. A morning Longjing and an afternoon Silver Needle is a completely reasonable daily routine — they're different moods of the same plant.</p>
+
+    <div class="card p-6 bg-leaf-50 border-leaf-200 mb-8">
+      <p class="text-sm text-accent leading-relaxed"><strong class="text-leaf-900">One naming trap:</strong> Anji Bai Cha is called "white tea" (白茶) but is a green tea — the name refers to its pale albino leaves, not the processing. A genuine white tea like Silver Needle is never pan-fired.</p>
+    </div>
+  </article>
+
+  <RelatedLinks links={[
+    { href: '/teas/silver-needle', label: 'silver needle guide' },
+    { href: '/teas/longjing', label: 'longjing guide' },
+    { href: '/types/green', label: 'all green teas' },
+    { href: '/types/white', label: 'all white teas' },
+  ]} />
+
+</BaseLayout>
