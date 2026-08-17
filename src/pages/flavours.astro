@@ -17,8 +17,8 @@ const schemaJson = JSON.stringify([
   articleSchema({
     title,
     description,
-    canonicalURL: 'https://chinese-tea.com/flavours',
-    image: 'https://chinese-tea.com/images/chinese-tea-og.webp',
+    canonicalURL: 'https://chin-tea.com/flavours',
+    image: 'https://chin-tea.com/images/chinese-tea-og.webp',
     datePublished: '2026-08-01',
     dateModified: '2026-08-12',
   }),
@@ -32,7 +32,7 @@ const schemaJson = JSON.stringify([
         return {
           '@type': 'Product',
           name: tea?.name ?? slug,
-          url: tea ? `https://chinese-tea.com/teas/${slug}` : undefined,
+          url: tea ? `https://chin-tea.com/teas/${slug}` : undefined,
           position: bi * 10 + ti + 1,
         };
       })

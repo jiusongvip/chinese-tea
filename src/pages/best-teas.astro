@@ -49,8 +49,8 @@ const schemaJson = JSON.stringify([
   articleSchema({
     title,
     description,
-    canonicalURL: 'https://chinese-tea.com/best-teas',
-    image: 'https://chinese-tea.com/images/chinese-tea-og.webp',
+    canonicalURL: 'https://chin-tea.com/best-teas',
+    image: 'https://chin-tea.com/images/chinese-tea-og.webp',
     datePublished: '2026-08-01',
     dateModified: '2026-08-12',
   }),
@@ -61,7 +61,7 @@ const schemaJson = JSON.stringify([
     itemListElement: [...topTen, ...bestByCategory, ...specialPicks]
       .map((x, i) => {
         const tea = teaFor(x.slug);
-        return { '@type': 'Product', name: tea?.name ?? x.slug, url: tea ? `https://chinese-tea.com/teas/${x.slug}` : undefined, position: i + 1 };
+        return { '@type': 'Product', name: tea?.name ?? x.slug, url: tea ? `https://chin-tea.com/teas/${x.slug}` : undefined, position: i + 1 };
       }),
   },
 ]);
