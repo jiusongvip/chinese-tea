@@ -4,38 +4,38 @@ Your practical guide to Chinese tea — the six major types, 21 famous teas with
 
 ## Site Structure
 
-- Homepage: https://chinese-tea.com
-- The Six Types: https://chinese-tea.com/types
-  - Green Tea: https://chinese-tea.com/types/green
-  - White Tea: https://chinese-tea.com/types/white
-  - Yellow Tea: https://chinese-tea.com/types/yellow
-  - Oolong Tea: https://chinese-tea.com/types/oolong
-  - Black Tea: https://chinese-tea.com/types/black
-  - Dark Tea: https://chinese-tea.com/types/dark
-- Famous Teas: https://chinese-tea.com/teas
-  - Best Chinese Teas (ranked picks): https://chinese-tea.com/best-teas
-  - 21 tea pages with flavor profile, brewing parameters, buying tips, and common scams (e.g. https://chinese-tea.com/teas/longjing)
+- Homepage: https://chin-tea.com
+- The Six Types: https://chin-tea.com/types
+  - Green Tea: https://chin-tea.com/types/green
+  - White Tea: https://chin-tea.com/types/white
+  - Yellow Tea: https://chin-tea.com/types/yellow
+  - Oolong Tea: https://chin-tea.com/types/oolong
+  - Black Tea: https://chin-tea.com/types/black
+  - Dark Tea: https://chin-tea.com/types/dark
+- Famous Teas: https://chin-tea.com/teas
+  - Best Chinese Teas (ranked picks): https://chin-tea.com/best-teas
+  - 21 tea pages with flavor profile, brewing parameters, buying tips, and common scams (e.g. https://chin-tea.com/teas/longjing)
 - Guides
-  - All Guides: https://chinese-tea.com/guides
-  - Start Here (Beginners): https://chinese-tea.com/guides/beginners
-  - How Tea Is Made: https://chinese-tea.com/guides/production
-  - Four Families of Oolong: https://chinese-tea.com/guides/oolong-styles
-  - Brewing: https://chinese-tea.com/guides/brewing
-  - Buying: https://chinese-tea.com/guides/buying
-  - Storage: https://chinese-tea.com/guides/storage
-  - Water: https://chinese-tea.com/guides/water
-  - Cold Brew: https://chinese-tea.com/guides/cold-brew
-  - Flavour Guide: https://chinese-tea.com/flavours
-  - Teaware: https://chinese-tea.com/teaware
+  - All Guides: https://chin-tea.com/guides
+  - Start Here (Beginners): https://chin-tea.com/guides/beginners
+  - How Tea Is Made: https://chin-tea.com/guides/production
+  - Four Families of Oolong: https://chin-tea.com/guides/oolong-styles
+  - Brewing: https://chin-tea.com/guides/brewing
+  - Buying: https://chin-tea.com/guides/buying
+  - Storage: https://chin-tea.com/guides/storage
+  - Water: https://chin-tea.com/guides/water
+  - Cold Brew: https://chin-tea.com/guides/cold-brew
+  - Flavour Guide: https://chin-tea.com/flavours
+  - Teaware: https://chin-tea.com/teaware
 - Learn
-  - Tea by Region: https://chinese-tea.com/regions
-  - Tea Culture & Ceremony: https://chinese-tea.com/culture
-  - Health Benefits: https://chinese-tea.com/health
-  - Tea & Food Pairing: https://chinese-tea.com/pairing
-  - Tasting Terms: https://chinese-tea.com/tasting-terms
-  - FAQ: https://chinese-tea.com/faq
-  - Blog: https://chinese-tea.com/blog
-- About: https://chinese-tea.com/about
+  - Tea by Region: https://chin-tea.com/regions
+  - Tea Culture & Ceremony: https://chin-tea.com/culture
+  - Health Benefits: https://chin-tea.com/health
+  - Tea & Food Pairing: https://chin-tea.com/pairing
+  - Tasting Terms: https://chin-tea.com/tasting-terms
+  - FAQ: https://chin-tea.com/faq
+  - Blog: https://chin-tea.com/blog
+- About: https://chin-tea.com/about
 
 ## About
 
