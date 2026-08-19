@@ -15,10 +15,10 @@ const schemaJson = JSON.stringify({
   '@type': 'CollectionPage',
   name: title,
   description,
-  url: 'https://chin-tea.com/teas',
+  url: 'https://www.chin-tea.com/teas',
   mainEntity: {
     '@type': 'ItemList',
-    itemListElement: teas.map((t, i) => ({ '@type': 'Product', name: t.name, url: `https://chin-tea.com/teas/${t.slug}`, position: i + 1 })),
+    itemListElement: teas.map((t, i) => ({ '@type': 'Product', name: t.name, url: `https://www.chin-tea.com/teas/${t.slug}`, position: i + 1 })),
   },
 });
 ---

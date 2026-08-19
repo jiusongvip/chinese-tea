@@ -3,7 +3,7 @@ import { teaTypes } from "./teaTypes";
 
 export const SITE = {
   name: "Chinese Tea Guide",
-  url: "https://chin-tea.com",
+  url: "https://www.chin-tea.com",
   description:
     "A practical guide to Chinese tea — the six major types, 21 famous teas with brewing and buying guides, brewing methods, tea regions, culture, and how to choose the right tea for your taste.",
   author: "Chinese Tea Guide",

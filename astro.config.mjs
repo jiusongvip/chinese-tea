@@ -7,7 +7,7 @@ import { pageMeta, SITE } from "./src/data/siteMeta.ts";
 // Design Read: premium editorial guide for Chinese tea drinkers
 export default defineConfig({
   site: SITE.url,
-  trailingSlash: "never",
+  trailingSlash: "always",
   vite: {
     plugins: [tailwindcss()],
     resolve: {

@@ -1,28 +1,28 @@
 export const heroSteps = [
   {
-    href: "/types",
+    href: "/types/",
     title: "Know the Types",
     body: "Green, white, oolong, black & more — understand the 6 categories at a glance",
   },
   {
-    href: "/teas",
+    href: "/teas/",
     title: "Match Your Taste",
     body: "Tell us what flavors you enjoy — we'll recommend the right tea for your palate",
   },
   {
-    href: "/guides/brewing",
+    href: "/guides/brewing/",
     title: "Brew Like a Pro",
     body: "Master water temperature, steeping time, and the right teaware for a perfect cup",
   },
 ];
 
 export const comparisonRows = [
-  { type: "Green", href: "/types/green", oxidation: "0% (unoxidized)", caffeine: "Medium", brewTemp: "160-175°F", beginner: 5, price: "$5-40 / 100g" },
-  { type: "White", href: "/types/white", oxidation: "0% (unoxidized)", caffeine: "Low", brewTemp: "175-185°F", beginner: 5, price: "$10-60 / 100g" },
-  { type: "Yellow", href: "/types/yellow", oxidation: "5-10% (lightly oxidized)", caffeine: "Low", brewTemp: "175-185°F", beginner: 4, price: "$15-80 / 100g" },
-  { type: "Oolong", href: "/types/oolong", oxidation: "10-70% (partially oxidized)", caffeine: "Low-Medium", brewTemp: "185-205°F", beginner: 4, price: "$8-200+ / 100g" },
-  { type: "Black", href: "/types/black", oxidation: "100% (fully oxidized)", caffeine: "Medium", brewTemp: "195-212°F", beginner: 5, price: "$8-50 / 100g" },
-  { type: "Dark", href: "/types/dark", oxidation: "Post-fermented", caffeine: "Medium-High", brewTemp: "200-212°F", beginner: 4, price: "$10-500+ / 357g" },
+  { type: "Green", href: "/types/green/", oxidation: "0% (unoxidized)", caffeine: "Medium", brewTemp: "160-175°F", beginner: 5, price: "$5-40 / 100g" },
+  { type: "White", href: "/types/white/", oxidation: "0% (unoxidized)", caffeine: "Low", brewTemp: "175-185°F", beginner: 5, price: "$10-60 / 100g" },
+  { type: "Yellow", href: "/types/yellow/", oxidation: "5-10% (lightly oxidized)", caffeine: "Low", brewTemp: "175-185°F", beginner: 4, price: "$15-80 / 100g" },
+  { type: "Oolong", href: "/types/oolong/", oxidation: "10-70% (partially oxidized)", caffeine: "Low-Medium", brewTemp: "185-205°F", beginner: 4, price: "$8-200+ / 100g" },
+  { type: "Black", href: "/types/black/", oxidation: "100% (fully oxidized)", caffeine: "Medium", brewTemp: "195-212°F", beginner: 5, price: "$8-50 / 100g" },
+  { type: "Dark", href: "/types/dark/", oxidation: "Post-fermented", caffeine: "Medium-High", brewTemp: "200-212°F", beginner: 4, price: "$10-500+ / 357g" },
 ];
 
 export const finderRecommendations = [
@@ -296,12 +296,12 @@ export const trustPoints = [
 ];
 
 export const relatedSearchLinks = [
-  { href: "/types/green", label: "types of chinese tea" },
-  { href: "/guides/brewing", label: "how to brew chinese tea" },
-  { href: "/teas/longjing", label: "longjing tea brewing temperature" },
-  { href: "/guides/buying", label: "where to buy authentic chinese tea" },
-  { href: "/teas/pu-erh-sheng", label: "sheng vs shou pu-erh" },
-  { href: "/guides/cold-brew", label: "cold brew chinese tea recipe" },
-  { href: "/teas/silver-needle", label: "silver needle white tea" },
-  { href: "/guides/storage", label: "how to store pu-erh tea" },
+  { href: "/types/green/", label: "types of chinese tea" },
+  { href: "/guides/brewing/", label: "how to brew chinese tea" },
+  { href: "/teas/longjing/", label: "longjing tea brewing temperature" },
+  { href: "/guides/buying/", label: "where to buy authentic chinese tea" },
+  { href: "/teas/pu-erh-sheng/", label: "sheng vs shou pu-erh" },
+  { href: "/guides/cold-brew/", label: "cold brew chinese tea recipe" },
+  { href: "/teas/silver-needle/", label: "silver needle white tea" },
+  { href: "/guides/storage/", label: "how to store pu-erh tea" },
 ];

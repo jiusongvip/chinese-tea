@@ -17,8 +17,8 @@ const schemaJson = JSON.stringify([
   articleSchema({
     title,
     description,
-    canonicalURL: 'https://chin-tea.com/flavours',
-    image: 'https://chin-tea.com/images/chinese-tea-og.webp',
+    canonicalURL: 'https://www.chin-tea.com/flavours',
+    image: 'https://www.chin-tea.com/images/chinese-tea-og.webp',
     datePublished: '2026-08-01',
     dateModified: '2026-08-12',
   }),
@@ -32,7 +32,7 @@ const schemaJson = JSON.stringify([
         return {
           '@type': 'Product',
           name: tea?.name ?? slug,
-          url: tea ? `https://chin-tea.com/teas/${slug}` : undefined,
+          url: tea ? `https://www.chin-tea.com/teas/${slug}` : undefined,
           position: bi * 10 + ti + 1,
         };
       })
@@ -101,7 +101,7 @@ const schemaJson = JSON.stringify([
   <section class="section-container py-12 max-w-3xl reveal">
     <div class="card p-6 bg-paper-100">
       <h3 class="font-semibold text-warm-900 mb-2">New to describing tea?</h3>
-      <p class="text-xs text-muted leading-relaxed">Professionals use hundreds of terms for the taste of tea. We've distilled the essential vocabulary — hui gan, yan yun, mouthfeel, and more — into a plain-English <a href="/tasting-terms" class="text-accent underline">Chinese tea tasting terms</a> guide.</p>
+      <p class="text-xs text-muted leading-relaxed">Professionals use hundreds of terms for the taste of tea. We've distilled the essential vocabulary — hui gan, yan yun, mouthfeel, and more — into a plain-English <a href="/tasting-terms/" class="text-accent underline">Chinese tea tasting terms</a> guide.</p>
     </div>
   </section>
 

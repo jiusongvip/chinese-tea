@@ -48,7 +48,7 @@ const schemaJson = JSON.stringify([
     <div class="relative z-10 section-container py-16 md:py-20">
       <div class="flex flex-wrap items-center gap-3 mb-5">
         <a href={`/types/${type?.slug}`} class={`px-3 py-1 text-xs font-bold rounded-full ${type?.accent.badge ?? 'bg-white/20 text-white'}`}>{type?.name}</a>
-        <a href="/teas" class="text-xs text-leaf-200/70 hover:text-white transition-colors">← All famous teas</a>
+        <a href="/teas/" class="text-xs text-leaf-200/70 hover:text-white transition-colors">← All famous teas</a>
       </div>
       <h1 class="text-4xl md:text-5xl font-display font-bold tracking-tight max-w-3xl">{tea.name} <span class="text-leaf-300 text-2xl md:text-3xl font-semibold">{tea.nameChinese}</span></h1>
       <p class="mt-4 text-lg text-leaf-100/85 max-w-2xl">{tea.flavorShort}</p>
@@ -92,7 +92,7 @@ const schemaJson = JSON.stringify([
           <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Ratio</p><p class="font-semibold text-warm-900 text-sm leading-snug">{tea.brewing.ratio}</p></div>
           <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-400 mb-1">Infusions</p><p class="font-semibold text-warm-900">{tea.brewing.infusions}</p></div>
         </div>
-        <a href="/guides/brewing" class="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">Read the general brewing guide →</a>
+        <a href="/guides/brewing/" class="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">Read the general brewing guide →</a>
       </div>
     </div>
   </section>
@@ -123,7 +123,7 @@ const schemaJson = JSON.stringify([
           ))}
         </div>
       </div>
-      <p class="mt-6 text-xs text-zinc-400">For the general principles behind every one of these checks — harvest dates, origin specificity, red flags — read our <a href="/guides/buying" class="text-accent underline">complete buying guide</a>.</p>
+      <p class="mt-6 text-xs text-zinc-400">For the general principles behind every one of these checks — harvest dates, origin specificity, red flags — read our <a href="/guides/buying/" class="text-accent underline">complete buying guide</a>.</p>
     </div>
   </section>
 
