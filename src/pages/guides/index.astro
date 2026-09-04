@@ -5,18 +5,18 @@ import CTACard from '../../components/CTACard.astro';
 import RelatedLinks from '../../components/RelatedLinks.astro';
 import { ArrowRight, Droplets, Snowflake, Landmark, HandCoins, Lock } from '@lucide/astro';
 
-const title = 'Chinese Tea Guides';
+const title = 'Chinese Tea Guides: Brewing, Buying, Storage';
 const description = 'All of our practical Chinese tea guides in one place — how tea is made, brewing, buying, storage, water, cold brew, teaware, and where to start as a beginner.';
 
 const guides = [
-  { href: '/guides/beginners', icon: Landmark, title: 'Start Here: Chinese Tea for Beginners', body: 'The shortest path from "I like tea" to a proper gongfu cup — which teas to start with, the three rules, and the mistakes to skip.', tag: 'New' },
-  { href: '/guides/production', icon: Snowflake, title: 'How Chinese Tea Is Made', body: 'The journey from leaf to cup — harvesting, withering, fixing, rolling, oxidation, drying, roasting, and aging — and which teas take which path.', tag: 'New' },
-  { href: '/guides/brewing', icon: Droplets, title: 'How to Brew Chinese Tea', body: 'Gongfu vs Western method, exact water temperatures per tea type, ratios, and the teaware you actually need.' },
-  { href: '/guides/oolong-styles', icon: Landmark, title: 'The Four Families of Oolong', body: 'Anxi green-style, Wuyi rock tea, Phoenix Dan Cong, and Taiwan high-mountain — the styles, cultivars, and how to tell them apart.' },
-  { href: '/guides/buying', icon: HandCoins, title: 'How to Buy Authentic Chinese Tea', body: 'What to look for, red flags to avoid, realistic price ranges, and how to spot fake famous teas.' },
-  { href: '/guides/storage', icon: Lock, title: 'How to Store Chinese Tea', body: 'Keep green teas fresh, black teas stable, and age pu-erh correctly — the rules are different for each.' },
-  { href: '/guides/water', icon: Droplets, title: 'The Right Water for Chinese Tea', body: 'Why water is 99% of the cup, and which water — spring, filtered, distilled, or tap — makes better tea.' },
-  { href: '/guides/cold-brew', icon: Snowflake, title: 'Cold Brew Chinese Tea (Leng Pao)', body: 'The sweeter, zero-bitter summer method — and which teas are built for it.' },
+  { href: '/guides/beginners/', icon: Landmark, title: 'Start Here: Chinese Tea for Beginners', body: 'The shortest path from "I like tea" to a proper gongfu cup — which teas to start with, the three rules, and the mistakes to skip.', tag: 'New' },
+  { href: '/guides/production/', icon: Snowflake, title: 'How Chinese Tea Is Made', body: 'The journey from leaf to cup — harvesting, withering, fixing, rolling, oxidation, drying, roasting, and aging — and which teas take which path.', tag: 'New' },
+  { href: '/guides/brewing/', icon: Droplets, title: 'How to Brew Chinese Tea', body: 'Gongfu vs Western method, exact water temperatures per tea type, ratios, and the teaware you actually need.' },
+  { href: '/guides/oolong-styles/', icon: Landmark, title: 'The Four Families of Oolong', body: 'Anxi green-style, Wuyi rock tea, Phoenix Dan Cong, and Taiwan high-mountain — the styles, cultivars, and how to tell them apart.' },
+  { href: '/guides/buying/', icon: HandCoins, title: 'How to Buy Authentic Chinese Tea', body: 'What to look for, red flags to avoid, realistic price ranges, and how to spot fake famous teas.' },
+  { href: '/guides/storage/', icon: Lock, title: 'How to Store Chinese Tea', body: 'Keep green teas fresh, black teas stable, and age pu-erh correctly — the rules are different for each.' },
+  { href: '/guides/water/', icon: Droplets, title: 'The Right Water for Chinese Tea', body: 'Why water is 99% of the cup, and which water — spring, filtered, distilled, or tap — makes better tea.' },
+  { href: '/guides/cold-brew/', icon: Snowflake, title: 'Cold Brew Chinese Tea (Leng Pao)', body: 'The sweeter, zero-bitter summer method — and which teas are built for it.' },
 ];
 ---
 
@@ -41,15 +41,15 @@ const guides = [
     </div>
   </section>
 
-  <CTACard primaryHref="/teas" primaryLabel="Browse All Teas" secondaryHref="/flavours" secondaryLabel="Flavour Guide" />
+  <CTACard primaryHref="/teas/" primaryLabel="Browse All Teas" secondaryHref="/flavours/" secondaryLabel="Flavour Guide" />
 
   <RelatedLinks links={[
-    { href: '/guides/brewing', label: 'how to brew chinese tea' },
-    { href: '/guides/buying', label: 'buying authentic chinese tea' },
-    { href: '/guides/production', label: 'how is chinese tea made' },
-    { href: '/guides/beginners', label: 'chinese tea for beginners' },
-    { href: '/guides/storage', label: 'how to store tea' },
-    { href: '/guides/cold-brew', label: 'cold brew chinese tea' },
+    { href: '/guides/brewing/', label: 'how to brew chinese tea' },
+    { href: '/guides/buying/', label: 'buying authentic chinese tea' },
+    { href: '/guides/production/', label: 'how is chinese tea made' },
+    { href: '/guides/beginners/', label: 'chinese tea for beginners' },
+    { href: '/guides/storage/', label: 'how to store tea' },
+    { href: '/guides/cold-brew/', label: 'cold brew chinese tea' },
   ]} />
 
 </BaseLayout>

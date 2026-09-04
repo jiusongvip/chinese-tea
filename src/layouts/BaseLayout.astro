@@ -71,7 +71,7 @@ if (!noindex) {
     const name =
       meta?.label ??
       part.replace(/-/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase());
-    crumbs.push({ name, item: path });
+    crumbs.push({ name, item: path + "/" });
     crumbsAdded = true;
   });
   if (crumbsAdded) {

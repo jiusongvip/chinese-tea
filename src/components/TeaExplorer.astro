@@ -59,7 +59,7 @@ const filters: { slug: 'all' | TeaTypeSlug; label: string }[] = [
                 <td class="px-5 py-3 font-medium text-warm-800 group-hover:text-accent transition-colors">
                   <span class="inline-flex items-center gap-2">
                     <svg class="w-4 h-4 text-zinc-300 group-hover:text-accent transition-transform expand-icon flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                    <a href={`/teas/${t.slug}`} class="hover:underline no-underline"><span>{t.name} <span class="text-zinc-400 font-normal text-xs ml-1">{t.nameChinese}</span></span></a>
+                    <a href={`/teas/${t.slug}/`} class="hover:underline no-underline"><span>{t.name} <span class="text-zinc-400 font-normal text-xs ml-1">{t.nameChinese}</span></span></a>
                   </span>
                 </td>
                 <td class="px-5 py-3"><span class={`px-2 py-0.5 text-xs rounded-full ${type?.accent.chip ?? ''} whitespace-nowrap`}>{type?.nameShort}</span></td>
@@ -124,7 +124,7 @@ const filters: { slug: 'all' | TeaTypeSlug; label: string }[] = [
                       <span class="font-semibold text-leaf-800">Ideal For: </span><span class="text-accent">{t.idealFor}</span>
                     </div>
                     <div class="mt-5 pt-4 border-t border-paper-200">
-                      <a href={`/teas/${t.slug}`} class="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-dark transition-colors">Open the full {t.name} guide →</a>
+                      <a href={`/teas/${t.slug}/`} class="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-dark transition-colors">Open the full {t.name} guide →</a>
                     </div>
                   </div>
                 </td>

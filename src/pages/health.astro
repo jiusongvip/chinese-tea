@@ -15,7 +15,7 @@ const description = 'What the science says about Chinese tea — antioxidants an
 const schemaJson = JSON.stringify(articleSchema({
   title,
   description,
-  canonicalURL: 'https://www.chin-tea.com/health',
+  canonicalURL: 'https://www.chin-tea.com/health/',
   image: 'https://www.chin-tea.com/images/chinese-tea-og.webp',
   datePublished: '2026-08-01',
   dateModified: '2026-08-12',
@@ -70,13 +70,13 @@ const healthIcons: Record<string, IconDefinition> = {
     </div>
   </section>
 
-  <CTACard primaryHref="/types/green" primaryLabel="Explore Green Teas" secondaryHref="/teas/silver-needle" secondaryLabel="Low-Caffeine Silver Needle" />
+  <CTACard primaryHref="/types/green/" primaryLabel="Explore Green Teas" secondaryHref="/teas/silver-needle/" secondaryLabel="Low-Caffeine Silver Needle" />
 
   <RelatedLinks links={[
-    { href: '/types/green', label: 'green tea antioxidants' },
-    { href: '/teas/anji-bai-cha', label: 'high theanine green tea' },
-    { href: '/teas/pu-erh-shou', label: 'pu-erh after meals' },
-    { href: '/faq', label: 'is chinese tea healthy' },
+    { href: '/types/green/', label: 'green tea antioxidants' },
+    { href: '/teas/anji-bai-cha/', label: 'high theanine green tea' },
+    { href: '/teas/pu-erh-shou/', label: 'pu-erh after meals' },
+    { href: '/faq/', label: 'is chinese tea healthy' },
   ]} />
 
 </BaseLayout>

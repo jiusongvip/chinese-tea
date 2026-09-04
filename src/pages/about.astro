@@ -6,7 +6,7 @@ import RelatedLinks from '../components/RelatedLinks.astro';
 import { trustPoints } from '../data/content';
 import { BadgeCheck, FlaskConical, HandCoins, SearchX } from '@lucide/astro';
 
-const title = 'About This Guide';
+const title = 'About This Guide: How We Test and Review';
 const description = 'Why Chinese Tea Guide exists, how we test and research every tea we recommend, and why you can trust the prices, temperatures, and buying tips on this site.';
 
 const trustIcons = [BadgeCheck, FlaskConical, HandCoins, SearchX];
@@ -54,12 +54,12 @@ const trustIcons = [BadgeCheck, FlaskConical, HandCoins, SearchX];
     </div>
   </section>
 
-  <CTACard primaryHref="/teas" primaryLabel="Start Exploring Teas" secondaryHref="/faq" secondaryLabel="Read the FAQ" />
+  <CTACard primaryHref="/teas/" primaryLabel="Start Exploring Teas" secondaryHref="/faq/" secondaryLabel="Read the FAQ" />
 
   <RelatedLinks links={[
-    { href: '/blog', label: 'read our blog' },
-    { href: '/privacy', label: 'privacy policy' },
-    { href: '/culture', label: 'tea culture' },
+    { href: '/blog/', label: 'read our blog' },
+    { href: '/privacy/', label: 'privacy policy' },
+    { href: '/culture/', label: 'tea culture' },
   ]} />
 
 </BaseLayout>

@@ -20,7 +20,7 @@ const ext = (['avif', 'webp', 'jpg', 'png'] as const).find((e) => existsSync(pat
 const photo = ext ? `/images/teas/${tea.slug}.${ext}` : null;
 ---
 
-<a href={`/teas/${tea.slug}`} class="group card card-hover overflow-hidden flex flex-col no-underline">
+<a href={`/teas/${tea.slug}/`} class="group card card-hover overflow-hidden flex flex-col no-underline">
   {photo ? (
     <div class="aspect-[3/2] overflow-hidden bg-paper-100 relative">
       <img src={photo} alt={`${tea.name} (${tea.nameChinese})`} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" width="640" height="427" />

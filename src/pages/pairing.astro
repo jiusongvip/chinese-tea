@@ -15,7 +15,7 @@ const description = 'Which Chinese tea goes with what food — green tea with se
 const schemaJson = JSON.stringify(articleSchema({
   title,
   description,
-  canonicalURL: 'https://www.chin-tea.com/pairing',
+  canonicalURL: 'https://www.chin-tea.com/pairing/',
   image: 'https://www.chin-tea.com/images/chinese-tea-og.webp',
   datePublished: '2026-08-01',
   dateModified: '2026-08-12',
@@ -66,13 +66,13 @@ const icons: Record<string, IconDefinition> = {
     </div>
   </section>
 
-  <CTACard primaryHref="/teas" primaryLabel="Find a Pairing Tea" secondaryHref="/culture" secondaryLabel="The Culture Behind It" />
+  <CTACard primaryHref="/teas/" primaryLabel="Find a Pairing Tea" secondaryHref="/culture/" secondaryLabel="The Culture Behind It" />
 
   <RelatedLinks links={[
-    { href: '/types/green', label: 'green tea with seafood' },
-    { href: '/types/oolong', label: 'oolong with dim sum' },
-    { href: '/types/dark', label: 'pu-erh after meals' },
-    { href: '/types/black', label: 'keemun at breakfast' },
+    { href: '/types/green/', label: 'green tea with seafood' },
+    { href: '/types/oolong/', label: 'oolong with dim sum' },
+    { href: '/types/dark/', label: 'pu-erh after meals' },
+    { href: '/types/black/', label: 'keemun at breakfast' },
   ]} />
 
 </BaseLayout>

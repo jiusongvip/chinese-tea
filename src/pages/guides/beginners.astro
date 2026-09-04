@@ -8,12 +8,12 @@ import RelatedLinks from '../../components/RelatedLinks.astro';
 import { articleSchema } from '../../data/schemas';
 
 const title = 'Chinese Tea for Beginners: Start Here';
-const description = 'The shortest path from "I like tea" to a proper gongfu cup — which teas to start with, the three rules that matter, the gear you need, and the first-week mistakes to skip.';
+const description = 'The shortest path from "I like tea" to a proper gongfu cup — which teas to start with, the three rules that matter, and the gear you need.';
 
 const schemaJson = JSON.stringify(articleSchema({
   title,
   description,
-  canonicalURL: 'https://www.chin-tea.com/guides/beginners',
+  canonicalURL: 'https://www.chin-tea.com/guides/beginners/',
   image: 'https://www.chin-tea.com/images/chinese-tea-og.webp',
   datePublished: '2026-08-01',
   dateModified: '2026-08-12',
@@ -78,7 +78,7 @@ const plan = [
           <SectionHeader eyebrow="Step 1" title="Start with These Five Teas" subtitle="Each one teaches you a different part of the map — and all five are forgiving enough for week one." headingLevel="h2" />
           <div class="mt-6 space-y-4">
             {starterTeas.map((t) => (
-              <a href={`/teas/${t.slug}`} class="card card-hover p-5 no-underline flex gap-4 items-start group">
+              <a href={`/teas/${t.slug}/`} class="card card-hover p-5 no-underline flex gap-4 items-start group">
                 <div class="flex-shrink-0">
                   <span class="block w-16 h-16 rounded-lg overflow-hidden"><img src={`/images/${t.type.split(' ')[0].toLowerCase()}-tea.webp`} alt={t.name} class="w-full h-full object-cover" loading="lazy" width="64" height="64" /></span>
                 </div>
@@ -148,14 +148,14 @@ const plan = [
     </div>
   </div>
 
-  <CTACard primaryHref="/teas" primaryLabel="Browse All Teas" secondaryHref="/guides/brewing" secondaryLabel="Full Brewing Guide" />
+  <CTACard primaryHref="/teas/" primaryLabel="Browse All Teas" secondaryHref="/guides/brewing/" secondaryLabel="Full Brewing Guide" />
 
   <RelatedLinks links={[
-    { href: '/guides/brewing', label: 'how to brew chinese tea' },
-    { href: '/guides/production', label: 'how chinese tea is made' },
-    { href: '/guides/buying', label: 'buying your first tea' },
-    { href: '/teaware', label: 'teaware essentials' },
-    { href: '/teas/silver-needle', label: 'best tea for beginners' },
+    { href: '/guides/brewing/', label: 'how to brew chinese tea' },
+    { href: '/guides/production/', label: 'how chinese tea is made' },
+    { href: '/guides/buying/', label: 'buying your first tea' },
+    { href: '/teaware/', label: 'teaware essentials' },
+    { href: '/teas/silver-needle/', label: 'best tea for beginners' },
   ]} />
 
 </BaseLayout>

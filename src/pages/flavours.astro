@@ -17,7 +17,7 @@ const schemaJson = JSON.stringify([
   articleSchema({
     title,
     description,
-    canonicalURL: 'https://www.chin-tea.com/flavours',
+    canonicalURL: 'https://www.chin-tea.com/flavours/',
     image: 'https://www.chin-tea.com/images/chinese-tea-og.webp',
     datePublished: '2026-08-01',
     dateModified: '2026-08-12',
@@ -32,7 +32,7 @@ const schemaJson = JSON.stringify([
         return {
           '@type': 'Product',
           name: tea?.name ?? slug,
-          url: tea ? `https://www.chin-tea.com/teas/${slug}` : undefined,
+          url: tea ? `https://www.chin-tea.com/teas/${slug}/` : undefined,
           position: bi * 10 + ti + 1,
         };
       })
@@ -70,7 +70,7 @@ const schemaJson = JSON.stringify([
             const tea = getTea(slug);
             if (!tea) return null;
             return (
-              <a href={`/teas/${tea.slug}`} class="group card card-hover p-5 no-underline flex flex-col">
+              <a href={`/teas/${tea.slug}/`} class="group card card-hover p-5 no-underline flex flex-col">
                 <div class="flex items-center gap-3 mb-2">
                   <TeaVisual tea={tea} />
                   <div>
@@ -105,15 +105,15 @@ const schemaJson = JSON.stringify([
     </div>
   </section>
 
-  <CTACard primaryHref="/teas" primaryLabel="Browse All Teas" secondaryHref="/tasting-terms" secondaryLabel="Tasting Terms Glossary" />
+  <CTACard primaryHref="/teas/" primaryLabel="Browse All Teas" secondaryHref="/tasting-terms/" secondaryLabel="Tasting Terms Glossary" />
 
   <RelatedLinks links={[
-    { href: '/tasting-terms', label: 'chinese tea tasting terms' },
-    { href: '/teas/longjing', label: 'nutty green tea' },
-    { href: '/teas/tie-guan-yin', label: 'floral oolong tea' },
-    { href: '/teas/pu-erh-shou', label: 'earthy tea' },
-    { href: '/teas/lapsang-souchong', label: 'smoky tea' },
-    { href: '/guides/buying', label: 'buy by flavor profile' },
+    { href: '/tasting-terms/', label: 'chinese tea tasting terms' },
+    { href: '/teas/longjing/', label: 'nutty green tea' },
+    { href: '/teas/tie-guan-yin/', label: 'floral oolong tea' },
+    { href: '/teas/pu-erh-shou/', label: 'earthy tea' },
+    { href: '/teas/lapsang-souchong/', label: 'smoky tea' },
+    { href: '/guides/buying/', label: 'buy by flavor profile' },
   ]} />
 
 </BaseLayout>

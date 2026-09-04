@@ -12,7 +12,7 @@ const description = 'Gongfu tea ceremony, tea as hospitality, the wedding tea ce
 const schemaJson = JSON.stringify(articleSchema({
   title,
   description,
-  canonicalURL: 'https://www.chin-tea.com/culture',
+  canonicalURL: 'https://www.chin-tea.com/culture/',
   image: 'https://www.chin-tea.com/images/chinese-tea-culture.webp',
   datePublished: '2026-08-01',
   dateModified: '2026-08-12',
@@ -72,13 +72,13 @@ const schemaJson = JSON.stringify(articleSchema({
     </div>
   </section>
 
-  <CTACard primaryHref="/teas" primaryLabel="Taste the Culture" secondaryHref="/regions" secondaryLabel="Where It Comes From" />
+  <CTACard primaryHref="/teas/" primaryLabel="Taste the Culture" secondaryHref="/regions/" secondaryLabel="Where It Comes From" />
 
   <RelatedLinks links={[
-    { href: '/guides/brewing', label: 'gongfu brewing at home' },
-    { href: '/teaware', label: 'gaiwan and yixing pots' },
-    { href: '/types/oolong', label: 'oolong for gongfu' },
-    { href: '/about', label: 'about this guide' },
+    { href: '/guides/brewing/', label: 'gongfu brewing at home' },
+    { href: '/teaware/', label: 'gaiwan and yixing pots' },
+    { href: '/types/oolong/', label: 'oolong for gongfu' },
+    { href: '/about/', label: 'about this guide' },
   ]} />
 
 </BaseLayout>

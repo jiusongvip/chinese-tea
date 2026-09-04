@@ -14,7 +14,7 @@ const description = 'Like wine, Chinese tea carries the character of its origin.
 const schemaJson = JSON.stringify(articleSchema({
   title,
   description,
-  canonicalURL: 'https://www.chin-tea.com/regions',
+  canonicalURL: 'https://www.chin-tea.com/regions/',
   image: 'https://www.chin-tea.com/images/chinese-tea-og.webp',
   datePublished: '2026-08-01',
   dateModified: '2026-08-12',
@@ -73,7 +73,7 @@ const schemaJson = JSON.stringify(articleSchema({
     <SectionHeader eyebrow="From the Fields" title="Teas You Can Taste Right Now" headingLevel="h2" />
     <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3">
       {teas.map((t) => (
-        <a href={`/teas/${t.slug}`} class="card card-hover p-4 no-underline block">
+        <a href={`/teas/${t.slug}/`} class="card card-hover p-4 no-underline block">
           <span class="text-base font-medium text-warm-800">{t.name}</span>
           <span class="block text-sm text-muted mt-0.5">{t.origin}</span>
         </a>
@@ -81,14 +81,14 @@ const schemaJson = JSON.stringify(articleSchema({
     </div>
   </section>
 
-  <CTACard primaryHref="/types" primaryLabel="Compare the Six Types" secondaryHref="/culture" secondaryLabel="Tea Culture" />
+  <CTACard primaryHref="/types/" primaryLabel="Compare the Six Types" secondaryHref="/culture/" secondaryLabel="Tea Culture" />
 
   <RelatedLinks links={[
-    { href: '/types/green', label: 'zhejiang green teas' },
-    { href: '/types/oolong', label: 'high mountain oolong tea' },
-    { href: '/types/oolong', label: 'qing cha blue tea explained' },
-    { href: '/types/dark', label: 'yunnan pu-erh' },
-    { href: '/types/black', label: 'yunnan black tea' },
+    { href: '/types/green/', label: 'zhejiang green teas' },
+    { href: '/types/oolong/', label: 'high mountain oolong tea' },
+    { href: '/types/oolong/', label: 'qing cha blue tea explained' },
+    { href: '/types/dark/', label: 'yunnan pu-erh' },
+    { href: '/types/black/', label: 'yunnan black tea' },
   ]} />
 
 </BaseLayout>

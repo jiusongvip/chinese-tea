@@ -7,12 +7,12 @@ import RelatedLinks from '../../components/RelatedLinks.astro';
 import { articleSchema } from '../../data/schemas';
 
 const title = 'The Four Families of Oolong Tea';
-const description = 'Oolong is four different worlds under one name — Anxi green-style, Wuyi rock tea, Phoenix Dan Cong, and Taiwan high-mountain. The styles, the famous cultivars, and how to tell them apart.';
+const description = 'Oolong is four different worlds under one name — Anxi green-style, Wuyi rock tea, Phoenix Dan Cong, and Taiwan high-mountain — and how to tell them apart.';
 
 const schemaJson = JSON.stringify(articleSchema({
   title,
   description,
-  canonicalURL: 'https://www.chin-tea.com/guides/oolong-styles',
+  canonicalURL: 'https://www.chin-tea.com/guides/oolong-styles/',
   image: 'https://www.chin-tea.com/images/chinese-tea-og.webp',
   datePublished: '2026-08-01',
   dateModified: '2026-08-12',
@@ -88,7 +88,7 @@ const families = [
             </div>
             {f.examples.length > 0 && (
               <div class="mt-4 flex flex-wrap gap-2">
-                {f.examples.map((slug) => <a href={`/teas/${slug}`} class="text-xs font-medium text-accent underline">See our {slug.replace(/-/g, ' ')} guide →</a>)}
+                {f.examples.map((slug) => <a href={`/teas/${slug}/`} class="text-xs font-medium text-accent underline">See our {slug.replace(/-/g, ' ')} guide →</a>)}
               </div>
             )}
           </section>
@@ -104,15 +104,15 @@ const families = [
     </div>
   </section>
 
-  <CTACard primaryHref="/types/oolong" primaryLabel="The Oolong Type Page" secondaryHref="/teas" secondaryLabel="Browse All Teas" />
+  <CTACard primaryHref="/types/oolong/" primaryLabel="The Oolong Type Page" secondaryHref="/teas/" secondaryLabel="Browse All Teas" />
 
   <RelatedLinks links={[
-    { href: '/types/oolong', label: 'what is oolong tea' },
-    { href: '/teas/da-hong-pao', label: 'wuyi rock tea guide' },
-    { href: '/teas/phoenix-dan-cong', label: 'phoenix dan cong guide' },
-    { href: '/teas/tie-guan-yin', label: 'anxi tie guan yin guide' },
-    { href: '/regions', label: 'taiwan high mountain oolong' },
-    { href: '/flavours', label: 'find oolong by flavour' },
+    { href: '/types/oolong/', label: 'what is oolong tea' },
+    { href: '/teas/da-hong-pao/', label: 'wuyi rock tea guide' },
+    { href: '/teas/phoenix-dan-cong/', label: 'phoenix dan cong guide' },
+    { href: '/teas/tie-guan-yin/', label: 'anxi tie guan yin guide' },
+    { href: '/regions/', label: 'taiwan high mountain oolong' },
+    { href: '/flavours/', label: 'find oolong by flavour' },
   ]} />
 
 </BaseLayout>

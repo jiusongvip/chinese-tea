@@ -10,12 +10,12 @@ import { faCircleCheck, faTriangleExclamation } from '@fortawesome/free-solid-sv
 import LeadImage from '../../components/LeadImage.astro';
 
 const title = 'How to Buy Authentic Chinese Tea';
-const description = 'How to buy real Chinese tea without getting scammed — what to look for, red flags to avoid, realistic price ranges, and the exact quality checks for each tea type.';
+const description = 'How to buy real Chinese tea without getting scammed — what to look for, red flags to avoid, realistic price ranges, and quality checks per tea type.';
 
 const schemaJson = JSON.stringify(articleSchema({
   title,
   description,
-  canonicalURL: 'https://www.chin-tea.com/guides/buying',
+  canonicalURL: 'https://www.chin-tea.com/guides/buying/',
   image: 'https://www.chin-tea.com/images/chinese-tea-og.webp',
   datePublished: '2026-08-01',
   dateModified: '2026-08-12',
@@ -67,7 +67,7 @@ const schemaJson = JSON.stringify(articleSchema({
       <p class="mt-4 text-muted leading-relaxed">General principles only get you so far. Each of our 15 famous tea pages includes tea-specific quality checks, common scams, search keywords, and realistic price entry points — so you know exactly what to ask for.</p>
       <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-3">
         {['longjing', 'silver-needle', 'tie-guan-yin', 'da-hong-pao', 'pu-erh-sheng', 'dian-hong'].map((slug) => (
-          <a href={`/teas/${slug}`} class="card card-hover p-4 no-underline block">
+          <a href={`/teas/${slug}/`} class="card card-hover p-4 no-underline block">
             <span class="font-medium text-warm-800">Read the {slug.replace(/-/g, ' ')} guide →</span>
           </a>
         ))}
@@ -76,14 +76,14 @@ const schemaJson = JSON.stringify(articleSchema({
     </div>
   </section>
 
-  <CTACard primaryHref="/teas" primaryLabel="Browse All Teas" secondaryHref="/guides/storage" secondaryLabel="Storage Guide" />
+  <CTACard primaryHref="/teas/" primaryLabel="Browse All Teas" secondaryHref="/guides/storage/" secondaryLabel="Storage Guide" />
 
   <RelatedLinks links={[
-    { href: '/guides/storage', label: 'how to store chinese tea' },
-    { href: '/teas/pu-erh-shou', label: 'how to buy pu-erh' },
-    { href: '/teas/longjing', label: 'how to spot fake longjing' },
-    { href: '/guides/brewing', label: 'brew your new tea' },
-    { href: '/teas/silver-needle', label: 'buying white tea' },
+    { href: '/guides/storage/', label: 'how to store chinese tea' },
+    { href: '/teas/pu-erh-shou/', label: 'how to buy pu-erh' },
+    { href: '/teas/longjing/', label: 'how to spot fake longjing' },
+    { href: '/guides/brewing/', label: 'brew your new tea' },
+    { href: '/teas/silver-needle/', label: 'buying white tea' },
   ]} />
 
 </BaseLayout>

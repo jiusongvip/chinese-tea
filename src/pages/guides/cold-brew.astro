@@ -8,12 +8,12 @@ import { articleSchema } from '../../data/schemas';
 import LeadImage from '../../components/LeadImage.astro';
 
 const title = 'Cold Brew Chinese Tea (Leng Pao)';
-const description = 'Cold brew is not iced tea. Learn the leng pao method — a sweeter, zero-bitter way to brew Chinese tea, plus which teas work best.';
+const description = 'Cold brew is not iced tea. Learn the leng pao method — a sweeter, zero-bitter way to brew Chinese tea, which teas work best, and the ratios to start with.';
 
 const schemaJson = JSON.stringify(articleSchema({
   title,
   description,
-  canonicalURL: 'https://www.chin-tea.com/guides/cold-brew',
+  canonicalURL: 'https://www.chin-tea.com/guides/cold-brew/',
   image: 'https://www.chin-tea.com/images/chinese-tea-og.webp',
   datePublished: '2026-08-01',
   dateModified: '2026-08-12',
@@ -55,12 +55,12 @@ const schemaJson = JSON.stringify(articleSchema({
     </div>
   </section>
 
-  <CTACard primaryHref="/guides/brewing" primaryLabel="Hot Brew Guide" secondaryHref="/teas" secondaryLabel="Find a Cold-Brew Tea" />
+  <CTACard primaryHref="/guides/brewing/" primaryLabel="Hot Brew Guide" secondaryHref="/teas/" secondaryLabel="Find a Cold-Brew Tea" />
 
   <RelatedLinks links={[
-    { href: '/guides/water', label: 'best water for cold brew' },
-    { href: '/teas/silver-needle', label: 'cold brew silver needle' },
-    { href: '/guides/storage', label: 'storing your tea' },
+    { href: '/guides/water/', label: 'best water for cold brew' },
+    { href: '/teas/silver-needle/', label: 'cold brew silver needle' },
+    { href: '/guides/storage/', label: 'storing your tea' },
   ]} />
 
 </BaseLayout>

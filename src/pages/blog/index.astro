@@ -4,12 +4,12 @@ import SectionHeader from '../../components/SectionHeader.astro';
 import RelatedLinks from '../../components/RelatedLinks.astro';
 import { ArrowRight } from '@lucide/astro';
 
-const title = 'Tea Blog';
-const description = 'Long-form guides on Chinese tea — gongfu brewing at home, green vs white tea, and more.';
+const title = 'Chinese Tea Blog: Brewing Guides and Stories';
+const description = 'Long-form Chinese tea guides and stories — gongfu brewing at home, green vs white tea, the history of Chinese tea, and practical guides for daily brewing.';
 
 const posts = [
   {
-    href: '/blog/history-of-chinese-tea',
+    href: '/blog/history-of-chinese-tea/',
     title: 'The History of Chinese Tea: From Legend to 4,000 Years',
     excerpt: 'Shen Nung\u2019s accident, the Tang dynasty\u2019s tea masters, the Tea Horse Road, and how the world\u2019s oldest tea culture keeps reinventing itself.',
     date: 'August 12, 2026',
@@ -17,14 +17,14 @@ const posts = [
     featured: true,
   },
   {
-    href: '/blog/gongfu-brewing-at-home',
+    href: '/blog/gongfu-brewing-at-home/',
     title: 'Gongfu Brewing at Home: The Setup You Actually Need',
     excerpt: 'You don\'t need a $200 tea table. Here\'s the honest starter setup — what to buy, what to skip, and the three habits that matter more than any gear.',
     date: 'August 10, 2026',
     read: '6 min read',
   },
   {
-    href: '/blog/green-vs-white-tea',
+    href: '/blog/green-vs-white-tea/',
     title: 'Green vs White Tea: What\'s the Difference (and Which Is for You)',
     excerpt: 'Both come from the same plant and neither is oxidized — so why do they taste so different? The processing, the picking, and how to choose.',
     date: 'August 4, 2026',
@@ -54,10 +54,10 @@ const posts = [
   </section>
 
   <RelatedLinks links={[
-    { href: '/guides/brewing', label: 'brewing guide' },
-    { href: '/teas', label: 'famous teas' },
-    { href: '/types/green', label: 'green tea types' },
-    { href: '/types/white', label: 'white tea types' },
+    { href: '/guides/brewing/', label: 'brewing guide' },
+    { href: '/teas/', label: 'famous teas' },
+    { href: '/types/green/', label: 'green tea types' },
+    { href: '/types/white/', label: 'white tea types' },
   ]} />
 
 </BaseLayout>

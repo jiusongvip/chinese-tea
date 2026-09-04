@@ -19,12 +19,12 @@ const title = 'Chinese Tea Guide: Types, Brewing & Culture';
 const description = 'The practical guide to Chinese tea: six types, 21 famous teas, brewing and buying guides, regions, and how to choose the right tea for your taste.';
 
 const heroNav = [
-  { label: 'Types', href: '/types' },
-  { label: 'Flavours', href: '/flavours' },
-  { label: 'Teas', href: '/teas' },
-  { label: 'Brewing', href: '/guides/brewing' },
-  { label: 'Regions', href: '/regions' },
-  { label: 'Buying', href: '/guides/buying' },
+  { label: 'Types', href: '/types/' },
+  { label: 'Flavours', href: '/flavours/' },
+  { label: 'Teas', href: '/teas/' },
+  { label: 'Brewing', href: '/guides/brewing/' },
+  { label: 'Regions', href: '/regions/' },
+  { label: 'Buying', href: '/guides/buying/' },
 ];
 
 const schemaJson = JSON.stringify([
@@ -34,7 +34,7 @@ const schemaJson = JSON.stringify([
     itemListElement: teas.map((t, i) => ({
       '@type': 'Product',
       name: t.name,
-      url: `https://www.chin-tea.com/teas/${t.slug}`,
+      url: `https://www.chin-tea.com/teas/${t.slug}/`,
       position: i + 1,
     })),
   },
@@ -327,7 +327,7 @@ const schemaJson = JSON.stringify([
     </div>
   </section>
 
-  <CTACard primaryHref="/teas" primaryLabel="Browse All Teas" secondaryHref="/guides/buying" secondaryLabel="Read the Buying Guide" />
+  <CTACard primaryHref="/teas/" primaryLabel="Browse All Teas" secondaryHref="/guides/buying/" secondaryLabel="Read the Buying Guide" />
 
   <RelatedLinks links={relatedSearchLinks} />
 

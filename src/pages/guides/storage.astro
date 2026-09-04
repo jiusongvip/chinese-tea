@@ -8,12 +8,12 @@ import { articleSchema } from '../../data/schemas';
 import LeadImage from '../../components/LeadImage.astro';
 
 const title = 'How to Store Chinese Tea';
-const description = 'The complete Chinese tea storage guide — how to keep green, white, and yellow teas fresh, how long roasted oolongs and blacks last, and how to age Pu-erh correctly.';
+const description = 'The complete Chinese tea storage guide — keeping green, white, and yellow teas fresh, how long roasted oolongs last, and how to age Pu-erh correctly.';
 
 const schemaJson = JSON.stringify(articleSchema({
   title,
   description,
-  canonicalURL: 'https://www.chin-tea.com/guides/storage',
+  canonicalURL: 'https://www.chin-tea.com/guides/storage/',
   image: 'https://www.chin-tea.com/images/chinese-tea-og.webp',
   datePublished: '2026-08-01',
   dateModified: '2026-08-12',
@@ -56,13 +56,13 @@ const schemaJson = JSON.stringify(articleSchema({
     </div>
   </section>
 
-  <CTACard primaryHref="/guides/buying" primaryLabel="Back to Buying Guide" secondaryHref="/teas/pu-erh-sheng" secondaryLabel="Aged Pu-erh Guide" />
+  <CTACard primaryHref="/guides/buying/" primaryLabel="Back to Buying Guide" secondaryHref="/teas/pu-erh-sheng/" secondaryLabel="Aged Pu-erh Guide" />
 
   <RelatedLinks links={[
-    { href: '/teas/pu-erh-sheng', label: 'how to age pu-erh' },
-    { href: '/guides/buying', label: 'buying fresh tea' },
-    { href: '/types/green', label: 'how long does green tea last' },
-    { href: '/guides/brewing', label: 'brew your stored tea' },
+    { href: '/teas/pu-erh-sheng/', label: 'how to age pu-erh' },
+    { href: '/guides/buying/', label: 'buying fresh tea' },
+    { href: '/types/green/', label: 'how long does green tea last' },
+    { href: '/guides/brewing/', label: 'brew your stored tea' },
   ]} />
 
 </BaseLayout>

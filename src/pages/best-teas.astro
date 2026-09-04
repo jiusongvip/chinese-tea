@@ -9,8 +9,8 @@ import { articleSchema } from '../data/schemas';
 import TeaVisual from '../components/TeaVisual.astro';
 import { ArrowRight } from '@lucide/astro';
 
-const title = 'The Best Chinese Teas: Our Top Picks by Category';
-const description = 'The best Chinese teas to try first — ranked by beginner-friendliness, fame, and value. Best green, oolong, black, white, dark, and yellow tea picks, with why each one makes the list.';
+const title = 'The Best Chinese Teas: Top Picks';
+const description = 'The best Chinese teas to try first — ranked by beginner-friendliness, fame, and value. Top green, oolong, black, white, dark, and yellow tea picks.';
 
 const topTen = [
   { slug: 'longjing', reason: "China's most famous tea and the best place to start with greens — nutty, smooth, and endlessly drinkable." },
@@ -49,7 +49,7 @@ const schemaJson = JSON.stringify([
   articleSchema({
     title,
     description,
-    canonicalURL: 'https://www.chin-tea.com/best-teas',
+    canonicalURL: 'https://www.chin-tea.com/best-teas/',
     image: 'https://www.chin-tea.com/images/chinese-tea-og.webp',
     datePublished: '2026-08-01',
     dateModified: '2026-08-12',
@@ -61,7 +61,7 @@ const schemaJson = JSON.stringify([
     itemListElement: [...topTen, ...bestByCategory, ...specialPicks]
       .map((x, i) => {
         const tea = teaFor(x.slug);
-        return { '@type': 'Product', name: tea?.name ?? x.slug, url: tea ? `https://www.chin-tea.com/teas/${x.slug}` : undefined, position: i + 1 };
+        return { '@type': 'Product', name: tea?.name ?? x.slug, url: tea ? `https://www.chin-tea.com/teas/${x.slug}/` : undefined, position: i + 1 };
       }),
   },
 ]);
@@ -91,7 +91,7 @@ const schemaJson = JSON.stringify([
         if (!tea) return null;
         const type = getTeaType(tea.type);
         return (
-          <a href={`/teas/${tea.slug}`} class="group card card-hover p-5 no-underline flex gap-5 items-center">
+          <a href={`/teas/${tea.slug}/`} class="group card card-hover p-5 no-underline flex gap-5 items-center">
             <span class="flex-shrink-0 w-12 h-12 rounded-lg bg-leaf-600 text-white flex items-center justify-center font-accent text-xl font-semibold">{i + 1}</span>
             <div class="flex-1 min-w-0">
               <div class="flex flex-wrap items-center gap-2 mb-1">
@@ -121,7 +121,7 @@ const schemaJson = JSON.stringify([
           if (!tea) return null;
           const type = getTeaType(tea.type);
           return (
-            <a href={`/teas/${tea.slug}`} class="group card card-hover p-5 no-underline flex flex-col">
+            <a href={`/teas/${tea.slug}/`} class="group card card-hover p-5 no-underline flex flex-col">
               <div class="flex items-center gap-3 mb-3">
                 <TeaVisual tea={tea} size="md" />
                 <div>
@@ -146,7 +146,7 @@ const schemaJson = JSON.stringify([
         const tea = teaFor(p.slug);
         if (!tea) return null;
         return (
-          <a href={`/teas/${tea.slug}`} class="group card card-hover p-5 no-underline flex flex-col">
+          <a href={`/teas/${tea.slug}/`} class="group card card-hover p-5 no-underline flex flex-col">
             <h3 class="font-semibold text-warm-900 mb-1 group-hover:text-accent transition-colors">{p.title}</h3>
             <p class="text-sm text-muted leading-relaxed">{p.body}</p>
             <p class="text-xs font-medium text-accent mt-3">Try: {tea.name}</p>
@@ -156,15 +156,15 @@ const schemaJson = JSON.stringify([
     </div>
   </section>
 
-  <CTACard primaryHref="/teas" primaryLabel="Browse All 21 Teas" secondaryHref="/flavours" secondaryLabel="Find by Flavour" />
+  <CTACard primaryHref="/teas/" primaryLabel="Browse All 21 Teas" secondaryHref="/flavours/" secondaryLabel="Find by Flavour" />
 
   <RelatedLinks links={[
-    { href: '/teas', label: 'best chinese green tea' },
-    { href: '/teas/tie-guan-yin', label: 'best oolong for beginners' },
-    { href: '/teas/silver-needle', label: 'best tea for beginners' },
-    { href: '/guides/beginners', label: 'how to start drinking chinese tea' },
-    { href: '/guides/buying', label: 'how much should chinese tea cost' },
-    { href: '/flavours', label: 'find tea by flavour' },
+    { href: '/teas/', label: 'best chinese green tea' },
+    { href: '/teas/tie-guan-yin/', label: 'best oolong for beginners' },
+    { href: '/teas/silver-needle/', label: 'best tea for beginners' },
+    { href: '/guides/beginners/', label: 'how to start drinking chinese tea' },
+    { href: '/guides/buying/', label: 'how much should chinese tea cost' },
+    { href: '/flavours/', label: 'find tea by flavour' },
   ]} />
 
 </BaseLayout>

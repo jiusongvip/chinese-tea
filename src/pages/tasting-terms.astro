@@ -13,7 +13,7 @@ const description = 'The essential Chinese tea tasting vocabulary explained in p
 const schemaJson = JSON.stringify(articleSchema({
   title,
   description,
-  canonicalURL: 'https://www.chin-tea.com/tasting-terms',
+  canonicalURL: 'https://www.chin-tea.com/tasting-terms/',
   image: 'https://www.chin-tea.com/images/chinese-tea-og.webp',
   datePublished: '2026-08-01',
   dateModified: '2026-08-12',
@@ -67,13 +67,13 @@ const schemaJson = JSON.stringify(articleSchema({
     </div>
   </section>
 
-  <CTACard primaryHref="/flavours" primaryLabel="Find Tea by Flavour" secondaryHref="/teas" secondaryLabel="Browse All Teas" />
+  <CTACard primaryHref="/flavours/" primaryLabel="Find Tea by Flavour" secondaryHref="/teas/" secondaryLabel="Browse All Teas" />
 
   <RelatedLinks links={[
-    { href: '/flavours', label: 'chinese tea flavour guide' },
-    { href: '/culture', label: 'tea culture terms' },
-    { href: '/teas/pu-erh-sheng', label: 'hui gan in aged tea' },
-    { href: '/teas/da-hong-pao', label: 'what is yan yun' },
+    { href: '/flavours/', label: 'chinese tea flavour guide' },
+    { href: '/culture/', label: 'tea culture terms' },
+    { href: '/teas/pu-erh-sheng/', label: 'hui gan in aged tea' },
+    { href: '/teas/da-hong-pao/', label: 'what is yan yun' },
   ]} />
 
 </BaseLayout>

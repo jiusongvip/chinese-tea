@@ -18,7 +18,7 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes("/404"),
+      filter: (page) => !page.includes("/404") && !page.includes("/privacy"),
       serialize: (item) => {
         const path = new URL(item.url).pathname;
         const meta = pageMeta[path] ?? pageMeta[path.replace(/\/$/, "")];

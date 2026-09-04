@@ -69,7 +69,7 @@ const finderData = JSON.stringify(
         document.getElementById('result-title').textContent = rec.title;
         var link = document.getElementById('result-link');
         link.textContent = 'Read the full guide \u2192';
-        link.setAttribute('href', '/teas/' + rec.teaSlug);
+        link.setAttribute('href', '/teas/' + rec.teaSlug + '/');
         link.classList.remove('hidden');
         link.classList.add('inline-flex');
         document.getElementById('result-desc').textContent = rec.desc;

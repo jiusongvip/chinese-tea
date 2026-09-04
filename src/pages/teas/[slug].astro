@@ -21,8 +21,14 @@ if (!tea) return new Response(null, { status: 404, statusText: 'Not found' });
 const type = getTeaType(tea.type);
 const related = getRelatedTeas(tea.slug);
 
-const title = `${tea.name} (${tea.nameChinese})`;
-const description = `${tea.name} tea guide — flavor profile, exact brewing temperature, ${tea.buying.priceEntry}, quality checks, common scams, and history.`;
+const titleBase = `${tea.name} (${tea.nameChinese})`;
+const title = titleBase.length >= 20 ? titleBase : `${titleBase} Tea Guide`;
+let description = `${tea.name} tea guide — flavor profile, exact brewing temperature, ${tea.buying.priceEntry}, quality checks, common scams, and history.`;
+if (description.length > 160) {
+  description = description.replace("exact ", "").replace("common scams", "scams");
+} else if (description.length < 140) {
+  description = description.replace(/, and history\.$/, ", history, and where to buy it.");
+}
 
 const teaQa = [
   { q: `How do you brew ${tea.name}?`, a: `Brew ${tea.name} at ${tea.brewing.temp}. For gongfu style, steep ${tea.brewing.timeGongfu}; Western style, ${tea.brewing.timeWestern}. Use ${tea.brewing.vessel} with ${tea.brewing.ratio}. Expect ${tea.brewing.infusions} infusions.` },
@@ -47,7 +53,7 @@ const schemaJson = JSON.stringify([
     </div>
     <div class="relative z-10 section-container py-16 md:py-20">
       <div class="flex flex-wrap items-center gap-3 mb-5">
-        <a href={`/types/${type?.slug}`} class={`px-3 py-1 text-xs font-bold rounded-full ${type?.accent.badge ?? 'bg-white/20 text-white'}`}>{type?.name}</a>
+        <a href={`/types/${type?.slug}/`} class={`px-3 py-1 text-xs font-bold rounded-full ${type?.accent.badge ?? 'bg-white/20 text-white'}`}>{type?.name}</a>
         <a href="/teas/" class="text-xs text-leaf-200/70 hover:text-white transition-colors">← All famous teas</a>
       </div>
       <h1 class="text-4xl md:text-5xl font-display font-bold tracking-tight max-w-3xl">{tea.name} <span class="text-leaf-300 text-2xl md:text-3xl font-semibold">{tea.nameChinese}</span></h1>
@@ -148,7 +154,7 @@ const schemaJson = JSON.stringify([
             <div><dt class="text-zinc-400 text-xs">Caffeine</dt><dd class="text-warm-800 font-medium">{tea.caffeine}</dd></div>
             <div><dt class="text-zinc-400 text-xs">Beginner friendliness</dt><dd class="text-warm-800 font-medium">{stars(tea.beginner)}</dd></div>
           </dl>
-          <a href={`/types/${type?.slug}`} class="mt-5 block text-center px-4 py-2.5 btn btn-primary text-sm">All {type?.nameShort} teas</a>
+          <a href={`/types/${type?.slug}/`} class="mt-5 block text-center px-4 py-2.5 btn btn-primary text-sm">All {type?.nameShort} teas</a>
         </div>
       </aside>
     </div>
@@ -162,13 +168,13 @@ const schemaJson = JSON.stringify([
     </div>
   </section>
 
-  <CTACard primaryHref="/teas" primaryLabel="Browse All Teas" secondaryHref="/guides/buying" secondaryLabel="Buying Guide" />
+  <CTACard primaryHref="/teas/" primaryLabel="Browse All Teas" secondaryHref="/guides/buying/" secondaryLabel="Buying Guide" />
 
   <RelatedLinks links={[
-    { href: `/types/${type?.slug}`, label: `${type?.nameShort?.toLowerCase()} tea brewing guide` },
-    { href: '/guides/storage', label: 'how to store chinese tea' },
-    { href: `/teas/${related[0]?.slug}`, label: `${related[0]?.name?.toLowerCase()} comparison` },
-    { href: '/guides/cold-brew', label: 'cold brew this tea' },
+    { href: `/types/${type?.slug}/`, label: `${type?.nameShort?.toLowerCase()} tea brewing guide` },
+    { href: '/guides/storage/', label: 'how to store chinese tea' },
+    { href: `/teas/${related[0]?.slug}/`, label: `${related[0]?.name?.toLowerCase()} comparison` },
+    { href: '/guides/cold-brew/', label: 'cold brew this tea' },
   ]} />
 
 </BaseLayout>

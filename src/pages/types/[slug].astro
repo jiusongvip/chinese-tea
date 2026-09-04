@@ -20,12 +20,20 @@ const typeTeas = teasByType(type.slug);
 const { accent } = type;
 
 const title = `${type.name} (${type.nameZh}): A Complete Guide`;
-const description = `${type.name} guide — ${type.oxidation.toLowerCase()}, caffeine level ${type.caffeine}, brewing temperature ${type.brewTemp}, famous examples like ${type.exampleNames.join(', ')}, and how to buy them.`;
+let examples = [...type.exampleNames];
+let description = `${type.name} guide — ${type.oxidation.toLowerCase()}, caffeine ${type.caffeine}, brewing temperature ${type.brewTemp}, famous examples like ${examples.join(', ')}, and how to buy them.`;
+while (description.length > 160 && examples.length > 1) {
+  examples = examples.slice(0, -1);
+  description = `${type.name} guide — ${type.oxidation.toLowerCase()}, caffeine ${type.caffeine}, brewing temperature ${type.brewTemp}, famous examples like ${examples.join(', ')}, and how to buy them.`;
+}
+if (description.length > 160) {
+  description = `${type.name} guide — ${type.oxidation.toLowerCase()}, caffeine ${type.caffeine}, brewed at ${type.brewTemp}, famous examples like ${examples.join(', ')}, and how to buy them.`;
+}
 
 const schemaJson = JSON.stringify(teaTypeSchema({
   name: type.name,
   description,
-  url: `https://chinese-tea.com/types/${type.slug}`,
+  url: `https://www.chin-tea.com/types/${type.slug}/`,
 }));
 ---
 
@@ -115,20 +123,20 @@ const schemaJson = JSON.stringify(teaTypeSchema({
     <SectionHeader eyebrow="Keep Exploring" title="The Other Five Types" headingLevel="h2" />
     <div class="mt-8 flex flex-wrap gap-3">
       {teaTypes.filter((t) => t.slug !== type.slug).map((t) => (
-        <a href={`/types/${t.slug}`} class={`px-4 py-2 border rounded-full text-sm transition ${t.accent.chip}`}>{t.name} ({t.nameZh})</a>
+        <a href={`/types/${t.slug}/`} class={`px-4 py-2 border rounded-full text-sm transition ${t.accent.chip}`}>{t.name} ({t.nameZh})</a>
       ))}
     </div>
   </section>
 
-  <CTACard primaryHref="/teas" primaryLabel="Browse All Famous Teas" secondaryHref="/guides/buying" secondaryLabel="Buying Guide" />
+  <CTACard primaryHref="/teas/" primaryLabel="Browse All Famous Teas" secondaryHref="/guides/buying/" secondaryLabel="Buying Guide" />
 
   <RelatedLinks links={[
-    { href: '/types/green', label: 'types of chinese green tea' },
-    { href: '/types/oolong', label: 'types of oolong tea' },
-    { href: '/types/dark', label: 'dark tea vs pu-erh' },
-    { href: '/types/black', label: 'chinese black tea list' },
-    { href: '/types/yellow', label: 'rarest chinese tea' },
-    { href: '/types/white', label: 'white tea for beginners' },
+    { href: '/types/green/', label: 'types of chinese green tea' },
+    { href: '/types/oolong/', label: 'types of oolong tea' },
+    { href: '/types/dark/', label: 'dark tea vs pu-erh' },
+    { href: '/types/black/', label: 'chinese black tea list' },
+    { href: '/types/yellow/', label: 'rarest chinese tea' },
+    { href: '/types/white/', label: 'white tea for beginners' },
   ]} />
 
 </BaseLayout>

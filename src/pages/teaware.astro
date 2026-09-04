@@ -15,7 +15,7 @@ const description = 'The four essential pieces of teaware for brewing Chinese te
 const schemaJson = JSON.stringify(articleSchema({
   title,
   description,
-  canonicalURL: 'https://www.chin-tea.com/teaware',
+  canonicalURL: 'https://www.chin-tea.com/teaware/',
   image: 'https://www.chin-tea.com/images/chinese-tea-og.webp',
   datePublished: '2026-08-01',
   dateModified: '2026-08-12',
@@ -60,13 +60,13 @@ const icons: Record<string, IconDefinition> = {
     </div>
   </section>
 
-  <CTACard primaryHref="/guides/brewing" primaryLabel="Brew With Your Teaware" secondaryHref="/teas" secondaryLabel="Pick a Tea" />
+  <CTACard primaryHref="/guides/brewing/" primaryLabel="Brew With Your Teaware" secondaryHref="/teas/" secondaryLabel="Pick a Tea" />
 
   <RelatedLinks links={[
-    { href: '/guides/brewing', label: 'gongfu brewing guide' },
-    { href: '/culture', label: 'gongfu tea ceremony' },
-    { href: '/types/oolong', label: 'teas for gongfu' },
-    { href: '/guides/water', label: 'water for your teaware' },
+    { href: '/guides/brewing/', label: 'gongfu brewing guide' },
+    { href: '/culture/', label: 'gongfu tea ceremony' },
+    { href: '/types/oolong/', label: 'teas for gongfu' },
+    { href: '/guides/water/', label: 'water for your teaware' },
   ]} />
 
 </BaseLayout>

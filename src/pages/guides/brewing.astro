@@ -13,7 +13,7 @@ const description = 'The complete Chinese tea brewing guide — gongfu vs Wester
 const schemaJson = JSON.stringify(articleSchema({
   title,
   description,
-  canonicalURL: 'https://www.chin-tea.com/guides/brewing',
+  canonicalURL: 'https://www.chin-tea.com/guides/brewing/',
   image: 'https://www.chin-tea.com/images/chinese-tea-brewing.avif',
   datePublished: '2026-08-01',
   dateModified: '2026-08-12',
@@ -81,15 +81,15 @@ const gongfuSteps = [
     </div>
   </section>
 
-  <CTACard primaryHref="/teas" primaryLabel="Find a Tea to Brew" secondaryHref="/teaware" secondaryLabel="Teaware Essentials" />
+  <CTACard primaryHref="/teas/" primaryLabel="Find a Tea to Brew" secondaryHref="/teaware/" secondaryLabel="Teaware Essentials" />
 
   <RelatedLinks links={[
-    { href: '/guides/water', label: 'best water for chinese tea' },
-    { href: '/guides/cold-brew', label: 'cold brew chinese tea' },
-    { href: '/teaware', label: 'gaiwan vs yixing teapot' },
-    { href: '/guides/buying', label: 'how much tea to buy' },
-    { href: '/types/green', label: 'green tea brewing temperature' },
-    { href: '/types/oolong', label: 'oolong gongfu guide' },
+    { href: '/guides/water/', label: 'best water for chinese tea' },
+    { href: '/guides/cold-brew/', label: 'cold brew chinese tea' },
+    { href: '/teaware/', label: 'gaiwan vs yixing teapot' },
+    { href: '/guides/buying/', label: 'how much tea to buy' },
+    { href: '/types/green/', label: 'green tea brewing temperature' },
+    { href: '/types/oolong/', label: 'oolong gongfu guide' },
   ]} />
 
 </BaseLayout>

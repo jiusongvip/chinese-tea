@@ -10,7 +10,7 @@ const { type } = Astro.props;
 const { accent } = type;
 ---
 
-<a href={`/types/${type.slug}`} class="group card card-hover overflow-hidden flex flex-col no-underline">
+<a href={`/types/${type.slug}/`} class="group card card-hover overflow-hidden flex flex-col no-underline">
   <div class="aspect-[3/2] overflow-hidden bg-paper-100 relative">
     <img src={type.image} alt={`${type.name} (${type.nameZh})`} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" width="640" height="427" />
     <span class={`absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded ${accent.badge}`}>{type.nameShort}</span>

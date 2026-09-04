@@ -15,7 +15,7 @@ const description = 'Tea is 99% water. Which water to use for Chinese tea — sp
 const schemaJson = JSON.stringify(articleSchema({
   title,
   description,
-  canonicalURL: 'https://www.chin-tea.com/guides/water',
+  canonicalURL: 'https://www.chin-tea.com/guides/water/',
   image: 'https://www.chin-tea.com/images/chinese-tea-og.webp',
   datePublished: '2026-08-01',
   dateModified: '2026-08-12',
@@ -66,12 +66,12 @@ const tones: Record<string, string> = {
     </div>
   </section>
 
-  <CTACard primaryHref="/guides/brewing" primaryLabel="Back to Brewing Guide" secondaryHref="/guides/cold-brew" secondaryLabel="Cold Brew Method" />
+  <CTACard primaryHref="/guides/brewing/" primaryLabel="Back to Brewing Guide" secondaryHref="/guides/cold-brew/" secondaryLabel="Cold Brew Method" />
 
   <RelatedLinks links={[
-    { href: '/guides/brewing', label: 'brewing temperatures' },
-    { href: '/guides/cold-brew', label: 'cold brew at home' },
-    { href: '/types/green', label: 'green tea with spring water' },
+    { href: '/guides/brewing/', label: 'brewing temperatures' },
+    { href: '/guides/cold-brew/', label: 'cold brew at home' },
+    { href: '/types/green/', label: 'green tea with spring water' },
   ]} />
 
 </BaseLayout>

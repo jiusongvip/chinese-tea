@@ -7,8 +7,8 @@ import RelatedLinks from '../../components/RelatedLinks.astro';
 import { teaTypes } from '../../data/teaTypes';
 import { comparisonRows } from '../../data/content';
 
-const title = 'The Six Types of Chinese Tea: A Complete Guide';
-const description = 'All six Chinese tea types explained by their processing — fixing, withering, sealing the yellow, rocking the green, oxidation, and fermentation — plus brewing temperatures and how to choose.';
+const title = 'The Six Types of Chinese Tea: Complete Guide';
+const description = 'All six Chinese tea types explained by their processing — fixing, withering, oxidation, and fermentation — plus brewing temperatures and how to choose.';
 ---
 
 <BaseLayout {title} {description}>
@@ -39,7 +39,7 @@ const description = 'All six Chinese tea types explained by their processing —
         <tbody>
           {teaTypes.map((t, i) => (
             <tr class={`${i % 2 === 0 ? 'bg-white' : 'bg-paper-100/50'} hover:bg-leaf-50/60 transition-colors`}>
-              <td class="px-5 py-3 font-medium text-warm-800"><a href={`/types/${t.slug}`} class="hover:text-accent hover:underline no-underline">{t.name}</a></td>
+              <td class="px-5 py-3 font-medium text-warm-800"><a href={`/types/${t.slug}/`} class="hover:text-accent hover:underline no-underline">{t.name}</a></td>
               <td class="px-5 py-3 text-muted">{t.process.term}</td>
               <td class="px-5 py-3 text-warm-800">{t.process.zh} <span class="text-zinc-400 font-normal">{t.namePinyin}</span></td>
               <td class="px-5 py-3 text-muted hidden md:table-cell">{t.process.literal}</td>
@@ -99,7 +99,7 @@ const description = 'All six Chinese tea types explained by their processing —
       <div class="mt-8 space-y-3">
         {teaTypes.map((t) => (
           <div class="card p-5 flex gap-4 items-start">
-            <a href={`/types/${t.slug}`} class={`mt-1 flex-shrink-0 px-2.5 py-1 text-xs font-bold rounded-full ${t.accent.badge}`}>{t.nameShort}</a>
+            <a href={`/types/${t.slug}/`} class={`mt-1 flex-shrink-0 px-2.5 py-1 text-xs font-bold rounded-full ${t.accent.badge}`}>{t.nameShort}</a>
             <p class="text-sm text-warm-700 leading-relaxed">{t.oneLiner}</p>
           </div>
         ))}
@@ -148,15 +148,15 @@ const description = 'All six Chinese tea types explained by their processing —
     </div>
   </section>
 
-  <CTACard primaryHref="/teas" primaryLabel="Explore the Famous Teas" secondaryHref="/guides/brewing" secondaryLabel="Brewing Guide" />
+  <CTACard primaryHref="/teas/" primaryLabel="Explore the Famous Teas" secondaryHref="/guides/brewing/" secondaryLabel="Brewing Guide" />
 
   <RelatedLinks links={[
-    { href: '/types/green', label: 'types of chinese green tea' },
-    { href: '/types/oolong', label: 'what is qing cha (blue tea)' },
-    { href: '/types/dark', label: 'dark tea vs pu-erh' },
-    { href: '/types/black', label: 'why is black tea called red tea' },
-    { href: '/flavours', label: 'chinese tea flavour guide' },
-    { href: '/faq', label: 'is herbal tea actually tea' },
+    { href: '/types/green/', label: 'types of chinese green tea' },
+    { href: '/types/oolong/', label: 'what is qing cha (blue tea)' },
+    { href: '/types/dark/', label: 'dark tea vs pu-erh' },
+    { href: '/types/black/', label: 'why is black tea called red tea' },
+    { href: '/flavours/', label: 'chinese tea flavour guide' },
+    { href: '/faq/', label: 'is herbal tea actually tea' },
   ]} />
 
 </BaseLayout>
