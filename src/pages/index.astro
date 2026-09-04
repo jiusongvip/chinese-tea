@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import TypeCard from '../components/TypeCard.astro';
 import TeaCard from '../components/TeaCard.astro';
-import TeaExplorer from '../components/TeaExplorer.astro';
 import FinderWidget from '../components/FinderWidget.astro';
 import BrewingTabs from '../components/BrewingTabs.astro';
 import CTACard from '../components/CTACard.astro';
@@ -13,7 +12,7 @@ import { getTeaType } from '../data/teaTypes';
 import { teas } from '../data/teas';
 import { faqs } from '../data/faq';
 import { comparisonRows, heroSteps, cultureFacts, relatedSearchLinks, cultureEntries } from '../data/content';
-import { FlaskConical, BadgeCheck, HandCoins, SearchX } from '@lucide/astro';
+import { FlaskConical, BadgeCheck, HandCoins, SearchX, ArrowRight } from '@lucide/astro';
 
 const title = 'Chinese Tea Guide: Types, Brewing & Culture';
 const description = 'The practical guide to Chinese tea: six types, 21 famous teas, brewing and buying guides, regions, and how to choose the right tea for your taste.';
@@ -120,13 +119,24 @@ const schemaJson = JSON.stringify([
     </div>
   </section>
 
-  <!-- Interactive explorer — filter, search, expand every tea -->
+  <!-- Interactive explorer — moved to /compare/; compact teaser keeps the homepage lean -->
   <section class="py-12 bg-gradient-to-b from-paper-100 to-white">
     <div class="section-container">
-      <div class="text-center mb-10 reveal">
-        <SectionHeader eyebrow="Compare &amp; Search" title="Explore Every Tea Side by Side" subtitle="Filter by type, search by name or flavour, and click any row to expand its full brewing and buying profile." headingLevel="h2" center />
+      <div class="text-center mb-8 reveal">
+        <SectionHeader eyebrow="Compare &amp; Search" title="Explore Every Tea Side by Side" subtitle="All 21 famous teas in one filterable table — flavour, brewing parameters, caffeine, and price at a glance." headingLevel="h2" center />
       </div>
-      <TeaExplorer />
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto reveal">
+        {teas.slice(0, 6).map((t) => (
+          <a href={`/teas/${t.slug}/`} class="card flex items-center gap-3 px-4 py-3 no-underline group">
+            <span class="font-display font-semibold text-warm-800 text-sm flex-1">{t.name}</span>
+            <span class="font-mono text-[10px] uppercase tracking-wider text-accent opacity-0 group-hover:opacity-100 transition-opacity">view →</span>
+          </a>
+        ))}
+      </div>
+      <div class="text-center mt-8 reveal">
+        <a href="/compare/" class="inline-flex items-center gap-2 px-8 py-3.5 btn btn-primary">Open the Full Comparison Table<ArrowRight class="w-4 h-4" /></a>
+        <p class="text-sm text-muted mt-4">Filter by type, search by flavour, expand any row for brewing and buying details.</p>
+      </div>
     </div>
   </section>
 

@@ -25,6 +25,7 @@ export const pageMeta: Record<string, PageMeta> = {
   "/": { label: "Home", lastmod: LASTMOD },
 
   "/teas": { label: "Famous Teas", lastmod: LASTMOD },
+  "/compare": { label: "Compare Teas", lastmod: LASTMOD },
   "/best-teas": { label: "Best Chinese Teas", lastmod: LASTMOD },
   "/types": { label: "The Six Types", lastmod: LASTMOD },
   "/flavours": { label: "Flavour Guide", lastmod: LASTMOD },

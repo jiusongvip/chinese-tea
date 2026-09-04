@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TeaExplorer from '../components/TeaExplorer.astro';
+import CTACard from '../components/CTACard.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import { teas } from '../data/teas';
+
+const title = 'Compare All 21 Chinese Teas Side by Side';
+const description = 'Filter and search all 21 famous Chinese teas in one table. Compare flavour profiles, brewing temperatures, caffeine, prices, and buying tips side by side.';
+
+const schemaJson = JSON.stringify([
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: teas.map((t, i) => ({
+      '@type': 'Product',
+      name: t.name,
+      url: `https://www.chin-tea.com/teas/${t.slug}/`,
+      position: i + 1,
+    })),
+  },
+]);
+---
+
+<BaseLayout {title} {description} schemaJson={schemaJson}>
+  <section class="section-container pt-14 pb-6">
+    <p class="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-3">Compare &amp; Search</p>
+    <h1 class="text-3xl md:text-4xl font-display font-semibold tracking-tight text-warm-900 mb-5">Explore Every Chinese Tea Side by Side</h1>
+    <p class="text-muted max-w-2xl leading-relaxed">One table, all 21 famous teas. Filter by type, search by name or flavour note, then click any row to expand its full profile — aroma, taste, brewing temperature and time, entry-level price, and the scam to avoid when buying. Every figure comes from our <a href="/teas/" class="text-accent hover:underline">individual tea guides</a>, re-checked quarterly.</p>
+  </section>
+
+  <section class="pb-12">
+    <div class="section-container">
+      <TeaExplorer />
+    </div>
+  </section>
+
+  <CTACard primaryHref="/teas/" primaryLabel="Browse Tea Guides" secondaryHref="/guides/brewing/" secondaryLabel="Learn to Brew Properly" />
+
+  <RelatedLinks links={[
+    { href: '/types/', label: 'the six types of Chinese tea' },
+    { href: '/flavours/', label: 'find tea by flavour' },
+    { href: '/best-teas/', label: 'our ranked picks' },
+    { href: '/faq/', label: 'frequently asked questions' },
+  ]} />
+</BaseLayout>
