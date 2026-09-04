@@ -5,18 +5,18 @@ Your practical guide to Chinese tea — the six major types, 21 famous teas with
 ## Site Structure
 
 - Homepage: https://www.chin-tea.com
-- The Six Types: https://www.chin-tea.com/types
+- The Six Types: https://www.chin-tea.com/types/
   - Green Tea: https://www.chin-tea.com/types/green
   - White Tea: https://www.chin-tea.com/types/white
   - Yellow Tea: https://www.chin-tea.com/types/yellow
   - Oolong Tea: https://www.chin-tea.com/types/oolong
   - Black Tea: https://www.chin-tea.com/types/black
   - Dark Tea: https://www.chin-tea.com/types/dark
-- Famous Teas: https://www.chin-tea.com/teas
-  - Best Chinese Teas (ranked picks): https://www.chin-tea.com/best-teas
-  - 21 tea pages with flavor profile, brewing parameters, buying tips, and common scams (e.g. https://www.chin-tea.com/teas/longjing)
+- Famous Teas: https://www.chin-tea.com/teas/
+  - Best Chinese Teas (ranked picks): https://www.chin-tea.com/best-teas/
+  - 21 tea pages with flavor profile, brewing parameters, buying tips, and common scams (e.g. https://www.chin-tea.com/teas/longjing/)
 - Guides
-  - All Guides: https://www.chin-tea.com/guides
+  - All Guides: https://www.chin-tea.com/guides/
   - Start Here (Beginners): https://www.chin-tea.com/guides/beginners
   - How Tea Is Made: https://www.chin-tea.com/guides/production
   - Four Families of Oolong: https://www.chin-tea.com/guides/oolong-styles
@@ -25,17 +25,17 @@ Your practical guide to Chinese tea — the six major types, 21 famous teas with
   - Storage: https://www.chin-tea.com/guides/storage
   - Water: https://www.chin-tea.com/guides/water
   - Cold Brew: https://www.chin-tea.com/guides/cold-brew
-  - Flavour Guide: https://www.chin-tea.com/flavours
-  - Teaware: https://www.chin-tea.com/teaware
+  - Flavour Guide: https://www.chin-tea.com/flavours/
+  - Teaware: https://www.chin-tea.com/teaware/
 - Learn
-  - Tea by Region: https://www.chin-tea.com/regions
-  - Tea Culture & Ceremony: https://www.chin-tea.com/culture
-  - Health Benefits: https://www.chin-tea.com/health
-  - Tea & Food Pairing: https://www.chin-tea.com/pairing
-  - Tasting Terms: https://www.chin-tea.com/tasting-terms
-  - FAQ: https://www.chin-tea.com/faq
-  - Blog: https://www.chin-tea.com/blog
-- About: https://www.chin-tea.com/about
+  - Tea by Region: https://www.chin-tea.com/regions/
+  - Tea Culture & Ceremony: https://www.chin-tea.com/culture/
+  - Health Benefits: https://www.chin-tea.com/health/
+  - Tea & Food Pairing: https://www.chin-tea.com/pairing/
+  - Tasting Terms: https://www.chin-tea.com/tasting-terms/
+  - FAQ: https://www.chin-tea.com/faq/
+  - Blog: https://www.chin-tea.com/blog/
+- About: https://www.chin-tea.com/about/
 
 ## About
 

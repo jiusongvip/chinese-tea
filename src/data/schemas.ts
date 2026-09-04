@@ -17,6 +17,7 @@ export function organizationSchema() {
     description: SITE.description,
     email: SITE.email,
     logo: absolute("/favicon.svg"),
+    sameAs: ["https://github.com/jiusongvip/chinese-tea"],
   };
 }
 
@@ -66,7 +67,7 @@ export function articleSchema(opts: {
     headline: opts.title,
     description: opts.description,
     mainEntityOfPage: { "@type": "WebPage", "@id": opts.canonicalURL },
-    author: { "@type": "Organization", name: SITE.name },
+    author: { "@type": "Organization", name: SITE.name, url: absolute("/about/") },
     publisher: { "@type": "Organization", name: SITE.name, url: SITE.url, logo: { "@type": "ImageObject", url: absolute("/favicon.svg") } },
     datePublished: opts.datePublished ?? "2026-08-01",
     dateModified: opts.dateModified ?? opts.datePublished ?? "2026-08-12",
@@ -128,8 +129,10 @@ export function teaItemSchema(tea: Tea) {
     alternateName: tea.nameChinese,
     description: `${tea.flavorShort}. ${tea.origin}. ${tea.flavor.taste}`,
     image: absolute(tea.image),
-    url: absolute(`/teas/${tea.slug}`),
+    url: absolute(`/teas/${tea.slug}/`),
     category: `${tea.type.charAt(0).toUpperCase() + tea.type.slice(1)} tea`,
+    datePublished: "2026-08-01",
+    dateModified: "2026-08-12",
     offers: {
       "@type": "Offer",
       priceCurrency: "USD",

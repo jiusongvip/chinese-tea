@@ -74,13 +74,13 @@ const filters: { slug: 'all' | TeaTypeSlug; label: string }[] = [
                     <div class="flex items-center gap-3 mb-6">
                       <div class="w-10 h-10 flex-shrink-0"><TeaVisual tea={t} /></div>
                       <div>
-                        <h4 class="text-lg font-bold text-warm-900">{t.name}</h4>
+                        <h3 class="text-lg font-bold text-warm-900">{t.name}</h3>
                         <p class="text-sm text-zinc-400">{t.nameChinese} &middot; {type?.name} &middot; {t.origin}</p>
                       </div>
                     </div>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                       <div>
-                        <h5 class="text-xs font-mono uppercase tracking-[0.15em] text-accent mb-3">Flavor Profile</h5>
+                        <h4 class="text-xs font-mono uppercase tracking-[0.15em] text-accent mb-3">Flavor Profile</h4>
                         <div class="space-y-2.5 text-sm">
                           <div class="flex gap-2"><span class="text-zinc-400 w-16 flex-shrink-0">Aroma</span><span class="text-warm-700">{t.flavor.aroma}</span></div>
                           <div class="flex gap-2"><span class="text-zinc-400 w-16 flex-shrink-0">Taste</span><span class="text-warm-700">{t.flavor.taste}</span></div>
@@ -93,7 +93,7 @@ const filters: { slug: 'all' | TeaTypeSlug; label: string }[] = [
                         </div>
                       </div>
                       <div>
-                        <h5 class="text-xs font-mono uppercase tracking-[0.15em] text-accent mb-3">Brewing Guide</h5>
+                        <h4 class="text-xs font-mono uppercase tracking-[0.15em] text-accent mb-3">Brewing Guide</h4>
                         <div class="grid grid-cols-2 gap-x-6 gap-y-2.5 text-sm">
                           <div><span class="text-zinc-400 block text-xs">Water</span><span class="text-warm-800 font-medium">{t.brewing.temp}</span></div>
                           <div><span class="text-zinc-400 block text-xs">Vessel</span><span class="text-warm-800 font-medium">{t.brewing.vessel}</span></div>
@@ -105,7 +105,7 @@ const filters: { slug: 'all' | TeaTypeSlug; label: string }[] = [
                       </div>
                     </div>
                     <div class="mb-6 p-4 sm:p-5 bg-white rounded-lg border border-paper-200">
-                      <h5 class="text-xs font-mono uppercase tracking-[0.15em] text-amber-600 mb-3">Buying Guide</h5>
+                      <h4 class="text-xs font-mono uppercase tracking-[0.15em] text-amber-600 mb-3">Buying Guide</h4>
                       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4 text-sm">
                         <div class="p-3 bg-paper-100 rounded-lg"><span class="text-zinc-400 block text-xs mb-0.5">Entry Level</span><span class="text-warm-800 font-medium">{t.buying.priceEntry}</span></div>
                         <div class="p-3 bg-paper-100 rounded-lg"><span class="text-zinc-400 block text-xs mb-0.5">Premium / Collector</span><span class="text-warm-800 font-medium">{t.buying.priceAdvance}</span></div>
@@ -117,7 +117,7 @@ const filters: { slug: 'all' | TeaTypeSlug; label: string }[] = [
                       </div>
                     </div>
                     <div class="mb-5 text-sm">
-                      <h5 class="text-xs font-mono uppercase tracking-[0.15em] text-zinc-400 mb-2">History and Background</h5>
+                      <h4 class="text-xs font-mono uppercase tracking-[0.15em] text-zinc-400 mb-2">History and Background</h4>
                       <p class="text-muted leading-relaxed">{t.history}</p>
                     </div>
                     <div class="p-3 bg-leaf-50 rounded-lg border border-leaf-100 text-sm">
