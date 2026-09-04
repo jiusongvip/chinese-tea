@@ -55,7 +55,7 @@ export const regions: Region[] = [
       { name: "Yunnan Green", nameZh: "云南绿茶" },
     ],
     accent: "stone",
-    image: "/images/teas/pu-erh-sheng.jpg",
+    image: "/images/teas/pu-erh-sheng.webp",
   },
   {
     slug: "anhui",
@@ -84,7 +84,7 @@ export const regions: Region[] = [
       { name: "Rain Flower", nameZh: "雨花茶" },
     ],
     accent: "sky",
-    image: "/images/teas/biluochun.jpg",
+    image: "/images/teas/biluochun.webp",
   },
   {
     slug: "guangdong",
@@ -98,6 +98,6 @@ export const regions: Region[] = [
       { name: "Mi Lan Xiang", nameZh: "蜜兰香" },
     ],
     accent: "rose",
-    image: "/images/teas/phoenix-dan-cong.jpg",
+    image: "/images/teas/phoenix-dan-cong.webp",
   },
 ];

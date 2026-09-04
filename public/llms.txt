@@ -1,43 +1,47 @@
 # Chinese Tea Guide
 
-Your practical guide to Chinese tea — the six major types, 21 famous teas with brewing and buying guides, tea regions, brewing methods, tea culture, and how to choose the right tea.
+> A practical guide to Chinese tea — the six major types, 21 famous teas with brewing and buying guides, tea regions, brewing methods, tea culture, and how to choose the right tea for your taste. No sponsored recommendations.
 
-## Site Structure
+## Core Pages
 
-- Homepage: https://www.chin-tea.com
-- The Six Types: https://www.chin-tea.com/types/
-  - Green Tea: https://www.chin-tea.com/types/green
-  - White Tea: https://www.chin-tea.com/types/white
-  - Yellow Tea: https://www.chin-tea.com/types/yellow
-  - Oolong Tea: https://www.chin-tea.com/types/oolong
-  - Black Tea: https://www.chin-tea.com/types/black
-  - Dark Tea: https://www.chin-tea.com/types/dark
-- Famous Teas: https://www.chin-tea.com/teas/
-  - Best Chinese Teas (ranked picks): https://www.chin-tea.com/best-teas/
-  - Comparison table (all 21 teas, filterable): https://www.chin-tea.com/compare/
-  - 21 tea pages with flavor profile, brewing parameters, buying tips, and common scams (e.g. https://www.chin-tea.com/teas/longjing/)
-- Guides
-  - All Guides: https://www.chin-tea.com/guides/
-  - Start Here (Beginners): https://www.chin-tea.com/guides/beginners/
-  - How Tea Is Made: https://www.chin-tea.com/guides/production/
-  - Four Families of Oolong: https://www.chin-tea.com/guides/oolong-styles/
-  - Brewing: https://www.chin-tea.com/guides/brewing/
-  - Buying: https://www.chin-tea.com/guides/buying/
-  - Storage: https://www.chin-tea.com/guides/storage/
-  - Water: https://www.chin-tea.com/guides/water/
-  - Cold Brew: https://www.chin-tea.com/guides/cold-brew/
-  - Flavour Guide: https://www.chin-tea.com/flavours/
-  - Teaware: https://www.chin-tea.com/teaware/
-- Learn
-  - Tea by Region: https://www.chin-tea.com/regions/
-  - Tea Culture & Ceremony: https://www.chin-tea.com/culture/
-  - Health Benefits: https://www.chin-tea.com/health/
-  - Tea & Food Pairing: https://www.chin-tea.com/pairing/
-  - Tasting Terms: https://www.chin-tea.com/tasting-terms/
-  - FAQ: https://www.chin-tea.com/faq/
-  - Blog: https://www.chin-tea.com/blog/
-- About: https://www.chin-tea.com/about/
+- [Homepage](https://www.chin-tea.com/): Start here — overview of the six tea types, famous teas, and how to navigate the guide
+- [The Six Types of Chinese Tea](https://www.chin-tea.com/types/): Green, white, yellow, oolong, black, and dark tea explained
+- [Green Tea](https://www.chin-tea.com/types/green/): Unoxidized teas — Longjing, Biluochun, Maofeng and more
+- [White Tea](https://www.chin-tea.com/types/white/): Minimally processed — Silver Needle, White Peony, Shou Mei
+- [Yellow Tea](https://www.chin-tea.com/types/yellow/): The rare "sealed yellowing" category, including Junshan Yinzhen
+- [Oolong Tea](https://www.chin-tea.com/types/oolong/): Semi-oxidized — Tie Guan Yin, Da Hong Pao, Phoenix Dan Cong
+- [Black Tea](https://www.chin-tea.com/types/black/): Fully oxidized — Keemun, Dian Hong, Lapsang Souchong, Jin Jun Mei
+- [Dark Tea](https://www.chin-tea.com/types/dark/): Post-fermented — sheng and shou Pu-erh, Liu Bao
 
-## About
+## Famous Teas
 
-This site is built to help English-speaking tea lovers discover the world of Chinese tea through practical, experience-based information — exact brewing temperatures, realistic price ranges, quality checks, and common scams to avoid. No sponsored recommendations.
+- [All 21 Famous Teas](https://www.chin-tea.com/teas/): Every tea's flavor profile, brewing parameters, and buying tips
+- [Comparison Table](https://www.chin-tea.com/compare/): All 21 teas side by side — filterable by type and flavour
+- [Best Chinese Teas](https://www.chin-tea.com/best-teas/): Ranked picks for every budget
+- [Longjing (Dragon Well)](https://www.chin-tea.com/teas/longjing/): Example tea page — brewing, pricing, quality checks, common scams
+
+## Guides
+
+- [All Guides](https://www.chin-tea.com/guides/): Brewing, buying, storage, water, and production
+- [Tea for Beginners](https://www.chin-tea.com/guides/beginners/): Where to start with Chinese tea
+- [How Tea Is Made](https://www.chin-tea.com/guides/production/): From leaf to cup, step by step
+- [Brewing Guide](https://www.chin-tea.com/guides/brewing/): Temperatures, ratios, and timing
+- [Buying Guide](https://www.chin-tea.com/guides/buying/): How to judge quality and price
+- [Storage Guide](https://www.chin-tea.com/guides/storage/): Keep tea fresh
+- [Cold Brew Guide](https://www.chin-tea.com/guides/cold-brew/): Summer-friendly brewing
+- [Flavour Guide](https://www.chin-tea.com/flavours/): Find tea by taste preference
+
+## Learn
+
+- [Tea by Region](https://www.chin-tea.com/regions/): Zhejiang, Fujian, Yunnan and other tea regions
+- [Tea Culture & Ceremony](https://www.chin-tea.com/culture/): History, gongfu cha, and etiquette
+- [Health Benefits](https://www.chin-tea.com/health/): Evidence-based overview of tea and health
+- [Tea & Food Pairing](https://www.chin-tea.com/pairing/): Match teas with dishes
+- [Tasting Terms](https://www.chin-tea.com/tasting-terms/): Vocabulary for describing tea
+- [FAQ](https://www.chin-tea.com/faq/): Common questions answered
+- [Blog](https://www.chin-tea.com/blog/): Deep dives and comparisons
+- [About & Contact](https://www.chin-tea.com/about/): How we test teas; hello@chin-tea.com
+
+## Policy
+
+Crawling for AI search citations and training is permitted. Content is updated quarterly; last verified August 2026. For corrections, email hello@chin-tea.com.
