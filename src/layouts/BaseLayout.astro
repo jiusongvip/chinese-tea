@@ -144,13 +144,20 @@ const displayUpdated = lastUpdated ?? lastUpdatedFor(pathname);
     {!noindex && crumbSchema && <script type="application/ld+json" is:inline set:html={crumbSchema}></script>}
     {schemaJson && <script type="application/ld+json" is:inline set:html={schemaJson}></script>}
 
-    <!-- Google tag (gtag.js) -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-VP5JRV0PQ4"></script>
+    <!-- Google tag (gtag.js) — deferred until after window load to keep LCP window clear -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-VP5JRV0PQ4');
+      var _load = function () {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-VP5JRV0PQ4';
+        document.head.appendChild(s);
+      };
+      if ('requestIdleCallback' in window) { requestIdleCallback(_load, { timeout: 4000 }); }
+      else { window.addEventListener('load', function () { setTimeout(_load, 0); }, { once: true }); }
     </script>
 
     <slot name="head" />
