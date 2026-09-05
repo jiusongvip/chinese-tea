@@ -1,5 +1,7 @@
 ﻿---
 import "../styles/global.css";
+import geistWoff2 from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url";
+import newsreaderWoff2 from "@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2?url";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import InkGlyph from "../components/InkGlyph.astro";
@@ -110,6 +112,8 @@ const displayUpdated = lastUpdated ?? lastUpdatedFor(pathname);
     <meta name="robots" content={robotsContent} />
     {!noindex && <link rel="canonical" href={canonicalURL} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" as="font" type="font/woff2" href={geistWoff2} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={newsreaderWoff2} crossorigin />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="search" type="application/opensearchdescription+xml" title="Chinese Tea Guide" href="/opensearch.xml" />
     <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
