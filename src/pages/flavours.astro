@@ -74,12 +74,12 @@ const schemaJson = JSON.stringify([
                 <div class="flex items-center gap-3 mb-2">
                   <TeaVisual tea={tea} />
                   <div>
-                    <h3 class="font-semibold text-warm-900 leading-tight group-hover:text-accent transition-colors">{tea.name} <span class="text-xs font-normal text-zinc-400">{tea.nameChinese}</span></h3>
-                    <p class="text-xs text-zinc-400">{tea.origin}</p>
+                    <h3 class="font-semibold text-warm-900 leading-tight group-hover:text-accent transition-colors">{tea.name} <span class="text-xs font-normal text-zinc-500">{tea.nameChinese}</span></h3>
+                    <p class="text-xs text-zinc-500">{tea.origin}</p>
                   </div>
                 </div>
                 <p class="text-xs text-muted leading-relaxed mt-auto">{tea.flavorShort}</p>
-                <span class="mt-3 inline-flex items-center gap-1 text-xs font-medium text-accent">Full guide <ArrowRight class="w-3 h-3 text-leaf-400 group-hover:translate-x-0.5 transition-transform" /></span>
+                <span class="mt-3 inline-flex items-center gap-1 text-xs font-medium text-accent underline underline-offset-2">Full guide <ArrowRight class="w-3 h-3 text-leaf-400 group-hover:translate-x-0.5 transition-transform" /></span>
               </a>
             );
           })}

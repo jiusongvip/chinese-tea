@@ -44,10 +44,10 @@ const posts = [
       {posts.map((p) => (
         <a href={p.href} class={`group card card-hover p-6 flex flex-col no-underline ${p.featured ? 'md:col-span-2 bg-paper-100' : ''}`}>
           {p.featured && <p class="text-xs font-semibold tracking-[0.2em] uppercase text-accent mb-3">Featured</p>}
-          <p class="text-xs text-zinc-400 mb-3">{p.date} &middot; {p.read}</p>
+          <p class="text-xs text-zinc-500 mb-3">{p.date} &middot; {p.read}</p>
           <h2 class="font-display font-semibold text-xl leading-snug mb-2 group-hover:text-accent transition-colors">{p.title}</h2>
           <p class="text-sm text-muted leading-relaxed mb-6">{p.excerpt}</p>
-          <span class="mt-auto inline-flex items-center gap-1.5 text-sm font-medium text-accent">Read the article <ArrowRight class="w-4 h-4 text-leaf-400 group-hover:translate-x-1 transition-transform" /></span>
+          <span class="mt-auto inline-flex items-center gap-1.5 text-sm font-medium text-accent underline underline-offset-2">Read the article <ArrowRight class="w-4 h-4 text-leaf-400 group-hover:translate-x-1 transition-transform" /></span>
         </a>
       ))}
     </div>

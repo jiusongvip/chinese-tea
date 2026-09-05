@@ -23,14 +23,14 @@ import { brewingGuides } from '../data/brewingGuides';
       <div id={`brew-panel-${g.slug}`} role="tabpanel" class={i === 0 ? '' : 'hidden'}>
         <h3 class="text-xl font-bold text-warm-900 mb-6">{g.title}</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="p-4 bg-paper-100 rounded-lg"><p class="text-xs text-zinc-400 uppercase tracking-wider mb-1">Water Temperature</p><p class="font-semibold text-warm-800">{g.temp}</p></div>
-          <div class="p-4 bg-paper-100 rounded-lg"><p class="text-xs text-zinc-400 uppercase tracking-wider mb-1">Steeping Time</p><p class="font-semibold text-warm-800">{g.time}</p></div>
-          <div class="p-4 bg-paper-100 rounded-lg"><p class="text-xs text-zinc-400 uppercase tracking-wider mb-1">Best Vessel</p><p class="font-semibold text-warm-800">{g.vessel}</p></div>
-          <div class="p-4 bg-paper-100 rounded-lg"><p class="text-xs text-zinc-400 uppercase tracking-wider mb-1">Leaf-to-Water Ratio</p><p class="font-semibold text-warm-800">{g.ratio}</p></div>
+          <div class="p-4 bg-paper-100 rounded-lg"><p class="text-xs text-zinc-500 uppercase tracking-wider mb-1">Water Temperature</p><p class="font-semibold text-warm-800">{g.temp}</p></div>
+          <div class="p-4 bg-paper-100 rounded-lg"><p class="text-xs text-zinc-500 uppercase tracking-wider mb-1">Steeping Time</p><p class="font-semibold text-warm-800">{g.time}</p></div>
+          <div class="p-4 bg-paper-100 rounded-lg"><p class="text-xs text-zinc-500 uppercase tracking-wider mb-1">Best Vessel</p><p class="font-semibold text-warm-800">{g.vessel}</p></div>
+          <div class="p-4 bg-paper-100 rounded-lg"><p class="text-xs text-zinc-500 uppercase tracking-wider mb-1">Leaf-to-Water Ratio</p><p class="font-semibold text-warm-800">{g.ratio}</p></div>
         </div>
         <div class="mt-6 p-4 bg-leaf-50 rounded-lg border border-leaf-200">
           <p class="text-sm font-semibold text-leaf-800 mb-1">Pro Tips</p>
-          <p class="text-sm text-accent">{g.tips}</p>
+          <p class="text-sm text-accent underline underline-offset-2">{g.tips}</p>
         </div>
       </div>
     ))}

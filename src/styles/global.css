@@ -46,9 +46,9 @@
   --color-leaf-300: #92d3b9;
   --color-leaf-400: #6ec4a2;
   --color-leaf-500: #4fb98e;
-  --color-leaf-600: #419f7a;
-  --color-leaf-700: #347f61;
-  --color-leaf-800: #28624b;
+  --color-leaf-600: #337f60;
+  --color-leaf-700: #2a6a50;
+  --color-leaf-800: #22573f;
   --color-leaf-900: #1e4838;
   --color-leaf-950: #132f24;
 
@@ -194,12 +194,12 @@
   --color-pink-800: #1a1a1a;
   --color-pink-900: #101820;
 
-  /* Legacy aliases */
+  /* Legacy aliases — accent darkened to pass WCAG AA (4.5:1) on paper backgrounds */
   --color-surface: #fafafa;
   --color-border: #f1f1f1;
-  --color-muted: #8a8a8a;
-  --color-accent: #4fb98e;
-  --color-accent-dark: #3e9c77;
+  --color-muted: #6b6b6b;
+  --color-accent: #337f60;
+  --color-accent-dark: #27634a;
 }
 
 @layer base {

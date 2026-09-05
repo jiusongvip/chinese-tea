@@ -55,7 +55,7 @@ const schemaJson = JSON.stringify(articleSchema({
       <SectionHeader eyebrow="Price Reality Check" title="Realistic Price Ranges by Tea Type" subtitle="Prices below these ranges are red flags. Premium Chinese teas cost more because skilled hand-processing is expensive." headingLevel="h2" center />
       <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-3 max-w-4xl mx-auto">
         {buyingPriceTable.map((p) => (
-          <div class="card p-4"><span class="block text-xs text-zinc-400 mb-0.5">{p.label}</span><span class="font-semibold text-warm-900">{p.range}</span><span class="block text-xs text-zinc-400">{p.note}</span></div>
+          <div class="card p-4"><span class="block text-xs text-zinc-500 mb-0.5">{p.label}</span><span class="font-semibold text-warm-900">{p.range}</span><span class="block text-xs text-zinc-500">{p.note}</span></div>
         ))}
       </div>
     </div>
@@ -72,7 +72,7 @@ const schemaJson = JSON.stringify(articleSchema({
           </a>
         ))}
       </div>
-      <a href="/teas/" class="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">All 15 buying guides</a>
+      <a href="/teas/" class="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-accent underline underline-offset-2 hover:text-accent-dark">All 15 buying guides</a>
     </div>
   </section>
 
