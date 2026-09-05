@@ -89,16 +89,31 @@ export function faqSchema(questions: Faq[]) {
 
 // QAPage is the recommended markup for genuine Q&A pages
 // (FAQPage rich results retired May 7, 2026 — FAQPage is kept only to aid AI entity resolution)
-export function qaSchema(questions: Faq[]) {
+export function qaSchema(
+  questions: Faq[],
+  opts?: { url?: string; datePublished?: string; dateModified?: string },
+) {
+  const org = { "@type": "Organization", name: SITE.name, url: SITE.url };
+  const datePublished = opts?.datePublished ?? "2026-08-01";
+  const dateModified = opts?.dateModified ?? "2026-08-12";
   return questions.map((f) => ({
     "@context": CONTEXT,
     "@type": "QAPage",
+    author: org,
+    datePublished,
+    dateModified,
     mainEntity: {
       "@type": "Question",
       name: f.q,
       text: f.q,
       answerCount: 1,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: f.a,
+        author: org,
+        datePublished,
+        url: opts?.url,
+      },
     },
   }));
 }

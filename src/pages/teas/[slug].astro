@@ -7,6 +7,7 @@ import RelatedLinks from '../../components/RelatedLinks.astro';
 import { teas, getTea, getRelatedTeas, stars } from '../../data/teas';
 import { getTeaType } from '../../data/teaTypes';
 import { teaItemSchema, qaSchema, faqSchema } from '../../data/schemas';
+import { SITE } from '../../data/siteMeta';
 import FaIcon from '../../components/FaIcon.astro';
 import { faLocationDot, faCircleCheck, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
@@ -38,7 +39,7 @@ const teaQa = [
 
 const schemaJson = JSON.stringify([
   teaItemSchema(tea),
-  ...qaSchema(teaQa),
+  ...qaSchema(teaQa, { url: new URL(`/teas/${tea.slug}/`, SITE.url).href, datePublished: '2026-08-01', dateModified: '2026-08-12' }),
   faqSchema(teaQa),
 ]);
 ---

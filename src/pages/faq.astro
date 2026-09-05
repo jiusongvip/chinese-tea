@@ -6,11 +6,15 @@ import CTACard from '../components/CTACard.astro';
 import RelatedLinks from '../components/RelatedLinks.astro';
 import { faqs } from '../data/faq';
 import { faqSchema, qaSchema } from '../data/schemas';
+import { SITE } from '../data/siteMeta';
 
 const title = 'Frequently Asked Questions';
 const description = 'Answers to the most common questions about Chinese tea — the types, brewing, gongfu ceremony, caffeine, storage, buying, and reusing tea leaves.';
 
-const schemaJson = JSON.stringify([...qaSchema(faqs), faqSchema(faqs)]);
+const schemaJson = JSON.stringify([
+  ...qaSchema(faqs, { url: new URL('/faq/', SITE.url).href, datePublished: '2026-08-01', dateModified: '2026-08-12' }),
+  faqSchema(faqs),
+]);
 ---
 
 <BaseLayout {title} {description} schemaJson={schemaJson}>
