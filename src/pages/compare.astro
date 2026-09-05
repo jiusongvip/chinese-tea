@@ -13,7 +13,7 @@ const schemaJson = JSON.stringify([
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     itemListElement: teas.map((t, i) => ({
-      '@type': 'Product',
+      '@type': 'WebPage',
       name: t.name,
       url: `https://www.chin-tea.com/teas/${t.slug}/`,
       position: i + 1,

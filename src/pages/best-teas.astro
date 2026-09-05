@@ -61,7 +61,7 @@ const schemaJson = JSON.stringify([
     itemListElement: [...topTen, ...bestByCategory, ...specialPicks]
       .map((x, i) => {
         const tea = teaFor(x.slug);
-        return { '@type': 'Product', name: tea?.name ?? x.slug, url: tea ? `https://www.chin-tea.com/teas/${x.slug}/` : undefined, position: i + 1 };
+        return { '@type': 'WebPage', name: tea?.name ?? x.slug, url: tea ? `https://www.chin-tea.com/teas/${x.slug}/` : undefined, position: i + 1 };
       }),
   },
 ]);

@@ -30,7 +30,7 @@ const schemaJson = JSON.stringify([
       b.teas.map((slug, ti) => {
         const tea = getTea(slug);
         return {
-          '@type': 'Product',
+          '@type': 'WebPage',
           name: tea?.name ?? slug,
           url: tea ? `https://www.chin-tea.com/teas/${slug}/` : undefined,
           position: bi * 10 + ti + 1,
