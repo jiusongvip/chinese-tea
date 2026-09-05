@@ -4,46 +4,36 @@ import SectionHeader from '../../components/SectionHeader.astro';
 import TeaCard from '../../components/TeaCard.astro';
 import CTACard from '../../components/CTACard.astro';
 import RelatedLinks from '../../components/RelatedLinks.astro';
-import { teas, getTea, getRelatedTeas, stars } from '../../data/teas';
+import { getTea, getRelatedTeas, stars } from '../../data/teas';
 import { getTeaType } from '../../data/teaTypes';
 import { teaItemSchema, qaSchema, faqSchema } from '../../data/schemas';
 import { SITE } from '../../data/siteMeta';
 import FaIcon from '../../components/FaIcon.astro';
 import { faLocationDot, faCircleCheck, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
-export function getStaticPaths() {
-  return teas.map((t) => ({ params: { slug: t.slug } }));
-}
-
-const { slug } = Astro.params;
-const tea = getTea(slug!);
+const tea = getTea('pu-erh-sheng');
 if (!tea) return new Response(null, { status: 404, statusText: 'Not found' });
 
 const type = getTeaType(tea.type);
 const related = getRelatedTeas(tea.slug);
 
-const titleBase = tea.slug === 'pu-erh-sheng'
-  ? 'Sheng Pu-erh (Raw Pu-erh)'
-  : `${tea.name} (${tea.nameChinese})`;
-const title = titleBase.length >= 20 ? titleBase : `${titleBase} Tea Guide`;
-let description = tea.slug === 'pu-erh-sheng'
-  ? 'Sheng pu-erh tea (raw pu-erh) guide — flavor profile, brewing temperature, how it differs from shou pu-erh, health benefits, and aging potential.'
-  : `${tea.name} tea guide — flavor profile, exact brewing temperature, ${tea.buying.priceEntry}, quality checks, common scams, and history.`;
-if (description.length > 160) {
-  description = description.replace("exact ", "").replace("common scams", "scams");
-} else if (description.length < 140) {
-  description = description.replace(/, and history\.$/, ", history, and where to buy it.");
-}
+const title = 'Sheng Pu-erh Tea: Complete Guide to Raw Pu-erh';
+const description = 'Sheng pu-erh (raw pu-erh) is the traditional, naturally aged form of pu-erh tea from Yunnan, China. Learn its flavor profile, health benefits, brewing techniques, and how it differs from shou pu-erh.';
+
+const shengVsShouFaq = {
+  q: "What is the difference between sheng pu-erh and shou pu-erh?",
+  a: "Sheng pu-erh (raw pu-erh) is the traditional form — sun-dried green tea from Yunnan's large-leaf trees that is pressed and aged naturally over years or decades. It develops complex, sometimes fruity and camphor-like flavors through slow oxidation. Shou pu-erh (ripe pu-erh) was invented in 1973 to accelerate aging through a wet-piling (wo dui) fermentation process that takes 45-60 days. The result is a darker, earthier, smoother tea that mimics decades of aging. Sheng tends to be more astringent and complex when young, while shou is mellow and earthy from the start. Both are excellent — the choice depends on whether you prefer aging potential (sheng) or immediate drinkability (shou)."
+};
 
 const teaQa = [
-  { q: `How do you brew ${tea.name}?`, a: `Brew ${tea.name} at ${tea.brewing.temp}. For gongfu style, steep ${tea.brewing.timeGongfu}; Western style, ${tea.brewing.timeWestern}. Use ${tea.brewing.vessel} with ${tea.brewing.ratio}. Expect ${tea.brewing.infusions} infusions.` },
-  { q: `Where is ${tea.name} from?`, a: `${tea.name} is produced in ${tea.origin}. ${tea.harvest}` },
-  { q: `How much does ${tea.name} cost?`, a: `Entry-level ${tea.name} costs ${tea.buying.priceEntry}. Premium grades run ${tea.buying.priceAdvance}.` },
+  { q: `How do you brew sheng pu-erh?`, a: `Brew sheng pu-erh at ${tea.brewing.temp}. For gongfu style, steep ${tea.brewing.timeGongfu}; Western style, ${tea.brewing.timeWestern}. Use ${tea.brewing.vessel} with ${tea.brewing.ratio}. Expect ${tea.brewing.infusions} infusions.` },
+  { q: `Where is sheng pu-erh from?`, a: `${tea.name} is produced in ${tea.origin}. ${tea.harvest}` },
+  shengVsShouFaq,
 ];
 
 const schemaJson = JSON.stringify([
   teaItemSchema(tea),
-  ...qaSchema(teaQa, { url: new URL(`/teas/${tea.slug}/`, SITE.url).href, datePublished: '2026-08-01', dateModified: '2026-08-12' }),
+  ...qaSchema(teaQa, { url: new URL('/teas/sheng-pu-erh/', SITE.url).href, datePublished: '2026-08-01', dateModified: '2026-09-05' }),
   faqSchema(teaQa),
 ]);
 ---
@@ -53,16 +43,16 @@ const schemaJson = JSON.stringify([
   <!-- Hero -->
   <section class="relative bg-leaf-950 text-white overflow-hidden">
     <div class="absolute inset-0 opacity-30">
-      <img src={tea.image} alt={tea.name} class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async" width="1200" height="800" />
+      <img src={tea.image} alt="Sheng Pu-erh Tea" class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async" width="1200" height="800" />
       <div class="absolute inset-0 bg-gradient-to-b from-leaf-950/70 via-leaf-950/85 to-leaf-950"></div>
     </div>
     <div class="relative z-10 section-container py-16 md:py-20">
       <div class="flex flex-wrap items-center gap-3 mb-5">
-        <a href={`/types/${type?.slug}/`} class={`px-3 py-1 text-xs font-bold rounded-full ${type?.accent.badge ?? 'bg-white/20 text-white'}`}>{type?.name}</a>
+        <a href={`/types/${type?.slug}/`} class={`px-3 py-1 text-xs font-bold rounded-full ${type?.accent?.badge ?? 'bg-white/20 text-white'}`}>{type?.name}</a>
         <a href="/teas/" class="text-xs text-leaf-200/70 hover:text-white transition-colors">← All famous teas</a>
       </div>
-      <h1 class="text-4xl md:text-5xl font-display font-bold tracking-tight max-w-3xl">{tea.name} <span class="text-leaf-300 text-2xl md:text-3xl font-semibold">{tea.nameChinese}</span></h1>
-      <p class="mt-4 text-lg text-leaf-100/85 max-w-2xl">{tea.flavorShort}</p>
+      <h1 class="text-4xl md:text-5xl font-display font-bold tracking-tight max-w-3xl">Sheng Pu-erh Tea <span class="text-leaf-300 text-2xl md:text-3xl font-semibold">{tea.nameChinese}</span></h1>
+      <p class="mt-4 text-lg text-leaf-100/85 max-w-2xl">Sheng pu-erh, also known as raw pu-erh, is the traditional, naturally aged form of pu-erh tea from Yunnan, China. Unlike shou pu-erh, which is artificially fermented to accelerate aging, sheng pu-erh develops its complex, earthy, and sometimes fruity flavors over many years of natural maturation. This guide covers everything from its flavor profile and health benefits to proper brewing techniques.</p>
       <div class="mt-8 flex flex-wrap gap-3 text-xs">
         <span class="px-3 py-1.5 rounded-lg bg-white/10 border border-white/10 inline-flex items-center gap-1.5"><span class="text-leaf-300"><FaIcon icon={faLocationDot} size={12} /></span> {tea.origin}</span>
         <span class="px-3 py-1.5 rounded-lg bg-white/10 border border-white/10">Caffeine: {tea.caffeine}</span>
@@ -78,6 +68,94 @@ const schemaJson = JSON.stringify([
       <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Infusions</p><p class="font-semibold text-warm-900">{tea.brewing.infusions}</p></div>
       <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Harvest</p><p class="font-semibold text-warm-900 text-sm leading-snug">{tea.harvest}</p></div>
       <div class="card p-4"><p class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Entry Price</p><p class="font-semibold text-warm-900 text-sm leading-snug">{tea.buying.priceEntry}</p></div>
+    </div>
+  </section>
+
+  <!-- What is Sheng Pu-erh? -->
+  <section class="section-container py-16">
+    <div class="max-w-3xl mx-auto reveal">
+      <SectionHeader eyebrow="Understanding" title="What Is Sheng Pu-erh?" headingLevel="h2" />
+      <div class="mt-6 space-y-4 text-warm-700 leading-relaxed">
+        <p>Sheng pu-erh (生普洱), also called raw pu-erh, is the original and traditional form of pu-erh tea. Made from the large-leaf tea trees (<em>Camellia sinensis var. assamica</em>) of Yunnan Province, sheng pu-erh is sun-dried after picking, then compressed into cakes, bricks, or tuo shapes. Unlike shou pu-erh, which undergoes accelerated fermentation through wet-piling (wo dui), sheng pu-erh ages naturally through slow oxidation over years or even decades.</p>
+        <p>When young, sheng pu-erh is bright, astringent, and sometimes bitter with floral and vegetal notes. As it ages, it transforms dramatically — the liquor darkens from pale gold to deep amber, and the flavor develops into something smooth, complex, and deeply satisfying, with notes of dried fruit, camphor, wood, and medicine. This aging potential is what makes sheng pu-erh a favorite among collectors and connoisseurs.</p>
+        <p>Think of sheng pu-erh like fine wine: young sheng is bold and tannic, while aged sheng is smooth and layered. The best sheng pu-erhs from famous mountains like Lao Ban Zhang, Bing Dao, and Yi Wu can age for 20-50+ years, becoming increasingly valuable and complex over time.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sheng vs Shou Comparison -->
+  <section class="bg-paper-100 py-16">
+    <div class="section-container">
+      <SectionHeader eyebrow="Comparison" title="Sheng Pu-erh vs Shou Pu-erh" subtitle="The two types of pu-erh tea explained — and how to choose between them." headingLevel="h2" />
+      <div class="mt-8 overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="border-b-2 border-paper-300">
+              <th class="text-left py-3 px-4 font-semibold text-warm-900 w-1/4">Feature</th>
+              <th class="text-left py-3 px-4 font-semibold text-leaf-800 w-[37.5%]">Sheng Pu-erh (Raw)</th>
+              <th class="text-left py-3 px-4 font-semibold text-amber-800 w-[37.5%]">Shou Pu-erh (Ripe)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-paper-200">
+            <tr>
+              <td class="py-3 px-4 text-zinc-600 font-medium">Chinese Name</td>
+              <td class="py-3 px-4 text-warm-800">生普洱 (Shēng Pǔ'ěr)</td>
+              <td class="py-3 px-4 text-warm-800">熟普洱 (Shú Pǔ'ěr)</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-zinc-600 font-medium">Processing</td>
+              <td class="py-3 px-4 text-warm-800">Sun-dried, pressed, naturally aged</td>
+              <td class="py-3 px-4 text-warm-800">Wet-piled (wo dui) fermentation, 45-60 days</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-zinc-600 font-medium">Invented</td>
+              <td class="py-3 px-4 text-warm-800">Ancient (centuries old)</td>
+              <td class="py-3 px-4 text-warm-800">1973 (modern invention)</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-zinc-600 font-medium">Color (Liquor)</td>
+              <td class="py-3 px-4 text-warm-800">Pale gold (young) → deep amber (aged)</td>
+              <td class="py-3 px-4 text-warm-800">Dark mahogany, opaque</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-zinc-600 font-medium">Young Flavor</td>
+              <td class="py-3 px-4 text-warm-800">Bright, astringent, bitter-sweet, floral</td>
+              <td class="py-3 px-4 text-warm-800">Smooth, earthy, woody, zero astringency</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-zinc-600 font-medium">Aged Flavor</td>
+              <td class="py-3 px-4 text-warm-800">Complex, camphor, dried fruit, medicine</td>
+              <td class="py-3 px-4 text-warm-800">Deeper earth, aged wood, sweet finish</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-zinc-600 font-medium">Aging Potential</td>
+              <td class="py-3 px-4 text-warm-800">20-50+ years, transforms dramatically</td>
+              <td class="py-3 px-4 text-warm-800">Improves but less dramatic change</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-zinc-600 font-medium">Caffeine</td>
+              <td class="py-3 px-4 text-warm-800">High</td>
+              <td class="py-3 px-4 text-warm-800">Medium</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-zinc-600 font-medium">Beginner Friendly</td>
+              <td class="py-3 px-4 text-warm-800">★★★☆☆ (acquired taste when young)</td>
+              <td class="py-3 px-4 text-warm-800">★★★★☆ (smooth from the start)</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-zinc-600 font-medium">Price Range</td>
+              <td class="py-3 px-4 text-warm-800">$15-500+ / cake</td>
+              <td class="py-3 px-4 text-warm-800">$10-150+ / cake</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-zinc-600 font-medium">Best For</td>
+              <td class="py-3 px-4 text-warm-800">Collectors, aging, connoisseurs</td>
+              <td class="py-3 px-4 text-warm-800">Daily drinking, beginners, digestion</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-6 text-sm text-muted">New to pu-erh? <a href="/teas/pu-erh-shou/" class="text-accent underline hover:text-accent-dark">Start with shou pu-erh</a> for a smoother introduction, or explore <a href="/teas/pu-erh-sheng/" class="text-accent underline hover:text-accent-dark">sheng pu-erh</a> if you enjoy the idea of aging tea like fine wine.</p>
     </div>
   </section>
 
@@ -111,7 +189,7 @@ const schemaJson = JSON.stringify([
   <!-- Buying guide -->
   <section class="bg-paper-100 py-16">
     <div class="section-container">
-      <SectionHeader eyebrow="Buying Guide" title={`How to Buy ${tea.name} Without Getting Scammed`} subtitle="The Chinese tea market is vast and unregulated. Here's exactly what to look for — and what to run from." headingLevel="h2" />
+      <SectionHeader eyebrow="Buying Guide" title={`How to Buy Sheng Pu-erh Without Getting Scammed`} subtitle="The Chinese tea market is vast and unregulated. Here's exactly what to look for — and what to run from." headingLevel="h2" />
       <div class="mt-8 grid md:grid-cols-2 gap-4">
         <div class="card p-5"><p class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Entry Level</p><p class="font-semibold text-warm-900">{tea.buying.priceEntry}</p></div>
         <div class="card p-5"><p class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Premium / Collector</p><p class="font-semibold text-warm-900">{tea.buying.priceAdvance}</p></div>
@@ -165,19 +243,6 @@ const schemaJson = JSON.stringify([
     </div>
   </section>
 
-  {tea.slug === 'pu-erh-sheng' && (
-    <section class="bg-paper-100 py-16">
-      <div class="section-container">
-        <SectionHeader eyebrow="Deep Dive" title="What Is Sheng Pu-erh?" headingLevel="h2" />
-        <div class="mt-6 max-w-3xl space-y-4 text-warm-700 leading-relaxed">
-          <p>Sheng pu-erh (生普洱), also called raw pu-erh, is the original and traditional form of pu-erh tea. Made from the large-leaf tea trees (<em>Camellia sinensis var. assamica</em>) of Yunnan Province, sheng pu-erh is sun-dried after picking, then compressed into cakes, bricks, or tuo shapes. Unlike <a href="/teas/pu-erh-shou/" class="text-accent underline hover:text-accent-dark">shou pu-erh</a>, which undergoes accelerated fermentation through wet-piling (wo dui), sheng pu-erh ages naturally through slow oxidation over years or even decades.</p>
-          <p>When young, sheng pu-erh is bright, astringent, and sometimes bitter with floral and vegetal notes. As it ages, it transforms dramatically — the liquor darkens from pale gold to deep amber, and the flavor develops into something smooth, complex, and deeply satisfying, with notes of dried fruit, camphor, wood, and medicine.</p>
-          <p class="font-medium text-warm-900">Want the full story? <a href="/teas/sheng-pu-erh/" class="text-accent underline hover:text-accent-dark">Read our complete guide to sheng pu-erh tea →</a></p>
-        </div>
-      </div>
-    </section>
-  )}
-
   <!-- Related teas -->
   <section class="section-container pb-16">
     <SectionHeader eyebrow="You May Also Like" title="Related Teas" headingLevel="h2" />
@@ -186,7 +251,7 @@ const schemaJson = JSON.stringify([
     </div>
   </section>
 
-  <CTACard primaryHref="/teas/" primaryLabel="Browse All Teas" secondaryHref="/guides/buying/" secondaryLabel="Buying Guide" />
+  <CTACard primaryHref="/teas/" primaryLabel="Browse All Teas" secondaryHref="/guides/brewing/" secondaryLabel="Buying Guide" />
 
   <RelatedLinks links={[
     { href: `/types/${type?.slug}/`, label: `${type?.nameShort?.toLowerCase()} tea brewing guide` },

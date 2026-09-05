@@ -61,6 +61,7 @@ export const pageMeta: Record<string, PageMeta> = {
   ...Object.fromEntries(
     teas.map((t) => [`/teas/${t.slug}`, { label: t.name, lastmod: LASTMOD }])
   ),
+  "/teas/sheng-pu-erh": { label: "Sheng Pu-erh Tea: Complete Guide to Raw Pu-erh", lastmod: "2026-09-05" },
 };
 
 const monthNames = [
