@@ -65,9 +65,9 @@ const schemaJson = JSON.stringify([
   <!-- Hero — the ceremonial stage (Hamada-style three-zone composition) -->
   <section class="relative min-h-[100dvh] overflow-hidden bg-[#f7faf8]">
     <!-- Photo backdrop with a pale ceremonial wash -->
-    <div class="absolute inset-0" aria-hidden="true">
+    <div class="absolute inset-0">
       <img src="/images/chinese-tea-hero.avif" alt="Chinese tea ceremony scene with a clay teapot, cups, and loose leaf tea on a wooden table" class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async" width="1920" height="1080" />
-      <div class="absolute inset-0 bg-gradient-to-b from-[#f7faf8]/60 via-[#f7faf8]/75 to-[#f7faf8]/95"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-[#f7faf8]/60 via-[#f7faf8]/75 to-[#f7faf8]/95" aria-hidden="true"></div>
     </div>
     <canvas id="js-canvas-container" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
 
@@ -92,7 +92,7 @@ const schemaJson = JSON.stringify([
           Chinese Tea Guide
           <span class="inline-block w-8 h-px bg-accent/50"></span>
         </p>
-        <h1 data-chars class="font-accent text-4xl md:text-5xl lg:text-[4.2rem] font-semibold tracking-tight leading-[1.06] text-ink-900">
+        <h1 class="font-accent text-4xl md:text-5xl lg:text-[4.2rem] font-semibold tracking-tight leading-[1.06] text-ink-900">
           From six types to your perfect cup
         </h1>
         <p class="mt-7 text-base md:text-lg text-warm-600 leading-relaxed max-w-2xl mx-auto">

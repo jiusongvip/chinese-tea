@@ -4,7 +4,6 @@ import geistWoff2 from "@fontsource-variable/geist/files/geist-latin-wght-normal
 import newsreaderWoff2 from "@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2?url";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import InkGlyph from "../components/InkGlyph.astro";
 import {
   SITE,
   pageMeta,
@@ -161,11 +160,6 @@ const displayUpdated = lastUpdated ?? lastUpdatedFor(pathname);
       Skip to content
     </a>
 
-    <!-- Loading ceremony: a breath of tea -->
-    <div id="loading-wrap" class="loading-wrap" aria-hidden="true">
-      <span class="loading-glyph text-ink-900"><InkGlyph size={64} /></span>
-    </div>
-
     <Header />
 
     {!noindex && crumbs.length > 1 && (
@@ -223,47 +217,6 @@ const displayUpdated = lastUpdated ?? lastUpdatedFor(pathname);
         { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
       );
       document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-
-      const loading = document.getElementById("loading-wrap");
-      if (loading) {
-        const done = () => loading.classList.add("done");
-        if (sessionStorage.getItem("tea-loading-shown")) {
-          loading.classList.add("done");
-        } else {
-          sessionStorage.setItem("tea-loading-shown", "1");
-          window.addEventListener("load", () => setTimeout(done, 750), { once: true });
-          setTimeout(done, 1800);
-        }
-      }
-
-      document.querySelectorAll("[data-chars]").forEach((el) => {
-        if (!("IntersectionObserver" in window)) return;
-        const text = el.textContent || "";
-        el.textContent = "";
-        el.setAttribute("aria-label", text);
-        const frag = document.createDocumentFragment();
-        [...text].forEach((ch) => {
-          const s = document.createElement("span");
-          s.className = "char-reveal";
-          s.textContent = ch === " " ? "\u00A0" : ch;
-          frag.appendChild(s);
-        });
-        el.appendChild(frag);
-        new IntersectionObserver(
-          (entries, obs) => {
-            entries.forEach((e) => {
-              if (e.isIntersecting) {
-                el.querySelectorAll(".char-reveal").forEach((s, i) => {
-                  s.style.transitionDelay = `${i * 28}ms`;
-                  s.classList.add("in");
-                });
-                obs.disconnect();
-              }
-            });
-          },
-          { threshold: 0.3 }
-        ).observe(el);
-      });
     </script>
   </body>
 </html>
