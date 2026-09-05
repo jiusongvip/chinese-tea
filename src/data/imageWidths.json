@@ -1,0 +1,86 @@
+{
+  "anji-bai-cha": {
+    "w": 640,
+    "h": 853
+  },
+  "biluochun": {
+    "w": 640,
+    "h": 853
+  },
+  "da-hong-pao": {
+    "w": 640,
+    "h": 640
+  },
+  "dian-hong": {
+    "w": 445,
+    "h": 445
+  },
+  "gunpowder-green": {
+    "w": 447,
+    "h": 447
+  },
+  "huangshan-maofeng": {
+    "w": 500,
+    "h": 500
+  },
+  "jin-jun-mei": {
+    "w": 554,
+    "h": 554
+  },
+  "junshan-yinzhen": {
+    "w": 640,
+    "h": 527
+  },
+  "keemun": {
+    "w": 640,
+    "h": 427
+  },
+  "lapsang-souchong": {
+    "w": 600,
+    "h": 400
+  },
+  "liuan-guapian": {
+    "w": 640,
+    "h": 640
+  },
+  "longjing": {
+    "w": 640,
+    "h": 300
+  },
+  "phoenix-dan-cong": {
+    "w": 363,
+    "h": 225
+  },
+  "pu-erh-sheng": {
+    "w": 488,
+    "h": 409
+  },
+  "pu-erh-shou": {
+    "w": 548,
+    "h": 364
+  },
+  "shoumei": {
+    "w": 392,
+    "h": 368
+  },
+  "silver-needle": {
+    "w": 640,
+    "h": 569
+  },
+  "taiping-houkui": {
+    "w": 640,
+    "h": 434
+  },
+  "tie-guan-yin": {
+    "w": 640,
+    "h": 426
+  },
+  "white-peony": {
+    "w": 640,
+    "h": 550
+  },
+  "xinyang-maojian": {
+    "w": 500,
+    "h": 300
+  }
+}

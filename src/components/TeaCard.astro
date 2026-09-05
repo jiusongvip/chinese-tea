@@ -4,6 +4,7 @@ import path from 'node:path';
 import type { Tea } from '../data/teas';
 import { getTeaType } from '../data/teaTypes';
 import { ArrowRight } from '@lucide/astro';
+import imageWidths from '../data/imageWidths.json';
 
 interface Props {
   tea: Tea;
@@ -13,19 +14,26 @@ const { tea } = Astro.props;
 const type = getTeaType(tea.type);
 const badge = type?.accent.badge ?? 'bg-zinc-100 text-zinc-700';
 
-// A unique per-tea photo dropped into public/images/teas/{slug}.{avif|webp|jpg|png},
+// A unique per-tea photo dropped into public/images/teas/{slug}.webp,
 // otherwise an ink-seal cover with the tea's own character.
 const base = path.join(process.cwd(), 'public', 'images', 'teas');
-const ext = (['avif', 'webp', 'jpg', 'png'] as const).find((e) => existsSync(path.join(base, tea.slug + '.' + e)));
-const photo = ext ? `/images/teas/${tea.slug}.${ext}` : null;
-const src400 = photo && ext === 'webp' && existsSync(path.join(base, `${tea.slug}.400.webp`)) ? `/images/teas/${tea.slug}.400.webp` : null;
-const srcset = src400 ? `${src400} 400w, ${photo} 640w` : undefined;
+const hasPhoto = existsSync(path.join(base, `${tea.slug}.webp`));
+const dims = imageWidths[tea.slug as keyof typeof imageWidths];
+const w = dims?.w ?? 640;
+const h = dims?.h ?? 427;
+const has400 = dims ? dims.w > 400 : false;
+const webpSrcset = has400 ? `/images/teas/${tea.slug}.400.webp 400w, /images/teas/${tea.slug}.webp ${w}w` : undefined;
+const avifSrcset = has400 ? `/images/teas/${tea.slug}.400.avif 400w, /images/teas/${tea.slug}.avif ${w}w` : undefined;
+const sizes = "(min-width: 768px) 360px, 88vw";
 ---
 
 <a href={`/teas/${tea.slug}/`} class="group card card-hover overflow-hidden flex flex-col no-underline">
-  {photo ? (
+  {hasPhoto ? (
     <div class="aspect-[3/2] overflow-hidden bg-paper-100 relative">
-      <img src={photo} srcset={srcset} sizes="(min-width: 768px) 360px, 88vw" alt={`${tea.name} (${tea.nameChinese})`} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" width="640" height="427" />
+      <picture>
+        {avifSrcset && <source type="image/avif" srcset={avifSrcset} sizes={sizes} />}
+        <img src={`/images/teas/${tea.slug}.webp`} srcset={webpSrcset} sizes={sizes} alt={`${tea.name} (${tea.nameChinese})`} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" width={w} height={h} />
+      </picture>
       <span class={`absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded ${badge}`}>{type?.nameShort}</span>
     </div>
   ) : (

@@ -144,6 +144,11 @@ const displayUpdated = lastUpdated ?? lastUpdatedFor(pathname);
     {!noindex && crumbSchema && <script type="application/ld+json" is:inline set:html={crumbSchema}></script>}
     {schemaJson && <script type="application/ld+json" is:inline set:html={schemaJson}></script>}
 
+    <!-- Speculation Rules: prefetch internal pages on hover/pointer-down (Chromium, progressive) -->
+    <script type="speculationrules" is:inline set:html={JSON.stringify({
+      prefetch: [{ source: "document", where: { href_matches: "/*" }, eagerness: "moderate" }]
+    })}></script>
+
     <!-- Google tag (gtag.js) — deferred until after window load to keep LCP window clear -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
