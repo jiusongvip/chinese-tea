@@ -112,38 +112,21 @@ function parsePriceRange(s: string): [number, number] {
 }
 
 export function teaItemSchema(tea: Tea) {
-  const [minPrice, maxPrice] = parsePriceRange(tea.buying.priceEntry);
-  const priceSpecification =
-    maxPrice > minPrice
-      ? {
-          "@type": "PriceSpecification",
-          priceCurrency: "USD",
-          minPrice,
-          maxPrice,
-        }
-      : { "@type": "PriceSpecification", priceCurrency: "USD", price: minPrice };
+  const canonical = absolute(`/teas/${tea.slug}/`);
   return {
     "@context": CONTEXT,
-    "@type": "Product",
-    name: tea.name,
+    "@type": "Article",
+    headline: tea.name,
     alternateName: tea.nameChinese,
     description: `${tea.flavorShort}. ${tea.origin}. ${tea.flavor.taste}`,
     image: absolute(tea.image),
-    url: absolute(`/teas/${tea.slug}/`),
-    category: `${tea.type.charAt(0).toUpperCase() + tea.type.slice(1)} tea`,
+    url: canonical,
+    mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
+    author: { "@type": "Organization", name: SITE.name, url: absolute("/about/") },
+    publisher: { "@type": "Organization", name: SITE.name, url: SITE.url, logo: { "@type": "ImageObject", url: absolute("/favicon.svg") } },
     datePublished: "2026-08-01",
     dateModified: "2026-08-12",
-    offers: {
-      "@type": "Offer",
-      priceCurrency: "USD",
-      priceSpecification,
-      description: `Expected price range. Entry level: ${tea.buying.priceEntry}. Premium: ${tea.buying.priceAdvance}.`,
-    },
-    additionalProperty: [
-      { "@type": "PropertyValue", name: "Oxidation", value: tea.type },
-      { "@type": "PropertyValue", name: "Caffeine", value: tea.caffeine },
-      { "@type": "PropertyValue", name: "Origin", value: tea.origin },
-    ],
+    articleSection: `${tea.type.charAt(0).toUpperCase() + tea.type.slice(1)} tea`,
   };
 }
 
