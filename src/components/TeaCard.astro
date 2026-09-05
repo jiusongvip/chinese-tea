@@ -18,12 +18,14 @@ const badge = type?.accent.badge ?? 'bg-zinc-100 text-zinc-700';
 const base = path.join(process.cwd(), 'public', 'images', 'teas');
 const ext = (['avif', 'webp', 'jpg', 'png'] as const).find((e) => existsSync(path.join(base, tea.slug + '.' + e)));
 const photo = ext ? `/images/teas/${tea.slug}.${ext}` : null;
+const src400 = photo && ext === 'webp' && existsSync(path.join(base, `${tea.slug}.400.webp`)) ? `/images/teas/${tea.slug}.400.webp` : null;
+const srcset = src400 ? `${src400} 400w, ${photo} 640w` : undefined;
 ---
 
 <a href={`/teas/${tea.slug}/`} class="group card card-hover overflow-hidden flex flex-col no-underline">
   {photo ? (
     <div class="aspect-[3/2] overflow-hidden bg-paper-100 relative">
-      <img src={photo} alt={`${tea.name} (${tea.nameChinese})`} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" width="640" height="427" />
+      <img src={photo} srcset={srcset} sizes="(min-width: 768px) 360px, 88vw" alt={`${tea.name} (${tea.nameChinese})`} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" width="640" height="427" />
       <span class={`absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded ${badge}`}>{type?.nameShort}</span>
     </div>
   ) : (

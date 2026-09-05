@@ -33,6 +33,7 @@ export interface Props {
   lastUpdated?: string;
   schemaJson?: string;
   articleType?: "Article" | "BlogPosting";
+  preloadImage?: string;
 }
 
 const {
@@ -49,6 +50,7 @@ const {
   lastUpdated,
   schemaJson = "",
   articleType = "Article",
+  preloadImage = "",
 } = Astro.props;
 
 const pathname = Astro.url.pathname;
@@ -114,6 +116,7 @@ const displayUpdated = lastUpdated ?? lastUpdatedFor(pathname);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preload" as="font" type="font/woff2" href={geistWoff2} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={newsreaderWoff2} crossorigin />
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="search" type="application/opensearchdescription+xml" title="Chinese Tea Guide" href="/opensearch.xml" />
     <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
