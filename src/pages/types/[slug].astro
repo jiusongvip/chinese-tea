@@ -95,6 +95,11 @@ const schemaJson = JSON.stringify(teaTypeSchema({
       <div class="mt-6 card p-5">
         <p class="text-sm text-warm-700 leading-relaxed"><strong class="text-warm-900">The one-liner:</strong> {type.oneLiner}</p>
       </div>
+      {slug === 'black' && (
+        <div class="mt-6 card p-5 bg-leaf-50 border-leaf-200">
+          <p class="text-sm text-warm-700 leading-relaxed"><strong class="text-leaf-900">Why is black tea called "red tea" in Chinese?</strong> In Chinese, black tea is called hong cha (红茶, "red tea") — named for the reddish liquor, not the leaf color. When you search for "black tea in Chinese," the answer is actually "red tea" (红茶). The term "dark tea" (黑茶, hei cha) refers to a completely different category of post-fermented teas like Pu-erh. This naming difference is a common source of confusion for English speakers learning about Chinese tea.</p>
+        </div>
+      )}
     </div>
   </section>
 
@@ -104,6 +109,29 @@ const schemaJson = JSON.stringify(teaTypeSchema({
         <SectionHeader eyebrow="Beyond the Mainland" title={type.relatedNote.title} headingLevel="h2" />
         <p class="mt-5 text-warm-700 leading-relaxed">{type.relatedNote.body}</p>
         <p class="mt-6 text-sm text-muted">Related: <a href="/guides/oolong-styles/" class="text-accent underline">four families of oolong</a> · <a href="/regions/" class="text-accent underline">tea by region</a> · <a href="/guides/beginners/" class="text-accent underline">where to start</a> · <a href="/flavours/" class="text-accent underline">find teas by flavour</a></p>
+      </div>
+    </section>
+  )}
+
+  {slug === 'yellow' && (
+    <section class="section-container py-16">
+      <div class="max-w-3xl reveal">
+        <SectionHeader eyebrow="What to Taste" title="Best Yellow Tea Varieties to Try" headingLevel="h2" />
+        <div class="mt-6 space-y-4 text-warm-700 leading-relaxed">
+          <p>Yellow tea is genuinely rare — only a handful of producers still make it correctly. If you want to experience the best yellow tea has to offer, these are the varieties to seek out:</p>
+          <div class="card p-5">
+            <h3 class="font-semibold text-warm-900 mb-1">Junshan Yinzhen (君山银针)</h3>
+            <p class="text-sm text-muted">The most famous yellow tea in China, grown on Junshan Island in Dongting Lake, Hunan. Made exclusively from buds harvested in early spring. The buds famously stand upright in a glass during brewing — a performance that made it an imperial court favorite. Expect a mellow, honeyed sweetness with zero grassiness.</p>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-semibold text-warm-900 mb-1">Mengding Huangya (蒙顶黄芽)</h3>
+            <p class="text-sm text-muted">From Sichuan's Mengding Mountain, one of the earliest tea-growing regions in China. Known for its sweet, mellow character and honey-like finish. The leaves are flat and yellow-green, producing a liquor that's smoother and rounder than comparable green teas.</p>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-semibold text-warm-900 mb-1">Huangshan Maofeng (黄山毛峰)</h3>
+            <p class="text-sm text-muted">While primarily processed as a green tea, some producers create a yellow version with the men huang step. The result is a unique hybrid — orchid notes with the mellow roundness of yellow tea. A rare find worth seeking out.</p>
+          </div>
+        </div>
       </div>
     </section>
   )}

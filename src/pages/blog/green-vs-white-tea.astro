@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import RelatedLinks from '../../components/RelatedLinks.astro';
 
-const title = 'Green vs White Tea: Key Differences';
+const title = 'White Tea vs Green Tea: Key Differences and Which to Choose';
 const description = 'Green and white tea come from the same plant and neither is oxidized — so why do they taste so different? Processing, picking, caffeine, and how to choose.';
 ---
 
@@ -12,7 +12,7 @@ const description = 'Green and white tea come from the same plant and neither is
   articleType="BlogPosting"
   author="Chinese Tea Guide"
   datePublished="2026-08-04"
-  dateModified="2026-08-12"
+  dateModified="2026-09-07"
 >
 
   <article class="section-container py-12 max-w-[760px]">
@@ -27,25 +27,53 @@ const description = 'Green and white tea come from the same plant and neither is
     <p class="text-warm-700 leading-relaxed mb-6"><strong class="text-warm-900">White tea</strong> never gets heat near it. It's simply withered — spread out and left to slowly lose moisture — and then gently dried. No rolling, no firing, no oxidation control. The leaf keeps more of what it is: delicate, naturally sweet, almost fragile. That's why white tea is often called the least processed tea in the world.</p>
 
     <h2 class="font-display text-2xl font-semibold text-warm-900 mt-10 mb-4">What it means in the cup</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-      <div class="card p-5">
-        <h3 class="font-semibold text-warm-900 mb-2">Green tea</h3>
-        <ul class="space-y-2 text-sm text-muted list-disc pl-5 leading-relaxed">
-          <li>Toasty, nutty, sometimes grassy or chestnut</li>
-          <li>Medium caffeine (25-35mg per cup)</li>
-          <li>Needs careful water temperature — boiling water burns it</li>
-          <li>Best within 6-12 months of harvest</li>
-        </ul>
-      </div>
-      <div class="card p-5">
-        <h3 class="font-semibold text-warm-900 mb-2">White tea</h3>
-        <ul class="space-y-2 text-sm text-muted list-disc pl-5 leading-relaxed">
-          <li>Sweet, melon, hay, almost floral — zero bitterness</li>
-          <li>Lowest caffeine of any tea (15-25mg)</li>
-          <li>Nearly impossible to over-brew</li>
-          <li>Aged whites are a category of their own — they evolve for decades</li>
-        </ul>
-      </div>
+    <div class="overflow-x-auto mb-8">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="border-b-2 border-paper-300">
+            <th class="text-left py-3 px-4 font-semibold text-warm-900">Feature</th>
+            <th class="text-left py-3 px-4 font-semibold text-amber-800">White Tea</th>
+            <th class="text-left py-3 px-4 font-semibold text-emerald-800">Green Tea</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-paper-200">
+          <tr>
+            <td class="py-3 px-4 text-zinc-600 font-medium">Oxidation</td>
+            <td class="py-3 px-4 text-warm-800">Minimal (unintentional during withering)</td>
+            <td class="py-3 px-4 text-warm-800">None (fixed immediately with heat)</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-zinc-600 font-medium">Flavor</td>
+            <td class="py-3 px-4 text-warm-800">Sweet, honey, hay, almost floral</td>
+            <td class="py-3 px-4 text-warm-800">Toasty, nutty, sometimes grassy</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-zinc-600 font-medium">Caffeine</td>
+            <td class="py-3 px-4 text-warm-800">Low (15-25mg per cup)</td>
+            <td class="py-3 px-4 text-warm-800">Medium (25-35mg per cup)</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-zinc-600 font-medium">Best Water Temp</td>
+            <td class="py-3 px-4 text-warm-800">175-185°F (80-85°C)</td>
+            <td class="py-3 px-4 text-warm-800">160-175°F (70-80°C)</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-zinc-600 font-medium">Brewing Difficulty</td>
+            <td class="py-3 px-4 text-warm-800">Nearly impossible to over-brew</td>
+            <td class="py-3 px-4 text-warm-800">Needs careful temperature control</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-zinc-600 font-medium">Best Time to Drink</td>
+            <td class="py-3 px-4 text-warm-800">Anytime (gentle, calming)</td>
+            <td class="py-3 px-4 text-warm-800">Morning or afternoon (energizing)</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-zinc-600 font-medium">Aging Potential</td>
+            <td class="py-3 px-4 text-warm-800">Yes — ages for decades, develops honey and dried fruit</td>
+            <td class="py-3 px-4 text-warm-800">No — best within 6-12 months</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <h2 class="font-display text-2xl font-semibold text-warm-900 mt-10 mb-4">Which should you start with?</h2>

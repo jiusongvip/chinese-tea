@@ -23,7 +23,7 @@ const type = getTeaType(tea.type);
 const related = getRelatedTeas(tea.slug);
 
 const titleBase = tea.slug === 'pu-erh-sheng'
-  ? 'Sheng Pu-erh (Raw Pu-erh)'
+  ? 'Sheng Pu-erh Tea (Raw Pu-erh)'
   : `${tea.name} (${tea.nameChinese})`;
 const title = titleBase.length >= 20 ? titleBase : `${titleBase} Tea Guide`;
 let description = tea.slug === 'pu-erh-sheng'
